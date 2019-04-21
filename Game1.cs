@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace mgsb
+namespace test
 {
     public class Game1 : Game
     {
