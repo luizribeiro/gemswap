@@ -6,9 +6,14 @@ namespace mgsb
 {
     public class Game1 : Game
     {
+        const int SCREEN_WIDTH = 1920;
+        const int SCREEN_HEIGHT = 1080;
+
         const int SPRITE_FPS = 15;
         const int SPRITE_NUM_FRAMES = 14;
         const int SPRITE_NUM_COLUMNS = 8;
+        const int SPRITE_WIDTH = 64;
+        const int SPRITE_HEIGHT = 64;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -20,8 +25,8 @@ namespace mgsb
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
+            graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
+            graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
             graphics.ApplyChanges();
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -78,12 +83,12 @@ namespace mgsb
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             spriteBatch.Draw(
                 texture,
-                position: new Vector2(952, 710),
+                position: new Vector2((SCREEN_WIDTH - SPRITE_WIDTH)/2, (SCREEN_HEIGHT - SPRITE_HEIGHT)*2/3),
                 sourceRectangle: new Rectangle(
-                    (currentFrame % SPRITE_NUM_COLUMNS) * 64,
-                    (currentFrame / SPRITE_NUM_COLUMNS) * 64,
-                    64,
-                    64
+                    (currentFrame % SPRITE_NUM_COLUMNS) * SPRITE_WIDTH,
+                    (currentFrame / SPRITE_NUM_COLUMNS) * SPRITE_HEIGHT,
+                    SPRITE_WIDTH,
+                    SPRITE_HEIGHT
                 )
             );
             spriteBatch.End();
