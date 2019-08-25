@@ -20,6 +20,9 @@ namespace mgsb
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
+            graphics.ApplyChanges();
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -75,7 +78,7 @@ namespace mgsb
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             spriteBatch.Draw(
                 texture,
-                position: new Vector2(320, 320),
+                position: new Vector2(952, 710),
                 sourceRectangle: new Rectangle(
                     (currentFrame % SPRITE_NUM_COLUMNS) * 64,
                     (currentFrame / SPRITE_NUM_COLUMNS) * 64,
