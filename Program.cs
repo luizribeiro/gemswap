@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace test
+namespace mgsb
 {
     public static class Program
     {
