@@ -130,6 +130,60 @@ namespace mgsb
                             TILESET_HEIGHT
                         )
                     );
+
+                    if (map[y, x] == 1) {
+                        if (map[y-1, x-1] == 0 && map[y-1, x] == 1 && map[y, x-1] == 1) {
+                            spriteBatch.Draw(
+                                tileset,
+                                position: new Vector2(x * TILESET_WIDTH, y * TILESET_HEIGHT),
+                                sourceRectangle: new Rectangle(
+                                    (16 % TILESET_NUM_COLUMNS) * TILESET_WIDTH,
+                                    (16 / TILESET_NUM_COLUMNS) * TILESET_HEIGHT,
+                                    TILESET_WIDTH / 2,
+                                    TILESET_HEIGHT / 2
+                                )
+                            );
+                        }
+
+                        if (map[y-1, x+1] == 0 && map[y-1, x] == 1 && map[y, x+1] == 1) {
+                            spriteBatch.Draw(
+                                tileset,
+                                position: new Vector2(x * TILESET_WIDTH + TILESET_WIDTH / 2, y * TILESET_HEIGHT),
+                                sourceRectangle: new Rectangle(
+                                    (16 % TILESET_NUM_COLUMNS) * TILESET_WIDTH + TILESET_WIDTH / 2,
+                                    (16 / TILESET_NUM_COLUMNS) * TILESET_HEIGHT,
+                                    TILESET_WIDTH / 2,
+                                    TILESET_HEIGHT / 2
+                                )
+                            );
+                        }
+
+                        if (map[y+1, x-1] == 0 && map[y+1, x] == 1 && map[y, x-1] == 1) {
+                            spriteBatch.Draw(
+                                tileset,
+                                position: new Vector2(x * TILESET_WIDTH, y * TILESET_HEIGHT + TILESET_HEIGHT / 2),
+                                sourceRectangle: new Rectangle(
+                                    (16 % TILESET_NUM_COLUMNS) * TILESET_WIDTH,
+                                    (16 / TILESET_NUM_COLUMNS) * TILESET_HEIGHT + TILESET_HEIGHT / 2,
+                                    TILESET_WIDTH / 2,
+                                    TILESET_HEIGHT / 2
+                                )
+                            );
+                        }
+
+                        if (map[y+1, x+1] == 0 && map[y+1, x] == 1 && map[y, x+1] == 1) {
+                            spriteBatch.Draw(
+                                tileset,
+                                position: new Vector2(x * TILESET_WIDTH + TILESET_WIDTH / 2, y * TILESET_HEIGHT + TILESET_HEIGHT / 2),
+                                sourceRectangle: new Rectangle(
+                                    (16 % TILESET_NUM_COLUMNS) * TILESET_WIDTH + TILESET_WIDTH / 2,
+                                    (16 / TILESET_NUM_COLUMNS) * TILESET_HEIGHT + TILESET_HEIGHT / 2,
+                                    TILESET_WIDTH / 2,
+                                    TILESET_HEIGHT / 2
+                                )
+                            );
+                        }
+                    }
                 }
             }
             spriteBatch.End();
