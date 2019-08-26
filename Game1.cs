@@ -15,9 +15,34 @@ namespace mgsb
         const int SPRITE_WIDTH = 64;
         const int SPRITE_HEIGHT = 64;
 
+        const int TILESET_NUM_COLUMNS = 4;
+        const int TILESET_WIDTH = 64;
+        const int TILESET_HEIGHT = 64;
+
+        private static int[,] map = {
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        };
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D texture;
+        Texture2D bobSprite;
+        Texture2D tileset;
         int currentFrame;
         float timer;
         bool isJumping;
@@ -44,7 +69,8 @@ namespace mgsb
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            texture = this.Content.Load<Texture2D>("bob-jumping");
+            bobSprite = this.Content.Load<Texture2D>("bob-jumping");
+            tileset = this.Content.Load<Texture2D>("Tileset");
         }
 
         protected override void UnloadContent()
@@ -82,7 +108,7 @@ namespace mgsb
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             spriteBatch.Draw(
-                texture,
+                bobSprite,
                 position: new Vector2((SCREEN_WIDTH - SPRITE_WIDTH)/2, (SCREEN_HEIGHT - SPRITE_HEIGHT)*2/3),
                 sourceRectangle: new Rectangle(
                     (currentFrame % SPRITE_NUM_COLUMNS) * SPRITE_WIDTH,
@@ -91,9 +117,46 @@ namespace mgsb
                     SPRITE_HEIGHT
                 )
             );
+            for (int y = 0; y < map.GetLength(0); y++) {
+                for (int x = 0; x < map.GetLength(1); x++) {
+                    int tileIndex = getTileIndex(x, y);
+                    spriteBatch.Draw(
+                        tileset,
+                        position: new Vector2(x * TILESET_WIDTH, y * TILESET_HEIGHT),
+                        sourceRectangle: new Rectangle(
+                            (tileIndex % TILESET_NUM_COLUMNS) * TILESET_WIDTH,
+                            (tileIndex / TILESET_NUM_COLUMNS) * TILESET_HEIGHT,
+                            TILESET_WIDTH,
+                            TILESET_HEIGHT
+                        )
+                    );
+                }
+            }
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        protected int getTileIndex(int x, int y) {
+            if (map[y, x] == 0) {
+                return 17;
+            }
+
+            /*
+             * -, 1, -
+             * 2, -, 4
+             * -, 8, -
+             */
+            int[] tilesetValues = new int[] {
+                12, 14, 10, 8,
+                13, 15, 11, 9,
+                5, 7, 3, 1,
+                4, 6, 2, 0
+            };
+            return System.Array.IndexOf(
+                tilesetValues,
+                map[y-1, x]*1 + map[y, x-1]*2 + map[y, x+1]*4 + map[y+1, x]*8
+            );
         }
     }
 }
