@@ -131,7 +131,7 @@ namespace mgsb
         {
             for (int y = 0; y < map.GetLength(0); y++) {
                 for (int x = 0; x < map.GetLength(1); x++) {
-                    int tileIndex = getTileIndex(x, y);
+                    int tileIndex = GetTileIndex(x, y);
                     spriteBatch.Draw(
                         tileset,
                         position: new Vector2(x * TILESET_WIDTH, y * TILESET_HEIGHT),
@@ -200,7 +200,7 @@ namespace mgsb
             }
         }
 
-        protected int getTileIndex(int x, int y) {
+        protected int GetTileIndex(int x, int y) {
             if (map[y, x] == 0) {
                 return 17;
             }
