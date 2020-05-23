@@ -123,7 +123,8 @@ namespace mgsb
                     (currentFrame / SPRITE_NUM_COLUMNS) * SPRITE_HEIGHT,
                     SPRITE_WIDTH,
                     SPRITE_HEIGHT
-                )
+                ),
+                color: Color.White
             );
         }
 
@@ -140,7 +141,8 @@ namespace mgsb
                             (tileIndex / TILESET_NUM_COLUMNS) * TILESET_HEIGHT,
                             TILESET_WIDTH,
                             TILESET_HEIGHT
-                        )
+                        ),
+                        color: Color.White
                     );
 
                     if (map[y, x] == 1) {
@@ -153,7 +155,8 @@ namespace mgsb
                                     (16 / TILESET_NUM_COLUMNS) * TILESET_HEIGHT,
                                     TILESET_WIDTH / 2,
                                     TILESET_HEIGHT / 2
-                                )
+                                ),
+                                color: Color.White
                             );
                         }
 
@@ -166,7 +169,8 @@ namespace mgsb
                                     (16 / TILESET_NUM_COLUMNS) * TILESET_HEIGHT,
                                     TILESET_WIDTH / 2,
                                     TILESET_HEIGHT / 2
-                                )
+                                ),
+                                color: Color.White
                             );
                         }
 
@@ -179,7 +183,8 @@ namespace mgsb
                                     (16 / TILESET_NUM_COLUMNS) * TILESET_HEIGHT + TILESET_HEIGHT / 2,
                                     TILESET_WIDTH / 2,
                                     TILESET_HEIGHT / 2
-                                )
+                                ),
+                                color: Color.White
                             );
                         }
 
@@ -192,7 +197,8 @@ namespace mgsb
                                     (16 / TILESET_NUM_COLUMNS) * TILESET_HEIGHT + TILESET_HEIGHT / 2,
                                     TILESET_WIDTH / 2,
                                     TILESET_HEIGHT / 2
-                                )
+                                ),
+                                color: Color.White
                             );
                         }
                     }
