@@ -12,8 +12,8 @@ namespace gemswap
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D background;
-        Texture2D gemTexture;
         Board board;
+        BoardRenderer boardRenderer;
 
         public GemSwap()
         {
@@ -25,6 +25,7 @@ namespace gemswap
             this.IsMouseVisible = true;
 
             this.board = new Board();
+            this.boardRenderer = new BoardRenderer(GraphicsDevice);
         }
 
         protected override void Initialize()
@@ -36,7 +37,7 @@ namespace gemswap
         {
             this.spriteBatch = new SpriteBatch(GraphicsDevice);
             this.background = this.Content.Load<Texture2D>("background");
-            this.gemTexture = this.Content.Load<Texture2D>("gems");
+            this.boardRenderer.LoadContent(this.Content);
         }
 
         protected override void UnloadContent()
@@ -67,30 +68,9 @@ namespace gemswap
                 new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT),
                 Color.White
             );
-            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
-                for (int y = 0; y < Constants.BOARD_HEIGHT; y++) {
-                    int gem = this.board.getCell(x, y);
-                    if (gem == Board.EMPTY) {
-                        continue;
-                    }
-
-                    this.spriteBatch.Draw(
-                        this.gemTexture,
-                        position: new Vector2(
-                            x * Constants.GEM_WIDTH,
-                            y * Constants.GEM_HEIGHT
-                        ),
-                        sourceRectangle: new Rectangle(
-                            gem * Constants.GEM_WIDTH,
-                            0,
-                            Constants.GEM_WIDTH,
-                            Constants.GEM_HEIGHT
-                        ),
-                        color: Color.White
-                    );
-                }
-            }
             this.spriteBatch.End();
+
+            this.boardRenderer.Draw(board);
 
             base.Draw(gameTime);
         }
