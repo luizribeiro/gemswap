@@ -38,11 +38,20 @@ namespace gemswap {
 
         public void Draw(Board board) {
             this.spriteBatch.Begin();
+            this.DrawBackground();
+            this.DrawBoard(board);
+            this.spriteBatch.End();
+        }
+
+        private void DrawBackground() {
             spriteBatch.Draw(
                 this.backgroundTexture,
                 new Vector2(0, 0),
                 Color.Black
             );
+        }
+
+        private void DrawBoard(Board board) {
             for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
                 for (int y = 0; y < Constants.BOARD_HEIGHT; y++) {
                     int gem = board.getCell(x, y);
@@ -66,7 +75,6 @@ namespace gemswap {
                     );
                 }
             }
-            this.spriteBatch.End();
         }
     }
 }
