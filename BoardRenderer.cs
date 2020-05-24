@@ -37,10 +37,29 @@ namespace gemswap {
         }
 
         public void Draw(Board board) {
-            this.spriteBatch.Begin();
+            var s1 = new DepthStencilState {
+                StencilEnable = true,
+                StencilFunction = CompareFunction.Always,
+                StencilPass = StencilOperation.Replace,
+                ReferenceStencil = 1,
+                DepthBufferEnable = false,
+            };
+            var s2 = new DepthStencilState {
+                StencilEnable = true,
+                StencilFunction = CompareFunction.LessEqual,
+                StencilPass = StencilOperation.Keep,
+                ReferenceStencil = 1,
+                DepthBufferEnable = false,
+            };
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, null, null, s1, null, null);
+            this.DrawBackground();
+            spriteBatch.End();
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, null, null, s2, null, null);
             this.DrawBackground();
             this.DrawBoard(board);
-            this.spriteBatch.End();
+            spriteBatch.End();
         }
 
         private void DrawBackground() {

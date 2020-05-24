@@ -17,7 +17,9 @@ namespace gemswap
 
         public GemSwap()
         {
-            this.graphics = new GraphicsDeviceManager(this);
+            this.graphics = new GraphicsDeviceManager(this) {
+                PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8
+            };
             this.graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
             this.graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
             this.graphics.ApplyChanges();
