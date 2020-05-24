@@ -7,6 +7,7 @@ namespace gemswap
         public const int EMPTY = -1;
 
         private int[,] board;
+        private float offset;
 
         public Board()
         {
@@ -26,8 +27,17 @@ namespace gemswap
             }
         }
 
+        public void Update(float ellapsedMilliseconds) {
+            this.offset += (Constants.GEM_HEIGHT * ellapsedMilliseconds)
+                / Constants.BOARD_SPEED_ROW_PER_MS;
+        }
+
         public int getCell(int x, int y) {
             return this.board[x, y];
+        }
+
+        public float getOffset() {
+            return this.offset;
         }
     }
 }

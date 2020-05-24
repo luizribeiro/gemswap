@@ -52,6 +52,8 @@ namespace gemswap {
         }
 
         private void DrawBoard(Board board) {
+            float offset = board.getOffset();
+
             for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
                 for (int y = 0; y < Constants.BOARD_HEIGHT; y++) {
                     int gem = board.getCell(x, y);
@@ -63,7 +65,7 @@ namespace gemswap {
                         this.gemTexture,
                         position: new Vector2(
                             x * Constants.GEM_WIDTH,
-                            y * Constants.GEM_HEIGHT
+                            y * Constants.GEM_HEIGHT - offset
                         ),
                         sourceRectangle: new Rectangle(
                             gem * Constants.GEM_WIDTH,

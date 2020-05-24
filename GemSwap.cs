@@ -55,6 +55,11 @@ namespace gemswap
                 Exit();
             }
 
+            float ellapsedMilliseconds =
+                (float)gameTime.ElapsedGameTime.Milliseconds;
+
+            this.board.Update(ellapsedMilliseconds);
+
             base.Update(gameTime);
         }
 
