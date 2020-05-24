@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace gemswap {
     public class BoardRenderer
@@ -97,6 +98,18 @@ namespace gemswap {
                 }
             }
 
+            float heightLeft = Constants.GEM_HEIGHT - offset;
+            float pxSpeed = Constants.GEM_HEIGHT / Constants.BOARD_SPEED_ROW_PER_MS;
+            float msLeft = heightLeft / pxSpeed;
+            int alpha = msLeft > Constants.ANIMATION_GEM_FADE_IN_MS
+                ? 100
+                : Convert.ToInt32(100.0 + 155.0 * (1.0 - msLeft / Constants.ANIMATION_GEM_FADE_IN_MS));
+            Color upcomingGemColor = new Color(
+                alpha,
+                alpha,
+                alpha,
+                alpha
+            );
             for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
                 int gem = board.getUpcomingCell(x);
 
@@ -112,7 +125,7 @@ namespace gemswap {
                         Constants.GEM_WIDTH,
                         Constants.GEM_HEIGHT
                     ),
-                    color: new Color(100, 100, 100, 100)
+                    color: upcomingGemColor
                 );
             }
         }
