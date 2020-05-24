@@ -1,6 +1,6 @@
-# luizribeiro/mgsb
+# luizribeiro/gemswap
 
-This is my Monogame sandbox.
+This is my gemswap game.
 
 ### Building
 
