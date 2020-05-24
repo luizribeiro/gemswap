@@ -13,6 +13,7 @@ namespace gemswap
         SpriteBatch spriteBatch;
         Texture2D background;
         Texture2D gemTexture;
+        Board board;
 
         public GemSwap()
         {
@@ -22,6 +23,8 @@ namespace gemswap
             graphics.ApplyChanges();
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            this.board = new Board();
         }
 
         protected override void Initialize()
@@ -64,13 +67,18 @@ namespace gemswap
                 new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT),
                 Color.White
             );
-            for (int x = 0; x < 10; x++) {
-                for (int y = 0; y < 10; y++) {
+            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
+                for (int y = 0; y < Constants.BOARD_HEIGHT; y++) {
+                    int gem = this.board.getCell(x, y);
+                    if (gem == Board.EMPTY) {
+                        continue;
+                    }
+
                     spriteBatch.Draw(
                         this.gemTexture,
                         position: new Vector2(x*64, y*64),
                         sourceRectangle: new Rectangle(
-                            (x % Constants.NUM_GEMS) * Constants.GEM_WIDTH,
+                            gem * Constants.GEM_WIDTH,
                             0,
                             Constants.GEM_WIDTH,
                             Constants.GEM_HEIGHT
