@@ -17,12 +17,12 @@ namespace gemswap
 
         public GemSwap()
         {
-            graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
-            graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
-            graphics.ApplyChanges();
-            Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            this.graphics = new GraphicsDeviceManager(this);
+            this.graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
+            this.graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
+            this.graphics.ApplyChanges();
+            this.Content.RootDirectory = "Content";
+            this.IsMouseVisible = true;
 
             this.board = new Board();
         }
@@ -34,14 +34,14 @@ namespace gemswap
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            background = this.Content.Load<Texture2D>("background");
-            gemTexture = this.Content.Load<Texture2D>("gems");
+            this.spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.background = this.Content.Load<Texture2D>("background");
+            this.gemTexture = this.Content.Load<Texture2D>("gems");
         }
 
         protected override void UnloadContent()
         {
-            Content.Unload();
+            this.Content.Unload();
         }
 
         protected override void Update(GameTime gameTime)
@@ -59,11 +59,11 @@ namespace gemswap
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(new Color(0, 0, 0));
+            this.GraphicsDevice.Clear(new Color(0, 0, 0));
 
-            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            spriteBatch.Draw(
-                background,
+            this.spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            this.spriteBatch.Draw(
+                this.background,
                 new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT),
                 Color.White
             );
@@ -74,7 +74,7 @@ namespace gemswap
                         continue;
                     }
 
-                    spriteBatch.Draw(
+                    this.spriteBatch.Draw(
                         this.gemTexture,
                         position: new Vector2(
                             x * Constants.GEM_WIDTH,
@@ -90,7 +90,7 @@ namespace gemswap
                     );
                 }
             }
-            spriteBatch.End();
+            this.spriteBatch.End();
 
             base.Draw(gameTime);
         }
