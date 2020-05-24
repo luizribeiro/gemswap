@@ -136,7 +136,12 @@ namespace gemswap {
         private void DrawCursor(Board board) {
             spriteBatch.Draw(
                 this.cursorTexture,
-                new Vector2(- Constants.CURSOR_OFFSET_PX, - Constants.CURSOR_OFFSET_PX),
+                new Vector2(
+                    board.getCursorX() * Constants.GEM_WIDTH
+                        - Constants.CURSOR_OFFSET_PX,
+                    board.getCursorY() * Constants.GEM_HEIGHT
+                        - Constants.CURSOR_OFFSET_PX - board.getOffset()
+                ),
                 Color.White
             );
         }

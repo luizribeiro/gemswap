@@ -9,10 +9,15 @@ namespace gemswap
         private int[,] board;
         private int[] upcomingRow;
         private float offset;
+        private int cursorX;
+        private int cursorY;
 
         public Board()
         {
             this.board = new int[Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT];
+
+            this.cursorX = 0;
+            this.cursorY = Constants.BOARD_HEIGHT - 1;
 
             Random random = new Random();
             for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
@@ -41,6 +46,8 @@ namespace gemswap
         }
 
         private void AddNewRow() {
+            this.cursorY--;
+
             for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
                 for (int y = 0; y < Constants.BOARD_HEIGHT - 1; y++) {
                     this.board[x, y] = this.board[x, y + 1];
@@ -73,6 +80,14 @@ namespace gemswap
 
         public float getOffset() {
             return this.offset;
+        }
+
+        public int getCursorX() {
+            return this.cursorX;
+        }
+
+        public int getCursorY() {
+            return this.cursorY;
         }
     }
 }
