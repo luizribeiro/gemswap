@@ -15,5 +15,7 @@ namespace gemswap
         public const int GEM_WIDTH = 64;
         public const int GEM_HEIGHT = 64;
         public const int NUM_GEMS = 7;
+
+        public const int CURSOR_OFFSET_PX = 8;
     }
 }

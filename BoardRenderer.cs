@@ -10,6 +10,7 @@ namespace gemswap {
         SpriteBatch spriteBatch;
         Texture2D backgroundTexture;
         Texture2D gemTexture;
+        Texture2D cursorTexture;
 
         public BoardRenderer(GraphicsDevice graphicsDevice) {
             this.graphicsDevice = graphicsDevice;
@@ -18,6 +19,7 @@ namespace gemswap {
         public void LoadContent(ContentManager contentManager) {
             this.spriteBatch = new SpriteBatch(this.graphicsDevice);
             this.gemTexture = contentManager.Load<Texture2D>("gems");
+            this.cursorTexture = contentManager.Load<Texture2D>("cursor");
 
             int backgroundWidth = Constants.BOARD_WIDTH * Constants.GEM_WIDTH;
             int backgroundHeight =
@@ -60,6 +62,7 @@ namespace gemswap {
             spriteBatch.Begin(SpriteSortMode.Immediate, null, null, s2, null, null);
             this.DrawBackground();
             this.DrawBoard(board);
+            this.DrawCursor(board);
             spriteBatch.End();
         }
 
@@ -128,6 +131,14 @@ namespace gemswap {
                     color: upcomingGemColor
                 );
             }
+        }
+
+        private void DrawCursor(Board board) {
+            spriteBatch.Draw(
+                this.cursorTexture,
+                new Vector2(- Constants.CURSOR_OFFSET_PX, - Constants.CURSOR_OFFSET_PX),
+                Color.White
+            );
         }
     }
 }
