@@ -7,6 +7,7 @@ namespace gemswap
         public const int EMPTY = -1;
 
         private int[,] board;
+        private int[] upcomingRow;
         private float offset;
 
         public Board()
@@ -25,6 +26,8 @@ namespace gemswap
                         : Board.EMPTY;
                 }
             }
+
+            this.upcomingRow = this.BuildUpcomingRow();
         }
 
         public void Update(float ellapsedMilliseconds) {
@@ -44,15 +47,28 @@ namespace gemswap
                 }
             }
 
+            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
+                this.board[x, Constants.BOARD_HEIGHT - 1] = this.upcomingRow[x];
+            }
+
+            this.upcomingRow = BuildUpcomingRow();
+        }
+
+        private int[] BuildUpcomingRow() {
+            int[] upcomingRow = new int[Constants.BOARD_WIDTH];
             Random random = new Random();
             for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
-                this.board[x, Constants.BOARD_HEIGHT - 1] =
-                    random.Next(0, Constants.NUM_GEMS);
+                upcomingRow[x] = random.Next(0, Constants.NUM_GEMS);
             }
+            return upcomingRow;
         }
 
         public int getCell(int x, int y) {
             return this.board[x, y];
+        }
+
+        public int getUpcomingCell(int x) {
+            return this.upcomingRow[x];
         }
 
         public float getOffset() {

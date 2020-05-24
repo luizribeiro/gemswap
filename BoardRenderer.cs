@@ -77,6 +77,25 @@ namespace gemswap {
                     );
                 }
             }
+
+            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
+                int gem = board.getUpcomingCell(x);
+
+                this.spriteBatch.Draw(
+                    this.gemTexture,
+                    position: new Vector2(
+                        x * Constants.GEM_WIDTH,
+                        Constants.BOARD_HEIGHT * Constants.GEM_HEIGHT - offset
+                    ),
+                    sourceRectangle: new Rectangle(
+                        gem * Constants.GEM_WIDTH,
+                        0,
+                        Constants.GEM_WIDTH,
+                        Constants.GEM_HEIGHT
+                    ),
+                    color: new Color(100, 100, 100, 100)
+                );
+            }
         }
     }
 }
