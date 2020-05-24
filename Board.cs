@@ -89,5 +89,31 @@ namespace gemswap
         public int getCursorY() {
             return this.cursorY;
         }
+
+        public void MoveCursor(int dx, int dy) {
+            this.cursorX += dx;
+            this.cursorY += dy;
+
+            if (this.cursorX < 0) {
+                this.cursorX = 0;
+            }
+            if (this.cursorX > Constants.BOARD_WIDTH - 2) {
+                this.cursorX = Constants.BOARD_WIDTH - 2;
+            }
+
+            if (this.cursorY < 0) {
+                this.cursorY = 0;
+            }
+            if (this.cursorY > Constants.BOARD_HEIGHT - 1) {
+                this.cursorY = Constants.BOARD_HEIGHT - 1;
+            }
+        }
+
+        public void Swap() {
+            int temp = this.board[this.cursorX, this.cursorY];
+            this.board[this.cursorX, this.cursorY]
+                = this.board[this.cursorX + 1, this.cursorY];
+            this.board[this.cursorX + 1, this.cursorY] = temp;
+        }
     }
 }

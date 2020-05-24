@@ -14,6 +14,7 @@ namespace gemswap
         Texture2D background;
         Board board;
         BoardRenderer boardRenderer;
+        GamePadState previousGamePadState;
 
         public GemSwap()
         {
@@ -32,6 +33,7 @@ namespace gemswap
 
         protected override void Initialize()
         {
+            this.previousGamePadState = GamePad.GetState(PlayerIndex.One);
             base.Initialize();
         }
 
@@ -57,10 +59,43 @@ namespace gemswap
                 Exit();
             }
 
+            if (
+                gamePadState1.DPad.Left == ButtonState.Pressed
+                && gamePadState1.DPad.Left != previousGamePadState.DPad.Left
+            ) {
+                this.board.MoveCursor(dx: -1, dy: 0);
+            }
+            if (
+                gamePadState1.DPad.Right == ButtonState.Pressed
+                && gamePadState1.DPad.Right != previousGamePadState.DPad.Right
+            ) {
+                this.board.MoveCursor(dx: +1, dy: 0);
+            }
+            if (
+                gamePadState1.DPad.Down == ButtonState.Pressed
+                && gamePadState1.DPad.Down != previousGamePadState.DPad.Down
+            ) {
+                this.board.MoveCursor(dx: 0, dy: +1);
+            }
+            if (
+                gamePadState1.DPad.Up == ButtonState.Pressed
+                && gamePadState1.DPad.Up != previousGamePadState.DPad.Up
+            ) {
+                this.board.MoveCursor(dx: 0, dy: -1);
+            }
+            if (
+                gamePadState1.Buttons.A == ButtonState.Pressed
+                && gamePadState1.Buttons.A != previousGamePadState.Buttons.A
+            ) {
+                this.board.Swap();
+            }
+
             float ellapsedMilliseconds =
                 (float)gameTime.ElapsedGameTime.Milliseconds;
 
             this.board.Update(ellapsedMilliseconds);
+
+            this.previousGamePadState = gamePadState1;
 
             base.Update(gameTime);
         }
