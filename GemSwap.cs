@@ -9,15 +9,10 @@ namespace gemswap
         const int SCREEN_WIDTH = 1920;
         const int SCREEN_HEIGHT = 1080;
 
-        const int GEM_WIDTH = 64;
-        const int GEM_HEIGHT = 64;
-        const int NUM_GEMS = 7;
-
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D background;
         Texture2D gemTexture;
-        Board board;
 
         public GemSwap()
         {
@@ -75,10 +70,10 @@ namespace gemswap
                         this.gemTexture,
                         position: new Vector2(x*64, y*64),
                         sourceRectangle: new Rectangle(
-                            (x % NUM_GEMS) * GEM_WIDTH,
+                            (x % Constants.NUM_GEMS) * Constants.GEM_WIDTH,
                             0,
-                            GEM_WIDTH,
-                            GEM_HEIGHT
+                            Constants.GEM_WIDTH,
+                            Constants.GEM_HEIGHT
                         ),
                         color: Color.White
                     );
