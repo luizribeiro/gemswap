@@ -76,7 +76,10 @@ namespace gemswap
 
                     spriteBatch.Draw(
                         this.gemTexture,
-                        position: new Vector2(x*64, y*64),
+                        position: new Vector2(
+                            x * Constants.GEM_WIDTH,
+                            y * Constants.GEM_HEIGHT
+                        ),
                         sourceRectangle: new Rectangle(
                             gem * Constants.GEM_WIDTH,
                             0,
