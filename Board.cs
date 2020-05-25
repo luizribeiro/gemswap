@@ -7,6 +7,7 @@ namespace gemswap
         public const int EMPTY = -1;
 
         private int[,] board;
+        private bool[,] isLocked;
         private int[] upcomingRow;
         private float offset;
         private int cursorX;
@@ -19,6 +20,10 @@ namespace gemswap
         public Board()
         {
             this.board = new int[Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT];
+            this.isLocked = new bool[
+                Constants.BOARD_WIDTH,
+                Constants.BOARD_HEIGHT
+            ];
 
             this.cursorX = 0;
             this.cursorY = Constants.BOARD_HEIGHT - 1;
@@ -33,6 +38,7 @@ namespace gemswap
                     this.board[x, y] = y > Constants.BOARD_HEIGHT - height
                         ? random.Next(0, Constants.NUM_GEMS)
                         : Board.EMPTY;
+                    this.isLocked[x, y] = false;
                 }
             }
 
@@ -139,12 +145,17 @@ namespace gemswap
         }
 
         public void Swap() {
-            if (this.IsSwapping()) {
+            int x = this.cursorX;
+            int y = this.cursorY;
+
+            if (this.isLocked[x, y] || this.isLocked[x + 1, y]) {
                 return;
             }
 
-            int x = this.swapCursorX = cursorX;
-            int y = this.swapCursorY = cursorY;
+            this.swapCursorX = x;
+            this.swapCursorY = y;
+            this.isLocked[x, y] = true;
+            this.isLocked[x + 1, y] = true;
 
             this.swapTimer = new Timer(
                 durationMilliseconds: Constants.SWAP_DURATION_MS,
@@ -153,6 +164,9 @@ namespace gemswap
                     int temp = this.board[x, y];
                     this.board[x, y] = this.board[x + 1, y];
                     this.board[x + 1, y] = temp;
+
+                    this.isLocked[x, y] = false;
+                    this.isLocked[x + 1, y] = false;
                 }
             );
 
