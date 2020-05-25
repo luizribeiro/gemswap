@@ -132,5 +132,26 @@ namespace gemswap.tests
 
             AssertBoard(finalBoard, board);
         }
+
+        [Test]
+        public void TestFallingSingleGem() {
+            Config config = this.SetupConfig(boardWidth: 1, boardHeight: 2);
+            Board board = this.SetupBoard(config, new[,] {{1}, {0}});
+
+            // trigger the fall
+            this.Update(board, 0);
+
+            // check on it midway through
+            this.Update(board, config.SwapDurationMs / 2.0f);
+            AssertBoard(new[,] {{1}, {0}}, board);
+            Assert.AreEqual(
+                config.GemHeight / 2.0f,
+                board.GetCellOffsetY(0, 0)
+            );
+
+            // wait for it to finish
+            this.Update(board, config.SwapDurationMs / 2.0f);
+            AssertBoard(new[,] {{0}, {1}}, board);
+        }
     }
 }
