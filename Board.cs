@@ -227,11 +227,22 @@ namespace gemswap
             for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
                 for (int y = 0; y < Constants.BOARD_HEIGHT - 1; y++) {
                     this.board[x, y] = this.board[x, y + 1];
+                    this.isLocked[x, y] = this.isLocked[x, y + 1];
+                    this.movimentTimer[x, y] = this.movimentTimer[x, y + 1];
+                    this.fadeOutTimer[x, y] = this.fadeOutTimer[x, y + 1];
+                    this.boardDX[x, y] = this.boardDX[x, y + 1];
+                    this.boardDY[x, y] = this.boardDY[x, y + 1];
                 }
             }
 
             for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
-                this.board[x, Constants.BOARD_HEIGHT - 1] = this.upcomingRow[x];
+                int y = Constants.BOARD_HEIGHT - 1;
+                this.board[x, y] = this.upcomingRow[x];
+                this.isLocked[x, y] = false;
+                this.movimentTimer[x, y] = null;
+                this.fadeOutTimer[x, y] = null;
+                this.boardDX[x, y] = 0;
+                this.boardDY[x, y] = 0;
             }
 
             this.upcomingRow = BuildUpcomingRow();
