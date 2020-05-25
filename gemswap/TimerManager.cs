@@ -27,6 +27,12 @@ namespace gemswap {
             foreach (Timer timer in TimerManager.timers) {
                 timer.Update(ellapsedMilliseconds);
             }
+
+            TimerManager.timers.RemoveAll(t => !t.IsActive());
+        }
+
+        public static int GetNumTimers() {
+            return TimerManager.timers.Count;
         }
 
         public static void ClearAll() {

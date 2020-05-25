@@ -29,7 +29,7 @@ namespace gemswap {
             }
 
             this.currentTime += ellapsedMilliseconds;
-            if (this.currentTime < this.durationMilliseconds) {
+            if (this.Progress() < 1.0f) {
                 return;
             }
 
