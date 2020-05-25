@@ -25,6 +25,8 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
   * Fix bug where 5 piece L shaped combos are not scoring
 * **Mid-pri**
   * Fix falling animation that looks wonky for whatever reason
+  * Add support for two or more players
+  * Add support for keyboard
 * **Low-pri**
   * Center game on the screen
   * Add animation to cursor movement
