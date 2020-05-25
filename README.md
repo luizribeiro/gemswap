@@ -29,6 +29,7 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
   * Add support for two or more players
   * Add support for keyboard
   * Integrate with StyleCopAnalyzers
+  * Integrate with Travis or AppVeyor
 * **Low-pri**
   * Center game on the screen
   * Add animation to cursor movement
