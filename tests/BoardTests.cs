@@ -271,7 +271,7 @@ namespace gemswap.tests
             this.Update(board, config.EliminationDurationMs);
             AssertBoard(new[,] {
                 {2, 0, 2},
-                {0, 0, 0}, // FIXME: 1, 0, 1
+                {1, 0, 1},
                 {2, 1, 2},
             }, board);
         }

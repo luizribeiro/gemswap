@@ -87,8 +87,6 @@ namespace gemswap
                 this.AddNewRow();
             }
 
-            EliminateContiguous();
-
             for (int x = 0; x < config.BoardWidth; x++) {
                 for (int y = config.BoardHeight - 1; y >= 0; y--) {
                     if (this.isLocked[x, y]) {
@@ -100,6 +98,8 @@ namespace gemswap
                     }
                 }
             }
+
+            EliminateContiguous();
         }
 
         private void EliminateContiguous() {
