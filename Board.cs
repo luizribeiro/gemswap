@@ -61,6 +61,52 @@ namespace gemswap
                 this.offset = 0.0f;
                 this.AddNewRow();
             }
+
+            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
+                for (int y = Constants.BOARD_HEIGHT - 1; y >= 0; y--) {
+                    if (this.isLocked[x, y]) {
+                        continue;
+                    }
+                    if (this.board[x, y] == Board.EMPTY) {
+                        FallAllAbove(x, y);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void FallAllAbove(int x, int origY) {
+            for (int y = origY - 1; y >= 0; y--) {
+                int gem = this.board[x, y];
+                if (gem == Board.EMPTY) {
+                    continue;
+                }
+
+                int X = x, Y = y;
+
+                // fall x, y into x, y + 1
+                this.isLocked[x, y] = true;
+                this.isLocked[x, y + 1] = true;
+                this.boardDX[x, y] =  0;
+                this.boardDY[x, y] = +1;
+
+                Timer fallTimer = new Timer(
+                    durationMilliseconds: Constants.SWAP_DURATION_MS,
+                    delayMilliseconds: 0.0f,
+                    onDoneCallback: () => {
+                        this.board[X, Y] = Board.EMPTY;
+                        this.board[X, Y + 1] = gem;
+
+                        this.timerBoard[X, Y] = null;
+
+                        this.isLocked[X, Y] = false;
+                        this.isLocked[X, Y + 1] = false;
+                    }
+                );
+                TimerManager.AddTimer(fallTimer);
+
+                this.timerBoard[x, y] = fallTimer;
+            }
         }
 
         private void AddNewRow() {
