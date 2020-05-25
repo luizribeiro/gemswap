@@ -5,6 +5,7 @@ This is my gemswap game.
 ### Building
 
 ```
+$ nuget restore
 $ msbuild
 $ dotnet run
 ```
