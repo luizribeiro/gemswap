@@ -175,17 +175,15 @@ namespace gemswap
         }
 
         private void EliminateCell(int x, int y) {
-            int X = x, Y = y;
-            this.isLocked[X, Y] = true;
-            Y += this.boardVerticalOffset;
-            Timer timer = TimerManager.AddTimer(
+            this.isLocked[x, y] = true;
+            Timer timer = this.CreateCellTimer(
+                x,
+                y,
                 durationMilliseconds: config.SwapDurationMs,
-                onDoneCallback: () => {
-                    Y -= this.boardVerticalOffset;
-
-                    this.board[X, Y] = Board.EMPTY;
-                    this.isLocked[X, Y] = false;
-                    this.fadeOutTimer[X, Y] = null;
+                onDoneCallback: (x, y) => {
+                    this.board[x, y] = Board.EMPTY;
+                    this.isLocked[x, y] = false;
+                    this.fadeOutTimer[x, y] = null;
                 }
             );
             this.fadeOutTimer[x, y] = timer;
@@ -204,19 +202,18 @@ namespace gemswap
                 this.boardDX[x, y] =  0;
                 this.boardDY[x, y] = +1;
 
-                int X = x, Y = y + this.boardVerticalOffset;
-                Timer fallTimer = TimerManager.AddTimer(
+                Timer fallTimer = this.CreateCellTimer(
+                    x,
+                    y,
                     durationMilliseconds: config.SwapDurationMs,
-                    onDoneCallback: () => {
-                        Y -= this.boardVerticalOffset;
+                    onDoneCallback: (x, y) => {
+                        this.board[x, y] = Board.EMPTY;
+                        this.board[x, y + 1] = gem;
 
-                        this.board[X, Y] = Board.EMPTY;
-                        this.board[X, Y + 1] = gem;
+                        this.movimentTimer[x, y] = null;
 
-                        this.movimentTimer[X, Y] = null;
-
-                        this.isLocked[X, Y] = false;
-                        this.isLocked[X, Y + 1] = false;
+                        this.isLocked[x, y] = false;
+                        this.isLocked[x, y + 1] = false;
                     }
                 );
 
@@ -335,25 +332,40 @@ namespace gemswap
             this.boardDX[x + 1, y] = -1;
             this.boardDY[x + 1, y] =  0;
 
-            int X = x, Y = y + this.boardVerticalOffset;
-            Timer swapTimer = TimerManager.AddTimer(
+            Timer swapTimer = this.CreateCellTimer(
+                x,
+                y,
                 durationMilliseconds: config.SwapDurationMs,
-                onDoneCallback: () => {
-                    Y -= this.boardVerticalOffset;
+                onDoneCallback: (x, y) => {
+                    this.board[x, y] = rightGem;
+                    this.board[x + 1, y] = leftGem;
 
-                    this.board[X, Y] = rightGem;
-                    this.board[X + 1, Y] = leftGem;
+                    this.movimentTimer[x, y] = null;
+                    this.movimentTimer[x + 1, y] = null;
 
-                    this.movimentTimer[X, Y] = null;
-                    this.movimentTimer[x + 1, Y] = null;
-
-                    this.isLocked[X, Y] = false;
-                    this.isLocked[x + 1, Y] = false;
+                    this.isLocked[x, y] = false;
+                    this.isLocked[x + 1, y] = false;
                 }
             );
 
             this.movimentTimer[x, y] = swapTimer;
             this.movimentTimer[x + 1, y] = swapTimer;
+        }
+
+        private Timer CreateCellTimer(
+            int x,
+            int y,
+            float durationMilliseconds,
+            Action<int, int> onDoneCallback
+        ) {
+            int X = x, Y = y + this.boardVerticalOffset;
+            return TimerManager.AddTimer(
+                durationMilliseconds: durationMilliseconds,
+                onDoneCallback: () => onDoneCallback(
+                    X,
+                    Y - this.boardVerticalOffset
+                )
+            );
         }
     }
 }
