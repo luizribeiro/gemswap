@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace gemswap {
@@ -6,6 +7,20 @@ namespace gemswap {
 
         public static void AddTimer(Timer timer) {
             TimerManager.timers.Add(timer);
+        }
+
+        public static Timer AddTimer(
+            float durationMilliseconds,
+            float delayMilliseconds = 0.0f,
+            Action? onDoneCallback = null
+        ) {
+            Timer timer = new Timer(
+                durationMilliseconds: durationMilliseconds,
+                delayMilliseconds: delayMilliseconds,
+                onDoneCallback: onDoneCallback
+            );
+            TimerManager.AddTimer(timer);
+            return timer;
         }
 
         public static void Update(float ellapsedMilliseconds) {

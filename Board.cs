@@ -174,9 +174,8 @@ namespace gemswap
         private void EliminateCell(int x, int y) {
             int X = x, Y = y;
             this.isLocked[X, Y] = true;
-            Timer timer = new Timer(
+            Timer timer = TimerManager.AddTimer(
                 durationMilliseconds: Constants.SWAP_DURATION_MS,
-                delayMilliseconds: 0.0f,
                 onDoneCallback: () => {
                     this.board[X, Y] = Board.EMPTY;
                     this.isLocked[X, Y] = false;
@@ -184,7 +183,6 @@ namespace gemswap
                 }
             );
             this.fadeOutTimer[x, y] = timer;
-            TimerManager.AddTimer(timer);
         }
 
         private void FallAllAbove(int x, int origY) {
@@ -202,9 +200,8 @@ namespace gemswap
                 this.boardDX[x, y] =  0;
                 this.boardDY[x, y] = +1;
 
-                Timer fallTimer = new Timer(
+                Timer fallTimer = TimerManager.AddTimer(
                     durationMilliseconds: Constants.SWAP_DURATION_MS,
-                    delayMilliseconds: 0.0f,
                     onDoneCallback: () => {
                         this.board[X, Y] = Board.EMPTY;
                         this.board[X, Y + 1] = gem;
@@ -215,7 +212,6 @@ namespace gemswap
                         this.isLocked[X, Y + 1] = false;
                     }
                 );
-                TimerManager.AddTimer(fallTimer);
 
                 this.movimentTimer[x, y] = fallTimer;
             }
@@ -331,9 +327,8 @@ namespace gemswap
             this.boardDX[x + 1, y] = -1;
             this.boardDY[x + 1, y] =  0;
 
-            Timer swapTimer = new Timer(
+            Timer swapTimer = TimerManager.AddTimer(
                 durationMilliseconds: Constants.SWAP_DURATION_MS,
-                delayMilliseconds: 0.0f,
                 onDoneCallback: () => {
                     // FIXME: there is a bug here where x, y may be outdated
                     // (in case a new row is added to the board before setting
@@ -351,8 +346,6 @@ namespace gemswap
 
             this.movimentTimer[x, y] = swapTimer;
             this.movimentTimer[x + 1, y] = swapTimer;
-
-            TimerManager.AddTimer(swapTimer);
         }
     }
 }
