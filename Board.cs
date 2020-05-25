@@ -11,6 +11,7 @@ namespace gemswap
         private int[,] boardDY;
         private bool[,] isLocked;
         private Timer[,] movimentTimer;
+        private Timer[,] fadeOutTimer;
         private int[] upcomingRow;
         private float offset;
         private int cursorX;
@@ -26,6 +27,10 @@ namespace gemswap
                 Constants.BOARD_HEIGHT
             ];
             this.movimentTimer = new Timer[
+                Constants.BOARD_WIDTH,
+                Constants.BOARD_HEIGHT
+            ];
+            this.fadeOutTimer = new Timer[
                 Constants.BOARD_WIDTH,
                 Constants.BOARD_HEIGHT
             ];
@@ -45,6 +50,7 @@ namespace gemswap
                         : Board.EMPTY;
                     this.isLocked[x, y] = false;
                     this.movimentTimer[x, y] = null;
+                    this.fadeOutTimer[x, y] = null;
                     this.boardDX[x, y] = 0;
                     this.boardDY[x, y] = 0;
                 }
@@ -138,15 +144,15 @@ namespace gemswap
                 if (this.board[x, y] != this.board[xx, y]) {
                     break;
                 }
-                this.board[x, y] = Board.EMPTY;
+                EliminateCell(x, y);
             }
             for (int x = xx + 1; x < Constants.BOARD_WIDTH; x--) {
                 if (this.board[x, y] != this.board[xx, y]) {
                     break;
                 }
-                this.board[x, y] = Board.EMPTY;
+                EliminateCell(x, y);
             }
-            this.board[xx, y] = Board.EMPTY;
+            EliminateCell(xx, y);
         }
 
         private void EliminateVertical(int x, int yy) {
@@ -154,15 +160,30 @@ namespace gemswap
                 if (this.board[x, y] != this.board[x, yy]) {
                     break;
                 }
-                this.board[x, y] = Board.EMPTY;
+                EliminateCell(x, y);
             }
             for (int y = yy + 1; y < Constants.BOARD_HEIGHT; y--) {
                 if (this.board[x, y] != this.board[x, yy]) {
                     break;
                 }
-                this.board[x, y] = Board.EMPTY;
+                EliminateCell(x, y);
             }
-            this.board[x, yy] = Board.EMPTY;
+            EliminateCell(x, yy);
+        }
+
+        private void EliminateCell(int x, int y) {
+            int X = x, Y = y;
+            this.isLocked[X, Y] = true;
+            Timer timer = new Timer(
+                durationMilliseconds: Constants.SWAP_DURATION_MS,
+                delayMilliseconds: 0.0f,
+                onDoneCallback: () => {
+                    this.board[X, Y] = Board.EMPTY;
+                    this.isLocked[X, Y] = false;
+                }
+            );
+            this.fadeOutTimer[x, y] = timer;
+            TimerManager.AddTimer(timer);
         }
 
         private void FallAllAbove(int x, int origY) {
