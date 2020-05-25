@@ -30,3 +30,5 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
   * Add animation to cursor movement
   * Prevent cursor from going above all rows
   * Delete old, inactive timers
+  * Different animation duration for each action (swapping, falling,
+    disappearing, etc)
