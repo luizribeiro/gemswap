@@ -33,7 +33,6 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
 * **High-pri**
   * Clean up multiple matrices used for the board (maybe into a single one?)
 * **Mid-pri**
-  * Fix falling animation that looks wonky for whatever reason
   * Add support for two or more players
   * Add support for keyboard
   * Integrate with StyleCopAnalyzers

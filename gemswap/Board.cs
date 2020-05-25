@@ -94,7 +94,6 @@ namespace gemswap
                     }
                     if (this.board[x, y] == Board.EMPTY) {
                         FallAllAbove(x, y);
-                        break;
                     }
                 }
             }
@@ -193,7 +192,7 @@ namespace gemswap
             for (int y = origY - 1; y >= 0; y--) {
                 int gem = this.board[x, y];
                 if (gem == Board.EMPTY) {
-                    continue;
+                    break;
                 }
 
                 // fall x, y into x, y + 1

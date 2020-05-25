@@ -275,5 +275,55 @@ namespace gemswap.tests
                 {2, 1, 2},
             }, board);
         }
+
+        [Test]
+        public void TestFallingAnimation() {
+            Config config = this.SetupConfig(boardWidth: 1, boardHeight: 4);
+            Board board = this.SetupBoard(
+                config,
+                board: new[,] {
+                    {2},
+                    {1},
+                    {1},
+                    {1},
+                }
+            );
+
+            this.Update(board, 0);
+            this.Update(board, config.EliminationDurationMs);
+            AssertBoard(new[,] {
+                {2},
+                {0},
+                {0},
+                {0},
+            }, board);
+
+            // half-way through the fall
+            this.Update(board, 0);
+            this.Update(board, config.FallDurationMs / 2.0f);
+            AssertBoard(new[,] {
+                {2},
+                {0},
+                {0},
+                {0},
+            }, board);
+            Assert.AreEqual(1, board.getCell(0, 0));
+            Assert.AreEqual(
+                config.GemHeight * 0.5f,
+                board.GetCellOffsetY(0, 0)
+            );
+
+            // once done falling
+            this.Update(board, 0);
+            this.Update(board, config.FallDurationMs / 2.0f);
+            AssertBoard(new[,] {
+                {0},
+                {2},
+                {0},
+                {0},
+            }, board);
+            Assert.AreEqual(1, board.getCell(0, 1));
+            Assert.AreEqual(0.0f, board.GetCellOffsetY(0, 1));
+        }
     }
 }
