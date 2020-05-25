@@ -149,7 +149,7 @@ namespace gemswap
             this.swapTimer = new Timer(
                 durationMilliseconds: Constants.SWAP_DURATION_MS,
                 delayMilliseconds: 0.0f,
-                callback: () => {
+                onDoneCallback: () => {
                     int temp = this.board[x, y];
                     this.board[x, y] = this.board[x + 1, y];
                     this.board[x + 1, y] = temp;

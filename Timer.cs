@@ -8,16 +8,16 @@ namespace gemswap {
         float delayMilliseconds;
         float durationMilliseconds;
 
-        Action callback;
+        Action onDoneCallback;
 
         public Timer(
             float durationMilliseconds,
             float delayMilliseconds = 0.0f,
-            Action callback = null
+            Action onDoneCallback = null
         ) {
             this.durationMilliseconds = durationMilliseconds;
             this.delayMilliseconds = delayMilliseconds;
-            this.callback = callback;
+            this.onDoneCallback = onDoneCallback;
 
             this.isActive = true;
             this.currentTime = 0.0f;
@@ -34,8 +34,8 @@ namespace gemswap {
             }
 
             this.isActive = false;
-            if (this.callback != null) {
-                this.callback();
+            if (this.onDoneCallback != null) {
+                this.onDoneCallback();
             }
         }
 
