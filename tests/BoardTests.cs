@@ -19,7 +19,11 @@ namespace gemswap.tests
             return mock.Object;
         }
 
-        private Board SetupBoard(Config config, int[,] board) {
+        private Board SetupBoard(
+            Config config,
+            int[,] board,
+            int[]? upcomingRow = null
+        ) {
             int width = board.GetLength(1);
             int height = board.GetLength(0);
             Assert.AreEqual(config.BoardHeight, height);
@@ -32,7 +36,16 @@ namespace gemswap.tests
                 }
             }
 
-            return new Board(config, rotatedBoard);
+            if (upcomingRow == null) {
+                return new Board(config, rotatedBoard);
+            }
+
+            int[] newUpcomingRow = new int[width];
+            for (int x = 0; x < width; x++) {
+                newUpcomingRow[x] = upcomingRow[x] - 1;
+            }
+
+            return new Board(config, rotatedBoard, newUpcomingRow);
         }
 
         private void Update(Board board, float ellapsedMilliseconds) {
@@ -164,6 +177,29 @@ namespace gemswap.tests
             // wait for it to finish
             this.Update(board, config.SwapDurationMs / 2.0f);
             AssertBoard(new[,] {{0}, {1}}, board);
+        }
+
+        [Test]
+        public void TestScrollingUp() {
+            Config config = this.SetupConfig(boardWidth: 2, boardHeight: 2);
+            Board board = this.SetupBoard(
+                config,
+                board: new[,] {
+                    {0, 0},
+                    {1, 2},
+                },
+                upcomingRow: new[] {3, 4}
+            );
+            Assert.AreEqual(board.getCursorX(), 0);
+            Assert.AreEqual(board.getCursorY(), 1);
+
+            this.Update(board, config.BoardSpeedRowPermMs);
+            AssertBoard(new[,] {
+                {1, 2},
+                {3, 4},
+            }, board);
+            Assert.AreEqual(board.getCursorX(), 0);
+            Assert.AreEqual(board.getCursorY(), 0);
         }
     }
 }

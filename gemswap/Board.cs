@@ -68,6 +68,14 @@ namespace gemswap
             this.board = board;
         }
 
+        public Board(
+            Config config,
+            int[,] board,
+            int[] upcomingRow
+        ) : this(config, board) {
+            this.upcomingRow = upcomingRow;
+        }
+
         public void Update(float ellapsedMilliseconds) {
             this.offset += (config.GemHeight * ellapsedMilliseconds)
                 / config.BoardSpeedRowPermMs;
