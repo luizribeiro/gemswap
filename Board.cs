@@ -7,20 +7,25 @@ namespace gemswap
         public const int EMPTY = -1;
 
         private int[,] board;
+        private int[,] boardDX;
+        private int[,] boardDY;
         private bool[,] isLocked;
+        private Timer[,] timerBoard;
         private int[] upcomingRow;
         private float offset;
         private int cursorX;
         private int cursorY;
-        private int swapCursorX;
-        private int swapCursorY;
-
-        private Timer swapTimer;
 
         public Board()
         {
             this.board = new int[Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT];
+            this.boardDX = new int[Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT];
+            this.boardDY = new int[Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT];
             this.isLocked = new bool[
+                Constants.BOARD_WIDTH,
+                Constants.BOARD_HEIGHT
+            ];
+            this.timerBoard = new Timer[
                 Constants.BOARD_WIDTH,
                 Constants.BOARD_HEIGHT
             ];
@@ -39,6 +44,9 @@ namespace gemswap
                         ? random.Next(0, Constants.NUM_GEMS)
                         : Board.EMPTY;
                     this.isLocked[x, y] = false;
+                    this.timerBoard[x, y] = null;
+                    this.boardDX[x, y] = 0;
+                    this.boardDY[x, y] = 0;
                 }
             }
 
@@ -119,29 +127,14 @@ namespace gemswap
             }
         }
 
-        private bool IsSwapping() {
-            return this.swapTimer != null && this.swapTimer.IsActive();
+        public float GetCellOffsetX(int x, int y) {
+            return (this.timerBoard[x, y]?.Progress() ?? 0.0f)
+                * this.boardDX[x, y] * Constants.GEM_WIDTH;
         }
 
-        public float? GetSwapProgress() {
-            if (!this.IsSwapping()) {
-                return null;
-            }
-            return this.swapTimer.Progress();
-        }
-
-        public int? GetSwapCursorX() {
-            if (!this.IsSwapping()) {
-                return null;
-            }
-            return this.swapCursorX;
-        }
-
-        public int? GetSwapCursorY() {
-            if (!this.IsSwapping()) {
-                return null;
-            }
-            return this.swapCursorY;
+        public float GetCellOffsetY(int x, int y) {
+            return (this.timerBoard[x, y]?.Progress() ?? 0.0f)
+                * this.boardDY[x, y] * Constants.GEM_HEIGHT;
         }
 
         public void Swap() {
@@ -152,25 +145,36 @@ namespace gemswap
                 return;
             }
 
-            this.swapCursorX = x;
-            this.swapCursorY = y;
             this.isLocked[x, y] = true;
             this.isLocked[x + 1, y] = true;
 
-            this.swapTimer = new Timer(
+            int leftGem = this.board[x, y];
+            int rightGem = this.board[x + 1, y];
+
+            this.boardDX[x, y] = +1;
+            this.boardDY[x, y] =  0;
+            this.boardDX[x + 1, y] = -1;
+            this.boardDY[x + 1, y] =  0;
+
+            Timer swapTimer = new Timer(
                 durationMilliseconds: Constants.SWAP_DURATION_MS,
                 delayMilliseconds: 0.0f,
                 onDoneCallback: () => {
-                    int temp = this.board[x, y];
-                    this.board[x, y] = this.board[x + 1, y];
-                    this.board[x + 1, y] = temp;
+                    this.board[x, y] = rightGem;
+                    this.board[x + 1, y] = leftGem;
+
+                    this.timerBoard[x, y] = null;
+                    this.timerBoard[x + 1, y] = null;
 
                     this.isLocked[x, y] = false;
                     this.isLocked[x + 1, y] = false;
                 }
             );
 
-            TimerManager.AddTimer(this.swapTimer);
+            this.timerBoard[x, y] = swapTimer;
+            this.timerBoard[x + 1, y] = swapTimer;
+
+            TimerManager.AddTimer(swapTimer);
         }
     }
 }
