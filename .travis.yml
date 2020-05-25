@@ -1,5 +1,7 @@
 ---
 language: csharp
+mono: none
+dotnet: 3.1.300
 solution: gemswap.sln
 script:
   - dotnet build
