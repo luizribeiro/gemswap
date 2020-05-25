@@ -63,6 +63,60 @@ namespace gemswap
             }
 
             for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
+                int count = 0;
+                int currentGem = Board.EMPTY;
+                for (int y = 0; y < Constants.BOARD_HEIGHT; y++) {
+                    if (
+                        this.board[x, y] == Board.EMPTY || this.isLocked[x, y]
+                    ) {
+                        count = 0;
+                        currentGem = Board.EMPTY;
+                        continue;
+                    }
+
+                    if (this.board[x, y] == currentGem) {
+                        count++;
+                    } else {
+                        if (count >= 3) {
+                            EliminateVertical(x, y - 1);
+                        }
+                        count = 1;
+                        currentGem = this.board[x, y];
+                    }
+                }
+                if (count >= 3) {
+                    EliminateVertical(x, Constants.BOARD_HEIGHT - 1);
+                }
+            }
+
+            for (int y = 0; y < Constants.BOARD_HEIGHT; y++) {
+                int count = 0;
+                int currentGem = Board.EMPTY;
+                for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
+                    if (
+                        this.board[x, y] == Board.EMPTY || this.isLocked[x, y]
+                    ) {
+                        count = 0;
+                        currentGem = Board.EMPTY;
+                        continue;
+                    }
+
+                    if (this.board[x, y] == currentGem) {
+                        count++;
+                    } else {
+                        if (count >= 3) {
+                            EliminateHorizontal(x - 1, y);
+                        }
+                        count = 1;
+                        currentGem = this.board[x, y];
+                    }
+                }
+                if (count >= 3) {
+                    EliminateHorizontal(Constants.BOARD_WIDTH - 1, y);
+                }
+            }
+
+            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
                 for (int y = Constants.BOARD_HEIGHT - 1; y >= 0; y--) {
                     if (this.isLocked[x, y]) {
                         continue;
@@ -73,6 +127,38 @@ namespace gemswap
                     }
                 }
             }
+        }
+
+        private void EliminateHorizontal(int xx, int y) {
+            for (int x = xx - 1; x >= 0; x--) {
+                if (this.board[x, y] != this.board[xx, y]) {
+                    break;
+                }
+                this.board[x, y] = Board.EMPTY;
+            }
+            for (int x = xx + 1; x < Constants.BOARD_WIDTH; x--) {
+                if (this.board[x, y] != this.board[xx, y]) {
+                    break;
+                }
+                this.board[x, y] = Board.EMPTY;
+            }
+            this.board[xx, y] = Board.EMPTY;
+        }
+
+        private void EliminateVertical(int x, int yy) {
+            for (int y = yy - 1; y >= 0; y--) {
+                if (this.board[x, y] != this.board[x, yy]) {
+                    break;
+                }
+                this.board[x, y] = Board.EMPTY;
+            }
+            for (int y = yy + 1; y < Constants.BOARD_HEIGHT; y--) {
+                if (this.board[x, y] != this.board[x, yy]) {
+                    break;
+                }
+                this.board[x, y] = Board.EMPTY;
+            }
+            this.board[x, yy] = Board.EMPTY;
         }
 
         private void FallAllAbove(int x, int origY) {
