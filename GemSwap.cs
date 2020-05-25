@@ -10,8 +10,8 @@ namespace gemswap
         const int SCREEN_HEIGHT = 1080;
 
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Texture2D background;
+        SpriteBatch? spriteBatch;
+        Texture2D? background;
         Board board;
         BoardRenderer boardRenderer;
         GamePadState previousGamePadState;
@@ -110,7 +110,7 @@ namespace gemswap
         {
             this.GraphicsDevice.Clear(new Color(0, 0, 0));
 
-            this.spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            this.spriteBatch!.Begin(samplerState: SamplerState.PointClamp);
             this.spriteBatch.Draw(
                 this.background,
                 new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT),

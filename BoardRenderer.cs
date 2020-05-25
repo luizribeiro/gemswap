@@ -7,10 +7,10 @@ namespace gemswap {
     public class BoardRenderer
     {
         GraphicsDevice graphicsDevice;
-        SpriteBatch spriteBatch;
-        Texture2D backgroundTexture;
-        Texture2D gemTexture;
-        Texture2D cursorTexture;
+        SpriteBatch? spriteBatch;
+        Texture2D? backgroundTexture;
+        Texture2D? gemTexture;
+        Texture2D? cursorTexture;
 
         public BoardRenderer(GraphicsDevice graphicsDevice) {
             this.graphicsDevice = graphicsDevice;
@@ -55,7 +55,7 @@ namespace gemswap {
                 DepthBufferEnable = false,
             };
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, null, null, s1, null, null);
+            spriteBatch!.Begin(SpriteSortMode.Immediate, null, null, s1, null, null);
             this.DrawBackground();
             spriteBatch.End();
 
@@ -67,7 +67,7 @@ namespace gemswap {
         }
 
         private void DrawBackground() {
-            spriteBatch.Draw(
+            spriteBatch!.Draw(
                 this.backgroundTexture,
                 new Vector2(0, 0),
                 Color.Black
@@ -88,7 +88,7 @@ namespace gemswap {
                     float cellOffsetY = board.GetCellOffsetY(x, y);
 
                     int a = board.GetCellAlpha(x, y);
-                    this.spriteBatch.Draw(
+                    this.spriteBatch!.Draw(
                         this.gemTexture,
                         position: new Vector2(
                             x * Constants.GEM_WIDTH + cellOffsetX,
@@ -120,7 +120,7 @@ namespace gemswap {
             for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
                 int gem = board.getUpcomingCell(x);
 
-                this.spriteBatch.Draw(
+                this.spriteBatch!.Draw(
                     this.gemTexture,
                     position: new Vector2(
                         x * Constants.GEM_WIDTH,
@@ -138,7 +138,7 @@ namespace gemswap {
         }
 
         private void DrawCursor(Board board) {
-            spriteBatch.Draw(
+            spriteBatch!.Draw(
                 this.cursorTexture,
                 new Vector2(
                     board.getCursorX() * Constants.GEM_WIDTH

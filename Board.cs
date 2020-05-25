@@ -10,8 +10,8 @@ namespace gemswap
         private int[,] boardDX;
         private int[,] boardDY;
         private bool[,] isLocked;
-        private Timer[,] movimentTimer;
-        private Timer[,] fadeOutTimer;
+        private Timer?[,] movimentTimer;
+        private Timer?[,] fadeOutTimer;
         private int[] upcomingRow;
         private float offset;
         private int cursorX;

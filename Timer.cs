@@ -8,12 +8,12 @@ namespace gemswap {
         float delayMilliseconds;
         float durationMilliseconds;
 
-        Action onDoneCallback;
+        Action? onDoneCallback;
 
         public Timer(
             float durationMilliseconds,
             float delayMilliseconds = 0.0f,
-            Action onDoneCallback = null
+            Action? onDoneCallback = null
         ) {
             this.durationMilliseconds = durationMilliseconds;
             this.delayMilliseconds = delayMilliseconds;
