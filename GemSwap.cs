@@ -97,6 +97,8 @@ namespace gemswap
 
             this.previousGamePadState = gamePadState1;
 
+            TimerManager.Update(ellapsedMilliseconds);
+
             base.Update(gameTime);
         }
 
