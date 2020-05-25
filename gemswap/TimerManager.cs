@@ -28,5 +28,9 @@ namespace gemswap {
                 timer.Update(ellapsedMilliseconds);
             }
         }
+
+        public static void ClearAll() {
+            TimerManager.timers.Clear();
+        }
     }
 }

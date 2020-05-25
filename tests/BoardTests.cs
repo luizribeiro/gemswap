@@ -19,6 +19,11 @@ namespace gemswap.tests
             return mock.Object;
         }
 
+        [TearDown]
+        public void TearDownTest() {
+            TimerManager.ClearAll();
+        }
+
         private Board SetupBoard(
             Config config,
             int[,] board,
