@@ -8,7 +8,7 @@ namespace gemswap
         public virtual int BoardInitialMinHeight { get => 2; }
         public virtual int BoardInitialMaxHeight { get => 8; }
 
-        public virtual float BoardSpeedRowPerMs { get => 10000.0f; }
+        public virtual float BoardSpeedRowPerMs { get => 4000.0f; }
 
         public virtual float AnimationGemFadeInMs { get => 1000.0f; }
         public virtual float SwapDurationMs { get => 100.0f; }
