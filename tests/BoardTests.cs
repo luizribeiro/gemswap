@@ -241,5 +241,38 @@ namespace gemswap.tests
             Assert.AreEqual(board.getCursorX(), 0);
             Assert.AreEqual(board.getCursorY(), 0);
         }
+
+        [Test]
+        public void TestNoEliminationWhenFallingThrough() {
+            Config config = this.SetupConfig(boardWidth: 3, boardHeight: 3);
+            Board board = this.SetupBoard(
+                config,
+                board: new[,] {
+                    {2, 1, 2},
+                    {1, 0, 1},
+                    {2, 0, 2},
+                }
+            );
+
+            // trigger fall
+            this.Update(board, 0);
+
+            // make piece fall to the next position
+            this.Update(board, config.SwapDurationMs);
+            AssertBoard(new[,] {
+                {2, 0, 2},
+                {1, 1, 1},
+                {2, 0, 2},
+            }, board);
+
+            // fall again
+            this.Update(board, 0);
+            this.Update(board, config.SwapDurationMs);
+            AssertBoard(new[,] {
+                {2, 0, 2},
+                {0, 0, 0}, // FIXME: 1, 0, 1
+                {2, 1, 2},
+            }, board);
+        }
     }
 }
