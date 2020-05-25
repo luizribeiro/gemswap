@@ -12,6 +12,8 @@ namespace gemswap
         private int cursorX;
         private int cursorY;
 
+        private Timer swapTimer;
+
         public Board()
         {
             this.board = new int[Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT];
@@ -109,11 +111,29 @@ namespace gemswap
             }
         }
 
+        private bool IsSwapping() {
+            return this.swapTimer != null && this.swapTimer.IsActive();
+        }
+
         public void Swap() {
-            int temp = this.board[this.cursorX, this.cursorY];
-            this.board[this.cursorX, this.cursorY]
-                = this.board[this.cursorX + 1, this.cursorY];
-            this.board[this.cursorX + 1, this.cursorY] = temp;
+            if (this.IsSwapping()) {
+                return;
+            }
+
+            int x = cursorX;
+            int y = cursorY;
+
+            this.swapTimer = new Timer(
+                durationMilliseconds: 500.0f,
+                delayMilliseconds: 0.0f,
+                callback: () => {
+                    int temp = this.board[x, y];
+                    this.board[x, y] = this.board[x + 1, y];
+                    this.board[x + 1, y] = temp;
+                }
+            );
+
+            TimerManager.AddTimer(this.swapTimer);
         }
     }
 }
