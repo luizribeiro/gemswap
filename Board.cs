@@ -335,6 +335,9 @@ namespace gemswap
                 durationMilliseconds: Constants.SWAP_DURATION_MS,
                 delayMilliseconds: 0.0f,
                 onDoneCallback: () => {
+                    // FIXME: there is a bug here where x, y may be outdated
+                    // (in case a new row is added to the board before setting
+                    // the timer and executing the callback)
                     this.board[x, y] = rightGem;
                     this.board[x + 1, y] = leftGem;
 
