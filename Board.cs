@@ -10,7 +10,7 @@ namespace gemswap
         private int[,] boardDX;
         private int[,] boardDY;
         private bool[,] isLocked;
-        private Timer[,] timerBoard;
+        private Timer[,] movimentTimer;
         private int[] upcomingRow;
         private float offset;
         private int cursorX;
@@ -25,7 +25,7 @@ namespace gemswap
                 Constants.BOARD_WIDTH,
                 Constants.BOARD_HEIGHT
             ];
-            this.timerBoard = new Timer[
+            this.movimentTimer = new Timer[
                 Constants.BOARD_WIDTH,
                 Constants.BOARD_HEIGHT
             ];
@@ -44,7 +44,7 @@ namespace gemswap
                         ? random.Next(0, Constants.NUM_GEMS)
                         : Board.EMPTY;
                     this.isLocked[x, y] = false;
-                    this.timerBoard[x, y] = null;
+                    this.movimentTimer[x, y] = null;
                     this.boardDX[x, y] = 0;
                     this.boardDY[x, y] = 0;
                 }
@@ -62,6 +62,22 @@ namespace gemswap
                 this.AddNewRow();
             }
 
+            EliminateContiguous();
+
+            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
+                for (int y = Constants.BOARD_HEIGHT - 1; y >= 0; y--) {
+                    if (this.isLocked[x, y]) {
+                        continue;
+                    }
+                    if (this.board[x, y] == Board.EMPTY) {
+                        FallAllAbove(x, y);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void EliminateContiguous() {
             for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
                 int count = 0;
                 int currentGem = Board.EMPTY;
@@ -113,18 +129,6 @@ namespace gemswap
                 }
                 if (count >= 3) {
                     EliminateHorizontal(Constants.BOARD_WIDTH - 1, y);
-                }
-            }
-
-            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
-                for (int y = Constants.BOARD_HEIGHT - 1; y >= 0; y--) {
-                    if (this.isLocked[x, y]) {
-                        continue;
-                    }
-                    if (this.board[x, y] == Board.EMPTY) {
-                        FallAllAbove(x, y);
-                        break;
-                    }
                 }
             }
         }
@@ -183,7 +187,7 @@ namespace gemswap
                         this.board[X, Y] = Board.EMPTY;
                         this.board[X, Y + 1] = gem;
 
-                        this.timerBoard[X, Y] = null;
+                        this.movimentTimer[X, Y] = null;
 
                         this.isLocked[X, Y] = false;
                         this.isLocked[X, Y + 1] = false;
@@ -191,7 +195,7 @@ namespace gemswap
                 );
                 TimerManager.AddTimer(fallTimer);
 
-                this.timerBoard[x, y] = fallTimer;
+                this.movimentTimer[x, y] = fallTimer;
             }
         }
 
@@ -260,12 +264,12 @@ namespace gemswap
         }
 
         public float GetCellOffsetX(int x, int y) {
-            return (this.timerBoard[x, y]?.Progress() ?? 0.0f)
+            return (this.movimentTimer[x, y]?.Progress() ?? 0.0f)
                 * this.boardDX[x, y] * Constants.GEM_WIDTH;
         }
 
         public float GetCellOffsetY(int x, int y) {
-            return (this.timerBoard[x, y]?.Progress() ?? 0.0f)
+            return (this.movimentTimer[x, y]?.Progress() ?? 0.0f)
                 * this.boardDY[x, y] * Constants.GEM_HEIGHT;
         }
 
@@ -295,16 +299,16 @@ namespace gemswap
                     this.board[x, y] = rightGem;
                     this.board[x + 1, y] = leftGem;
 
-                    this.timerBoard[x, y] = null;
-                    this.timerBoard[x + 1, y] = null;
+                    this.movimentTimer[x, y] = null;
+                    this.movimentTimer[x + 1, y] = null;
 
                     this.isLocked[x, y] = false;
                     this.isLocked[x + 1, y] = false;
                 }
             );
 
-            this.timerBoard[x, y] = swapTimer;
-            this.timerBoard[x + 1, y] = swapTimer;
+            this.movimentTimer[x, y] = swapTimer;
+            this.movimentTimer[x + 1, y] = swapTimer;
 
             TimerManager.AddTimer(swapTimer);
         }
