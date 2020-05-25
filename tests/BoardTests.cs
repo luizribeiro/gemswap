@@ -4,18 +4,25 @@ namespace gemswap.tests
 {
     public class BoardTests
     {
-        Board? b;
-
-        [SetUp]
-        public void Setup()
+        [Test]
+        public void TestBottomRowContainsGems()
         {
-            this.b = new Board();
+            Board board = new Board();
+            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
+                Assert.AreNotEqual(
+                    board.getCell(x, Constants.BOARD_HEIGHT - 1),
+                    Board.EMPTY
+                );
+            }
         }
 
         [Test]
-        public void Test1()
+        public void TestTopRowIsEmpty()
         {
-            Assert.Pass();
+            Board board = new Board();
+            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
+                Assert.AreEqual(board.getCell(x, 0), Board.EMPTY);
+            }
         }
     }
 }
