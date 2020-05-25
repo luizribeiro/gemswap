@@ -1,7 +1,7 @@
 ---
 language: csharp
 mono: 6.8.0
-solution: gemswap.sln
+solution: gemswap/gemswap.sln
 script:
   - dotnet build gemswap
   - dotnet test tests
