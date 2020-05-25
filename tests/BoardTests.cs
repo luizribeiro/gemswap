@@ -153,7 +153,7 @@ namespace gemswap.tests
             // trigger the elimination
             this.Update(board, 0);
             // wait for it to finish
-            this.Update(board, config.SwapDurationMs);
+            this.Update(board, config.EliminationDurationMs);
 
             AssertBoard(finalBoard, board);
         }

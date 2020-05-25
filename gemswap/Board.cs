@@ -179,7 +179,7 @@ namespace gemswap
             Timer timer = this.CreateCellTimer(
                 x,
                 y,
-                durationMilliseconds: config.SwapDurationMs,
+                durationMilliseconds: config.EliminationDurationMs,
                 onDoneCallback: (x, y) => {
                     this.board[x, y] = Board.EMPTY;
                     this.isLocked[x, y] = false;

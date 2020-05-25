@@ -12,6 +12,7 @@ namespace gemswap
 
         public virtual float AnimationGemFadeInMs { get => 1000.0f; }
         public virtual float SwapDurationMs { get => 100.0f; }
+        public virtual float EliminationDurationMs { get => 200.0f; }
 
         public virtual int GemWidth { get => 64; }
         public virtual int GemHeight { get => 64; }
