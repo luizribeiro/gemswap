@@ -1,5 +1,7 @@
 # luizribeiro/gemswap
 
+[![Build Status](https://travis-ci.com/luizribeiro/gemswap.svg?token=Y5WyECQyFrzmKkJLsCaK&branch=master)](https://travis-ci.com/luizribeiro/gemswap)
+
 This is my gemswap game.
 
 ### Building
