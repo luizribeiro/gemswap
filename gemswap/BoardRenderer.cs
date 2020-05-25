@@ -108,7 +108,7 @@ namespace gemswap {
             }
 
             float heightLeft = config.GemHeight - offset;
-            float pxSpeed = config.GemHeight / config.BoardSpeedRowPermMs;
+            float pxSpeed = config.GemHeight / config.BoardSpeedRowPerMs;
             float msLeft = heightLeft / pxSpeed;
             int alpha = msLeft > config.AnimationGemFadeInMs
                 ? 100

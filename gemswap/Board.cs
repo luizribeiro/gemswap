@@ -80,7 +80,7 @@ namespace gemswap
 
         public void Update(float ellapsedMilliseconds) {
             this.offset += (config.GemHeight * ellapsedMilliseconds)
-                / config.BoardSpeedRowPermMs;
+                / config.BoardSpeedRowPerMs;
 
             if (this.offset >= config.GemHeight) {
                 this.offset = 0.0f;

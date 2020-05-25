@@ -193,7 +193,7 @@ namespace gemswap.tests
             Assert.AreEqual(board.getCursorX(), 0);
             Assert.AreEqual(board.getCursorY(), 1);
 
-            this.Update(board, config.BoardSpeedRowPermMs);
+            this.Update(board, config.BoardSpeedRowPerMs);
             AssertBoard(new[,] {
                 {1, 2},
                 {3, 4},
@@ -216,7 +216,7 @@ namespace gemswap.tests
             Assert.AreEqual(board.getCursorX(), 0);
             Assert.AreEqual(board.getCursorY(), 1);
 
-            this.Update(board, config.BoardSpeedRowPermMs - 1);
+            this.Update(board, config.BoardSpeedRowPerMs - 1);
             board.Swap();
             AssertBoard(new[,] {
                 {0, 0},
