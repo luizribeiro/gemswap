@@ -19,34 +19,34 @@ namespace gemswap
 
         public Board()
         {
-            this.board = new int[Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT];
-            this.boardDX = new int[Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT];
-            this.boardDY = new int[Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT];
+            this.board = new int[Config.BOARD_WIDTH, Config.BOARD_HEIGHT];
+            this.boardDX = new int[Config.BOARD_WIDTH, Config.BOARD_HEIGHT];
+            this.boardDY = new int[Config.BOARD_WIDTH, Config.BOARD_HEIGHT];
             this.isLocked = new bool[
-                Constants.BOARD_WIDTH,
-                Constants.BOARD_HEIGHT
+                Config.BOARD_WIDTH,
+                Config.BOARD_HEIGHT
             ];
             this.movimentTimer = new Timer[
-                Constants.BOARD_WIDTH,
-                Constants.BOARD_HEIGHT
+                Config.BOARD_WIDTH,
+                Config.BOARD_HEIGHT
             ];
             this.fadeOutTimer = new Timer[
-                Constants.BOARD_WIDTH,
-                Constants.BOARD_HEIGHT
+                Config.BOARD_WIDTH,
+                Config.BOARD_HEIGHT
             ];
 
             this.cursorX = 0;
-            this.cursorY = Constants.BOARD_HEIGHT - 1;
+            this.cursorY = Config.BOARD_HEIGHT - 1;
 
             Random random = new Random();
-            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
+            for (int x = 0; x < Config.BOARD_WIDTH; x++) {
                 int height = random.Next(
-                    Constants.BOARD_INITIAL_MIN_HEIGHT,
-                    Constants.BOARD_INITIAL_MAX_HEIGHT
+                    Config.BOARD_INITIAL_MIN_HEIGHT,
+                    Config.BOARD_INITIAL_MAX_HEIGHT
                 );
-                for (int y = 0; y < Constants.BOARD_HEIGHT; y++) {
-                    this.board[x, y] = y > Constants.BOARD_HEIGHT - height
-                        ? random.Next(0, Constants.NUM_GEMS)
+                for (int y = 0; y < Config.BOARD_HEIGHT; y++) {
+                    this.board[x, y] = y > Config.BOARD_HEIGHT - height
+                        ? random.Next(0, Config.NUM_GEMS)
                         : Board.EMPTY;
                     this.isLocked[x, y] = false;
                     this.movimentTimer[x, y] = null;
@@ -60,18 +60,18 @@ namespace gemswap
         }
 
         public void Update(float ellapsedMilliseconds) {
-            this.offset += (Constants.GEM_HEIGHT * ellapsedMilliseconds)
-                / Constants.BOARD_SPEED_ROW_PER_MS;
+            this.offset += (Config.GEM_HEIGHT * ellapsedMilliseconds)
+                / Config.BOARD_SPEED_ROW_PER_MS;
 
-            if (this.offset >= Constants.GEM_HEIGHT) {
+            if (this.offset >= Config.GEM_HEIGHT) {
                 this.offset = 0.0f;
                 this.AddNewRow();
             }
 
             EliminateContiguous();
 
-            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
-                for (int y = Constants.BOARD_HEIGHT - 1; y >= 0; y--) {
+            for (int x = 0; x < Config.BOARD_WIDTH; x++) {
+                for (int y = Config.BOARD_HEIGHT - 1; y >= 0; y--) {
                     if (this.isLocked[x, y]) {
                         continue;
                     }
@@ -84,10 +84,10 @@ namespace gemswap
         }
 
         private void EliminateContiguous() {
-            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
+            for (int x = 0; x < Config.BOARD_WIDTH; x++) {
                 int count = 0;
                 int currentGem = Board.EMPTY;
-                for (int y = 0; y < Constants.BOARD_HEIGHT; y++) {
+                for (int y = 0; y < Config.BOARD_HEIGHT; y++) {
                     if (
                         this.board[x, y] == Board.EMPTY || this.isLocked[x, y]
                     ) {
@@ -107,14 +107,14 @@ namespace gemswap
                     }
                 }
                 if (count >= 3) {
-                    EliminateVertical(x, Constants.BOARD_HEIGHT - 1);
+                    EliminateVertical(x, Config.BOARD_HEIGHT - 1);
                 }
             }
 
-            for (int y = 0; y < Constants.BOARD_HEIGHT; y++) {
+            for (int y = 0; y < Config.BOARD_HEIGHT; y++) {
                 int count = 0;
                 int currentGem = Board.EMPTY;
-                for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
+                for (int x = 0; x < Config.BOARD_WIDTH; x++) {
                     if (
                         this.board[x, y] == Board.EMPTY || this.isLocked[x, y]
                     ) {
@@ -134,7 +134,7 @@ namespace gemswap
                     }
                 }
                 if (count >= 3) {
-                    EliminateHorizontal(Constants.BOARD_WIDTH - 1, y);
+                    EliminateHorizontal(Config.BOARD_WIDTH - 1, y);
                 }
             }
         }
@@ -146,7 +146,7 @@ namespace gemswap
                 }
                 EliminateCell(x, y);
             }
-            for (int x = xx + 1; x < Constants.BOARD_WIDTH; x--) {
+            for (int x = xx + 1; x < Config.BOARD_WIDTH; x--) {
                 if (this.board[x, y] != this.board[xx, y]) {
                     break;
                 }
@@ -162,7 +162,7 @@ namespace gemswap
                 }
                 EliminateCell(x, y);
             }
-            for (int y = yy + 1; y < Constants.BOARD_HEIGHT; y--) {
+            for (int y = yy + 1; y < Config.BOARD_HEIGHT; y--) {
                 if (this.board[x, y] != this.board[x, yy]) {
                     break;
                 }
@@ -175,7 +175,7 @@ namespace gemswap
             int X = x, Y = y;
             this.isLocked[X, Y] = true;
             Timer timer = TimerManager.AddTimer(
-                durationMilliseconds: Constants.SWAP_DURATION_MS,
+                durationMilliseconds: Config.SWAP_DURATION_MS,
                 onDoneCallback: () => {
                     this.board[X, Y] = Board.EMPTY;
                     this.isLocked[X, Y] = false;
@@ -201,7 +201,7 @@ namespace gemswap
                 this.boardDY[x, y] = +1;
 
                 Timer fallTimer = TimerManager.AddTimer(
-                    durationMilliseconds: Constants.SWAP_DURATION_MS,
+                    durationMilliseconds: Config.SWAP_DURATION_MS,
                     onDoneCallback: () => {
                         this.board[X, Y] = Board.EMPTY;
                         this.board[X, Y + 1] = gem;
@@ -220,8 +220,8 @@ namespace gemswap
         private void AddNewRow() {
             this.cursorY--;
 
-            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
-                for (int y = 0; y < Constants.BOARD_HEIGHT - 1; y++) {
+            for (int x = 0; x < Config.BOARD_WIDTH; x++) {
+                for (int y = 0; y < Config.BOARD_HEIGHT - 1; y++) {
                     this.board[x, y] = this.board[x, y + 1];
                     this.isLocked[x, y] = this.isLocked[x, y + 1];
                     this.movimentTimer[x, y] = this.movimentTimer[x, y + 1];
@@ -231,8 +231,8 @@ namespace gemswap
                 }
             }
 
-            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
-                int y = Constants.BOARD_HEIGHT - 1;
+            for (int x = 0; x < Config.BOARD_WIDTH; x++) {
+                int y = Config.BOARD_HEIGHT - 1;
                 this.board[x, y] = this.upcomingRow[x];
                 this.isLocked[x, y] = false;
                 this.movimentTimer[x, y] = null;
@@ -245,10 +245,10 @@ namespace gemswap
         }
 
         private int[] BuildUpcomingRow() {
-            int[] upcomingRow = new int[Constants.BOARD_WIDTH];
+            int[] upcomingRow = new int[Config.BOARD_WIDTH];
             Random random = new Random();
-            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
-                upcomingRow[x] = random.Next(0, Constants.NUM_GEMS);
+            for (int x = 0; x < Config.BOARD_WIDTH; x++) {
+                upcomingRow[x] = random.Next(0, Config.NUM_GEMS);
             }
             return upcomingRow;
         }
@@ -280,26 +280,26 @@ namespace gemswap
             if (this.cursorX < 0) {
                 this.cursorX = 0;
             }
-            if (this.cursorX > Constants.BOARD_WIDTH - 2) {
-                this.cursorX = Constants.BOARD_WIDTH - 2;
+            if (this.cursorX > Config.BOARD_WIDTH - 2) {
+                this.cursorX = Config.BOARD_WIDTH - 2;
             }
 
             if (this.cursorY < 0) {
                 this.cursorY = 0;
             }
-            if (this.cursorY > Constants.BOARD_HEIGHT - 1) {
-                this.cursorY = Constants.BOARD_HEIGHT - 1;
+            if (this.cursorY > Config.BOARD_HEIGHT - 1) {
+                this.cursorY = Config.BOARD_HEIGHT - 1;
             }
         }
 
         public float GetCellOffsetX(int x, int y) {
             return (this.movimentTimer[x, y]?.Progress() ?? 0.0f)
-                * this.boardDX[x, y] * Constants.GEM_WIDTH;
+                * this.boardDX[x, y] * Config.GEM_WIDTH;
         }
 
         public float GetCellOffsetY(int x, int y) {
             return (this.movimentTimer[x, y]?.Progress() ?? 0.0f)
-                * this.boardDY[x, y] * Constants.GEM_HEIGHT;
+                * this.boardDY[x, y] * Config.GEM_HEIGHT;
         }
 
         public int GetCellAlpha(int x, int y) {
@@ -328,7 +328,7 @@ namespace gemswap
             this.boardDY[x + 1, y] =  0;
 
             Timer swapTimer = TimerManager.AddTimer(
-                durationMilliseconds: Constants.SWAP_DURATION_MS,
+                durationMilliseconds: Config.SWAP_DURATION_MS,
                 onDoneCallback: () => {
                     // FIXME: there is a bug here where x, y may be outdated
                     // (in case a new row is added to the board before setting

@@ -21,9 +21,9 @@ namespace gemswap {
             this.gemTexture = contentManager.Load<Texture2D>("gems");
             this.cursorTexture = contentManager.Load<Texture2D>("cursor");
 
-            int backgroundWidth = Constants.BOARD_WIDTH * Constants.GEM_WIDTH;
+            int backgroundWidth = Config.BOARD_WIDTH * Config.GEM_WIDTH;
             int backgroundHeight =
-                Constants.BOARD_HEIGHT * Constants.GEM_HEIGHT;
+                Config.BOARD_HEIGHT * Config.GEM_HEIGHT;
             this.backgroundTexture = new Texture2D(
                 this.graphicsDevice,
                 backgroundWidth,
@@ -77,8 +77,8 @@ namespace gemswap {
         private void DrawBoard(Board board) {
             float offset = board.getOffset();
 
-            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
-                for (int y = 0; y < Constants.BOARD_HEIGHT; y++) {
+            for (int x = 0; x < Config.BOARD_WIDTH; x++) {
+                for (int y = 0; y < Config.BOARD_HEIGHT; y++) {
                     int gem = board.getCell(x, y);
                     if (gem == Board.EMPTY) {
                         continue;
@@ -91,46 +91,46 @@ namespace gemswap {
                     this.spriteBatch!.Draw(
                         this.gemTexture,
                         position: new Vector2(
-                            x * Constants.GEM_WIDTH + cellOffsetX,
-                            y * Constants.GEM_HEIGHT + cellOffsetY - offset
+                            x * Config.GEM_WIDTH + cellOffsetX,
+                            y * Config.GEM_HEIGHT + cellOffsetY - offset
                         ),
                         sourceRectangle: new Rectangle(
-                            gem * Constants.GEM_WIDTH,
+                            gem * Config.GEM_WIDTH,
                             0,
-                            Constants.GEM_WIDTH,
-                            Constants.GEM_HEIGHT
+                            Config.GEM_WIDTH,
+                            Config.GEM_HEIGHT
                         ),
                         color: new Color(a, a, a, a)
                     );
                 }
             }
 
-            float heightLeft = Constants.GEM_HEIGHT - offset;
-            float pxSpeed = Constants.GEM_HEIGHT / Constants.BOARD_SPEED_ROW_PER_MS;
+            float heightLeft = Config.GEM_HEIGHT - offset;
+            float pxSpeed = Config.GEM_HEIGHT / Config.BOARD_SPEED_ROW_PER_MS;
             float msLeft = heightLeft / pxSpeed;
-            int alpha = msLeft > Constants.ANIMATION_GEM_FADE_IN_MS
+            int alpha = msLeft > Config.ANIMATION_GEM_FADE_IN_MS
                 ? 100
-                : Convert.ToInt32(100.0 + 155.0 * (1.0 - msLeft / Constants.ANIMATION_GEM_FADE_IN_MS));
+                : Convert.ToInt32(100.0 + 155.0 * (1.0 - msLeft / Config.ANIMATION_GEM_FADE_IN_MS));
             Color upcomingGemColor = new Color(
                 alpha,
                 alpha,
                 alpha,
                 alpha
             );
-            for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
+            for (int x = 0; x < Config.BOARD_WIDTH; x++) {
                 int gem = board.getUpcomingCell(x);
 
                 this.spriteBatch!.Draw(
                     this.gemTexture,
                     position: new Vector2(
-                        x * Constants.GEM_WIDTH,
-                        Constants.BOARD_HEIGHT * Constants.GEM_HEIGHT - offset
+                        x * Config.GEM_WIDTH,
+                        Config.BOARD_HEIGHT * Config.GEM_HEIGHT - offset
                     ),
                     sourceRectangle: new Rectangle(
-                        gem * Constants.GEM_WIDTH,
+                        gem * Config.GEM_WIDTH,
                         0,
-                        Constants.GEM_WIDTH,
-                        Constants.GEM_HEIGHT
+                        Config.GEM_WIDTH,
+                        Config.GEM_HEIGHT
                     ),
                     color: upcomingGemColor
                 );
@@ -141,10 +141,10 @@ namespace gemswap {
             spriteBatch!.Draw(
                 this.cursorTexture,
                 new Vector2(
-                    board.getCursorX() * Constants.GEM_WIDTH
-                        - Constants.CURSOR_OFFSET_PX,
-                    board.getCursorY() * Constants.GEM_HEIGHT
-                        - Constants.CURSOR_OFFSET_PX - board.getOffset()
+                    board.getCursorX() * Config.GEM_WIDTH
+                        - Config.CURSOR_OFFSET_PX,
+                    board.getCursorY() * Config.GEM_HEIGHT
+                        - Config.CURSOR_OFFSET_PX - board.getOffset()
                 ),
                 Color.White
             );

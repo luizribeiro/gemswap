@@ -1,6 +1,6 @@
 namespace gemswap
 {
-    public class Constants
+    public class Config
     {
         public const int BOARD_WIDTH = 6;
         public const int BOARD_HEIGHT = 14;
