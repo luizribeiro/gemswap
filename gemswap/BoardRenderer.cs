@@ -11,6 +11,7 @@ namespace gemswap {
         Texture2D? backgroundTexture;
         Texture2D? gemTexture;
         Texture2D? cursorTexture;
+        private Config config = new Config();
 
         public BoardRenderer(GraphicsDevice graphicsDevice) {
             this.graphicsDevice = graphicsDevice;
@@ -21,9 +22,9 @@ namespace gemswap {
             this.gemTexture = contentManager.Load<Texture2D>("gems");
             this.cursorTexture = contentManager.Load<Texture2D>("cursor");
 
-            int backgroundWidth = Config.BOARD_WIDTH * Config.GEM_WIDTH;
+            int backgroundWidth = config.BoardWidth * config.GemWidth;
             int backgroundHeight =
-                Config.BOARD_HEIGHT * Config.GEM_HEIGHT;
+                config.BoardHeight * config.GemHeight;
             this.backgroundTexture = new Texture2D(
                 this.graphicsDevice,
                 backgroundWidth,
@@ -77,8 +78,8 @@ namespace gemswap {
         private void DrawBoard(Board board) {
             float offset = board.getOffset();
 
-            for (int x = 0; x < Config.BOARD_WIDTH; x++) {
-                for (int y = 0; y < Config.BOARD_HEIGHT; y++) {
+            for (int x = 0; x < config.BoardWidth; x++) {
+                for (int y = 0; y < config.BoardHeight; y++) {
                     int gem = board.getCell(x, y);
                     if (gem == Board.EMPTY) {
                         continue;
@@ -91,46 +92,46 @@ namespace gemswap {
                     this.spriteBatch!.Draw(
                         this.gemTexture,
                         position: new Vector2(
-                            x * Config.GEM_WIDTH + cellOffsetX,
-                            y * Config.GEM_HEIGHT + cellOffsetY - offset
+                            x * config.GemWidth + cellOffsetX,
+                            y * config.GemHeight + cellOffsetY - offset
                         ),
                         sourceRectangle: new Rectangle(
-                            gem * Config.GEM_WIDTH,
+                            gem * config.GemWidth,
                             0,
-                            Config.GEM_WIDTH,
-                            Config.GEM_HEIGHT
+                            config.GemWidth,
+                            config.GemHeight
                         ),
                         color: new Color(a, a, a, a)
                     );
                 }
             }
 
-            float heightLeft = Config.GEM_HEIGHT - offset;
-            float pxSpeed = Config.GEM_HEIGHT / Config.BOARD_SPEED_ROW_PER_MS;
+            float heightLeft = config.GemHeight - offset;
+            float pxSpeed = config.GemHeight / config.BoardSpeedRowPermMs;
             float msLeft = heightLeft / pxSpeed;
-            int alpha = msLeft > Config.ANIMATION_GEM_FADE_IN_MS
+            int alpha = msLeft > config.AnimationGemFadeInMs
                 ? 100
-                : Convert.ToInt32(100.0 + 155.0 * (1.0 - msLeft / Config.ANIMATION_GEM_FADE_IN_MS));
+                : Convert.ToInt32(100.0 + 155.0 * (1.0 - msLeft / config.AnimationGemFadeInMs));
             Color upcomingGemColor = new Color(
                 alpha,
                 alpha,
                 alpha,
                 alpha
             );
-            for (int x = 0; x < Config.BOARD_WIDTH; x++) {
+            for (int x = 0; x < config.BoardWidth; x++) {
                 int gem = board.getUpcomingCell(x);
 
                 this.spriteBatch!.Draw(
                     this.gemTexture,
                     position: new Vector2(
-                        x * Config.GEM_WIDTH,
-                        Config.BOARD_HEIGHT * Config.GEM_HEIGHT - offset
+                        x * config.GemWidth,
+                        config.BoardHeight * config.GemHeight - offset
                     ),
                     sourceRectangle: new Rectangle(
-                        gem * Config.GEM_WIDTH,
+                        gem * config.GemWidth,
                         0,
-                        Config.GEM_WIDTH,
-                        Config.GEM_HEIGHT
+                        config.GemWidth,
+                        config.GemHeight
                     ),
                     color: upcomingGemColor
                 );
@@ -141,10 +142,10 @@ namespace gemswap {
             spriteBatch!.Draw(
                 this.cursorTexture,
                 new Vector2(
-                    board.getCursorX() * Config.GEM_WIDTH
-                        - Config.CURSOR_OFFSET_PX,
-                    board.getCursorY() * Config.GEM_HEIGHT
-                        - Config.CURSOR_OFFSET_PX - board.getOffset()
+                    board.getCursorX() * config.GemWidth
+                        - config.CursorOffsetPx,
+                    board.getCursorY() * config.GemHeight
+                        - config.CursorOffsetPx - board.getOffset()
                 ),
                 Color.White
             );
