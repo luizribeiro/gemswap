@@ -235,9 +235,8 @@ namespace gemswap.tests
 
             this.Update(board, config.SwapDurationMs);
             AssertBoard(new[,] {
-                // FIXME
-                {1, 2}, // 2, 1
-                {2, 1}, // 3, 4
+                {2, 1},
+                {3, 4},
             }, board);
             Assert.AreEqual(board.getCursorX(), 0);
             Assert.AreEqual(board.getCursorY(), 0);

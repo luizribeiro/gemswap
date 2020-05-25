@@ -18,6 +18,7 @@ namespace gemswap
         private float offset;
         private int cursorX;
         private int cursorY;
+        private int boardVerticalOffset;
         private Config config;
 
         public Board(Config config)
@@ -42,6 +43,7 @@ namespace gemswap
 
             this.cursorX = 0;
             this.cursorY = config.BoardHeight - 1;
+            this.boardVerticalOffset = 0;
 
             Random random = new Random();
             for (int x = 0; x < config.BoardWidth; x++) {
@@ -175,12 +177,15 @@ namespace gemswap
         private void EliminateCell(int x, int y) {
             int X = x, Y = y;
             this.isLocked[X, Y] = true;
+            Y += this.boardVerticalOffset;
             Timer timer = TimerManager.AddTimer(
                 durationMilliseconds: config.SwapDurationMs,
                 onDoneCallback: () => {
+                    Y -= this.boardVerticalOffset;
+
                     this.board[X, Y] = Board.EMPTY;
                     this.isLocked[X, Y] = false;
-                    this.fadeOutTimer[x, y] = null;
+                    this.fadeOutTimer[X, Y] = null;
                 }
             );
             this.fadeOutTimer[x, y] = timer;
@@ -193,17 +198,18 @@ namespace gemswap
                     continue;
                 }
 
-                int X = x, Y = y;
-
                 // fall x, y into x, y + 1
                 this.isLocked[x, y] = true;
                 this.isLocked[x, y + 1] = true;
                 this.boardDX[x, y] =  0;
                 this.boardDY[x, y] = +1;
 
+                int X = x, Y = y + this.boardVerticalOffset;
                 Timer fallTimer = TimerManager.AddTimer(
                     durationMilliseconds: config.SwapDurationMs,
                     onDoneCallback: () => {
+                        Y -= this.boardVerticalOffset;
+
                         this.board[X, Y] = Board.EMPTY;
                         this.board[X, Y + 1] = gem;
 
@@ -220,6 +226,7 @@ namespace gemswap
 
         private void AddNewRow() {
             this.cursorY--;
+            this.boardVerticalOffset++;
 
             for (int x = 0; x < config.BoardWidth; x++) {
                 for (int y = 0; y < config.BoardHeight - 1; y++) {
@@ -328,20 +335,20 @@ namespace gemswap
             this.boardDX[x + 1, y] = -1;
             this.boardDY[x + 1, y] =  0;
 
+            int X = x, Y = y + this.boardVerticalOffset;
             Timer swapTimer = TimerManager.AddTimer(
                 durationMilliseconds: config.SwapDurationMs,
                 onDoneCallback: () => {
-                    // FIXME: there is a bug here where x, y may be outdated
-                    // (in case a new row is added to the board before setting
-                    // the timer and executing the callback)
-                    this.board[x, y] = rightGem;
-                    this.board[x + 1, y] = leftGem;
+                    Y -= this.boardVerticalOffset;
 
-                    this.movimentTimer[x, y] = null;
-                    this.movimentTimer[x + 1, y] = null;
+                    this.board[X, Y] = rightGem;
+                    this.board[X + 1, Y] = leftGem;
 
-                    this.isLocked[x, y] = false;
-                    this.isLocked[x + 1, y] = false;
+                    this.movimentTimer[X, Y] = null;
+                    this.movimentTimer[x + 1, Y] = null;
+
+                    this.isLocked[X, Y] = false;
+                    this.isLocked[x + 1, Y] = false;
                 }
             );
 
