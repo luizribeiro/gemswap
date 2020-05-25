@@ -51,6 +51,20 @@ namespace gemswap
 
         protected override void Update(GameTime gameTime)
         {
+
+            float ellapsedMilliseconds =
+                (float)gameTime.ElapsedGameTime.Milliseconds;
+
+            TimerManager.Update(ellapsedMilliseconds);
+
+            this.board.Update(ellapsedMilliseconds);
+
+            this.HandleUserInput();
+
+            base.Update(gameTime);
+        }
+
+        private void HandleUserInput() {
             GamePadState gamePadState1 = GamePad.GetState(PlayerIndex.One);
             if (
                 gamePadState1.Buttons.Back == ButtonState.Pressed ||
@@ -89,17 +103,7 @@ namespace gemswap
             ) {
                 this.board.Swap();
             }
-
-            float ellapsedMilliseconds =
-                (float)gameTime.ElapsedGameTime.Milliseconds;
-
-            this.board.Update(ellapsedMilliseconds);
-
             this.previousGamePadState = gamePadState1;
-
-            TimerManager.Update(ellapsedMilliseconds);
-
-            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
