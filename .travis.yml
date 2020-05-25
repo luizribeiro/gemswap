@@ -3,4 +3,5 @@ language: csharp
 mono: 6.8.0
 solution: gemswap.sln
 script:
-  - dotnet build
+  - dotnet build gemswap
+  - dotnet test tests

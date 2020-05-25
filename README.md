@@ -7,9 +7,17 @@ This is my gemswap game.
 ### Building
 
 ```
+$ cd gemswap
 $ nuget restore
 $ msbuild
 $ dotnet run
+```
+
+### Testing
+
+```
+$ cd tests
+$ dotnet test
 ```
 
 ### Packaging
