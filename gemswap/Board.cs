@@ -205,7 +205,7 @@ namespace gemswap
                 Timer fallTimer = this.CreateCellTimer(
                     x,
                     y,
-                    durationMilliseconds: config.SwapDurationMs,
+                    durationMilliseconds: config.FallDurationMs,
                     onDoneCallback: (x, y) => {
                         this.board[x, y] = Board.EMPTY;
                         this.board[x, y + 1] = gem;

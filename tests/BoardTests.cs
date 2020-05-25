@@ -167,7 +167,7 @@ namespace gemswap.tests
             this.Update(board, 0);
 
             // check on it midway through
-            this.Update(board, config.SwapDurationMs / 2.0f);
+            this.Update(board, config.FallDurationMs / 2.0f);
             AssertBoard(new[,] {{1}, {0}}, board);
             Assert.AreEqual(
                 config.GemHeight / 2.0f,
@@ -175,7 +175,7 @@ namespace gemswap.tests
             );
 
             // wait for it to finish
-            this.Update(board, config.SwapDurationMs / 2.0f);
+            this.Update(board, config.FallDurationMs / 2.0f);
             AssertBoard(new[,] {{0}, {1}}, board);
         }
 
@@ -258,7 +258,7 @@ namespace gemswap.tests
             this.Update(board, 0);
 
             // make piece fall to the next position
-            this.Update(board, config.SwapDurationMs);
+            this.Update(board, config.FallDurationMs);
             AssertBoard(new[,] {
                 {2, 0, 2},
                 {1, 1, 1},
@@ -267,7 +267,8 @@ namespace gemswap.tests
 
             // fall again
             this.Update(board, 0);
-            this.Update(board, config.SwapDurationMs);
+            // wait for elimination since this reproduces the bug
+            this.Update(board, config.EliminationDurationMs);
             AssertBoard(new[,] {
                 {2, 0, 2},
                 {0, 0, 0}, // FIXME: 1, 0, 1
