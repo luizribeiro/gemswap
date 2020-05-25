@@ -201,5 +201,46 @@ namespace gemswap.tests
             Assert.AreEqual(board.getCursorX(), 0);
             Assert.AreEqual(board.getCursorY(), 0);
         }
+
+        [Test]
+        public void TestSwapImmediatelyBeforeAppendingUpcomingRow() {
+            Config config = this.SetupConfig(boardWidth: 2, boardHeight: 2);
+            Board board = this.SetupBoard(
+                config,
+                board: new[,] {
+                    {0, 0},
+                    {1, 2},
+                },
+                upcomingRow: new[] {3, 4}
+            );
+            Assert.AreEqual(board.getCursorX(), 0);
+            Assert.AreEqual(board.getCursorY(), 1);
+
+            this.Update(board, config.BoardSpeedRowPermMs - 1);
+            board.Swap();
+            AssertBoard(new[,] {
+                {0, 0},
+                {1, 2},
+            }, board);
+            Assert.AreEqual(board.getCursorX(), 0);
+            Assert.AreEqual(board.getCursorY(), 1);
+
+            this.Update(board, 1);
+            AssertBoard(new[,] {
+                {1, 2},
+                {3, 4},
+            }, board);
+            Assert.AreEqual(board.getCursorX(), 0);
+            Assert.AreEqual(board.getCursorY(), 0);
+
+            this.Update(board, config.SwapDurationMs);
+            AssertBoard(new[,] {
+                // FIXME
+                {1, 2}, // 2, 1
+                {2, 1}, // 3, 4
+            }, board);
+            Assert.AreEqual(board.getCursorX(), 0);
+            Assert.AreEqual(board.getCursorY(), 0);
+        }
     }
 }
