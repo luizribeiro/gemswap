@@ -84,10 +84,27 @@ namespace gemswap {
                         continue;
                     }
 
+                    float swapOffset = 0.0f;
+                    float? swapProgress = board.GetSwapProgress();
+                    if (swapProgress != null) {
+                        if (
+                            board.GetSwapCursorX() == x
+                                && board.GetSwapCursorY() == y
+                        ) {
+                            swapOffset = (float)swapProgress * Constants.GEM_WIDTH;
+                        }
+                        if (
+                            board.GetSwapCursorX() + 1 == x
+                                && board.GetSwapCursorY() == y
+                        ) {
+                            swapOffset = - (float)swapProgress * Constants.GEM_WIDTH;
+                        }
+                    }
+
                     this.spriteBatch.Draw(
                         this.gemTexture,
                         position: new Vector2(
-                            x * Constants.GEM_WIDTH,
+                            x * Constants.GEM_WIDTH + swapOffset,
                             y * Constants.GEM_HEIGHT - offset
                         ),
                         sourceRectangle: new Rectangle(

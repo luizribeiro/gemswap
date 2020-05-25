@@ -11,6 +11,8 @@ namespace gemswap
         private float offset;
         private int cursorX;
         private int cursorY;
+        private int swapCursorX;
+        private int swapCursorY;
 
         private Timer swapTimer;
 
@@ -115,16 +117,37 @@ namespace gemswap
             return this.swapTimer != null && this.swapTimer.IsActive();
         }
 
+        public float? GetSwapProgress() {
+            if (!this.IsSwapping()) {
+                return null;
+            }
+            return this.swapTimer.Progress();
+        }
+
+        public int? GetSwapCursorX() {
+            if (!this.IsSwapping()) {
+                return null;
+            }
+            return this.swapCursorX;
+        }
+
+        public int? GetSwapCursorY() {
+            if (!this.IsSwapping()) {
+                return null;
+            }
+            return this.swapCursorY;
+        }
+
         public void Swap() {
             if (this.IsSwapping()) {
                 return;
             }
 
-            int x = cursorX;
-            int y = cursorY;
+            int x = this.swapCursorX = cursorX;
+            int y = this.swapCursorY = cursorY;
 
             this.swapTimer = new Timer(
-                durationMilliseconds: 500.0f,
+                durationMilliseconds: Constants.SWAP_DURATION_MS,
                 delayMilliseconds: 0.0f,
                 callback: () => {
                     int temp = this.board[x, y];

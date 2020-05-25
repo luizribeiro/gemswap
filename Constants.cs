@@ -11,6 +11,7 @@ namespace gemswap
         public const float BOARD_SPEED_ROW_PER_MS = 10000.0f;
 
         public const float ANIMATION_GEM_FADE_IN_MS = 1000.0f;
+        public const float SWAP_DURATION_MS = 100.0f;
 
         public const int GEM_WIDTH = 64;
         public const int GEM_HEIGHT = 64;
