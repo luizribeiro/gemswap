@@ -41,5 +41,22 @@ namespace gemswap.tests
                 Assert.AreEqual(board.getCell(x, 0), Board.EMPTY);
             }
         }
+
+        [Test]
+        public void TestSwapping()
+        {
+            Config config = this.SetupConfig(boardWidth: 2, boardHeight: 1);
+            Board board = new Board(config, new[,] {{1}, {2}});
+
+            Assert.AreEqual(1, board.getCell(0, 0));
+            Assert.AreEqual(2, board.getCell(1, 0));
+
+            board.Swap();
+            TimerManager.Update(config.SwapDurationMs);
+            board.Update(config.SwapDurationMs);
+
+            Assert.AreEqual(2, board.getCell(0, 0));
+            Assert.AreEqual(1, board.getCell(1, 0));
+        }
     }
 }
