@@ -3,8 +3,10 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Nullable>enable</Nullable>
     <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
+
+    <DefaultItemExcludes>$(DefaultItemExcludes);tests\*</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>

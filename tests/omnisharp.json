@@ -1,0 +1,6 @@
+{
+  "dotnet": {
+   "enabled": true,
+   "enablePackageRestore": false
+  }
+}
