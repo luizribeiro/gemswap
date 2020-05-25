@@ -27,3 +27,6 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
   * Fix falling animation that looks wonky for whatever reason
 * **Low-pri**
   * Center game on the screen
+  * Add animation to cursor movement
+  * Prevent cursor from going above all rows
+  * Delete old, inactive timers
