@@ -16,10 +16,12 @@ namespace gemswap
         private float offset;
         private int cursorX;
         private int cursorY;
-        private Config config = new Config();
+        private Config config;
 
-        public Board()
+        public Board(Config config)
         {
+            this.config = config;
+
             this.board = new int[config.BoardWidth, config.BoardHeight];
             this.boardDX = new int[config.BoardWidth, config.BoardHeight];
             this.boardDY = new int[config.BoardWidth, config.BoardHeight];

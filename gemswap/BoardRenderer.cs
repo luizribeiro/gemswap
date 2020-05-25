@@ -11,9 +11,10 @@ namespace gemswap {
         Texture2D? backgroundTexture;
         Texture2D? gemTexture;
         Texture2D? cursorTexture;
-        private Config config = new Config();
+        private Config config;
 
-        public BoardRenderer(GraphicsDevice graphicsDevice) {
+        public BoardRenderer(Config config, GraphicsDevice graphicsDevice) {
+            this.config = config;
             this.graphicsDevice = graphicsDevice;
         }
 

@@ -27,8 +27,9 @@ namespace gemswap
             this.Content.RootDirectory = "Content";
             this.IsMouseVisible = true;
 
-            this.board = new Board();
-            this.boardRenderer = new BoardRenderer(GraphicsDevice);
+            Config config = new Config();
+            this.board = new Board(config);
+            this.boardRenderer = new BoardRenderer(config, GraphicsDevice);
         }
 
         protected override void Initialize()
