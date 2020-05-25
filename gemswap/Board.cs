@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace gemswap
 {
@@ -91,91 +93,75 @@ namespace gemswap
         }
 
         private void EliminateContiguous() {
+            List<Tuple<int, int>> toEliminate = new List<Tuple<int, int>>();
+
             for (int x = 0; x < config.BoardWidth; x++) {
                 int count = 0;
                 int currentGem = Board.EMPTY;
+                List<Tuple<int, int>> currentCells =
+                    new List<Tuple<int, int>>();
+
                 for (int y = 0; y < config.BoardHeight; y++) {
                     if (
                         this.board[x, y] == Board.EMPTY || this.isLocked[x, y]
                     ) {
+                        currentCells.Clear();
                         count = 0;
                         currentGem = Board.EMPTY;
                         continue;
                     }
 
-                    if (this.board[x, y] == currentGem) {
-                        count++;
-                    } else {
-                        if (count >= 3) {
-                            EliminateVertical(x, y - 1);
-                        }
-                        count = 1;
+                    if (this.board[x, y] != currentGem) {
                         currentGem = this.board[x, y];
+                        currentCells.Clear();
+                        currentCells.Add(new Tuple<int, int>(x, y));
+                        count = 1;
+                    } else {
+                        currentCells.Add(new Tuple<int, int>(x, y));
+                        count++;
                     }
-                }
-                if (count >= 3) {
-                    EliminateVertical(x, config.BoardHeight - 1);
+
+                    if (count >= 3) {
+                        toEliminate.AddRange(currentCells);
+                    }
                 }
             }
 
             for (int y = 0; y < config.BoardHeight; y++) {
                 int count = 0;
                 int currentGem = Board.EMPTY;
+                List<Tuple<int, int>> currentCells =
+                    new List<Tuple<int, int>>();
+
                 for (int x = 0; x < config.BoardWidth; x++) {
                     if (
                         this.board[x, y] == Board.EMPTY || this.isLocked[x, y]
                     ) {
+                        currentCells.Clear();
                         count = 0;
                         currentGem = Board.EMPTY;
                         continue;
                     }
 
-                    if (this.board[x, y] == currentGem) {
-                        count++;
-                    } else {
-                        if (count >= 3) {
-                            EliminateHorizontal(x - 1, y);
-                        }
-                        count = 1;
+                    if (this.board[x, y] != currentGem) {
                         currentGem = this.board[x, y];
+                        currentCells.Clear();
+                        currentCells.Add(new Tuple<int, int>(x, y));
+                        count = 1;
+                    } else {
+                        currentCells.Add(new Tuple<int, int>(x, y));
+                        count++;
+                    }
+
+                    if (count >= 3) {
+                        toEliminate.AddRange(currentCells);
                     }
                 }
-                if (count >= 3) {
-                    EliminateHorizontal(config.BoardWidth - 1, y);
-                }
             }
-        }
 
-        private void EliminateHorizontal(int xx, int y) {
-            for (int x = xx - 1; x >= 0; x--) {
-                if (this.board[x, y] != this.board[xx, y]) {
-                    break;
-                }
-                EliminateCell(x, y);
+            foreach (Tuple<int, int> cell in toEliminate.Distinct().ToList()) {
+                EliminateCell(cell.Item1, cell.Item2);
             }
-            for (int x = xx + 1; x < config.BoardWidth; x--) {
-                if (this.board[x, y] != this.board[xx, y]) {
-                    break;
-                }
-                EliminateCell(x, y);
-            }
-            EliminateCell(xx, y);
-        }
-
-        private void EliminateVertical(int x, int yy) {
-            for (int y = yy - 1; y >= 0; y--) {
-                if (this.board[x, y] != this.board[x, yy]) {
-                    break;
-                }
-                EliminateCell(x, y);
-            }
-            for (int y = yy + 1; y < config.BoardHeight; y--) {
-                if (this.board[x, y] != this.board[x, yy]) {
-                    break;
-                }
-                EliminateCell(x, y);
-            }
-            EliminateCell(x, yy);
         }
 
         private void EliminateCell(int x, int y) {

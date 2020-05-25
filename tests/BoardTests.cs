@@ -109,6 +109,18 @@ namespace gemswap.tests
                     { 0 },
                 },
             },
+            new object[] {
+                new int[,] {
+                    { 1, 0, 0 },
+                    { 1, 0, 0 },
+                    { 1, 1, 1 },
+                },
+                new int[,] {
+                    { 0, 0, 0 },
+                    { 0, 0, 0 },
+                    { 0, 0, 0 },
+                },
+            },
         };
 
         [Test, TestCaseSource("TestCasesForEliminatingGems")]
