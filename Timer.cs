@@ -50,5 +50,9 @@ namespace gemswap {
                 1.0f
             );
         }
+
+        public bool IsActive() {
+            return this.isActive;
+        }
     }
 }
