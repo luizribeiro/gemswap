@@ -87,6 +87,7 @@ namespace gemswap {
                     float cellOffsetX = board.GetCellOffsetX(x, y);
                     float cellOffsetY = board.GetCellOffsetY(x, y);
 
+                    int a = board.GetCellAlpha(x, y);
                     this.spriteBatch.Draw(
                         this.gemTexture,
                         position: new Vector2(
@@ -99,7 +100,7 @@ namespace gemswap {
                             Constants.GEM_WIDTH,
                             Constants.GEM_HEIGHT
                         ),
-                        color: Color.White
+                        color: new Color(a, a, a, a)
                     );
                 }
             }

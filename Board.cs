@@ -180,6 +180,7 @@ namespace gemswap
                 onDoneCallback: () => {
                     this.board[X, Y] = Board.EMPTY;
                     this.isLocked[X, Y] = false;
+                    this.fadeOutTimer[x, y] = null;
                 }
             );
             this.fadeOutTimer[x, y] = timer;
@@ -292,6 +293,12 @@ namespace gemswap
         public float GetCellOffsetY(int x, int y) {
             return (this.movimentTimer[x, y]?.Progress() ?? 0.0f)
                 * this.boardDY[x, y] * Constants.GEM_HEIGHT;
+        }
+
+        public int GetCellAlpha(int x, int y) {
+            return Convert.ToInt32(
+                (1.0f - (this.fadeOutTimer[x, y]?.Progress() ?? 0.0f))  * 255
+            );
         }
 
         public void Swap() {
