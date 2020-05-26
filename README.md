@@ -30,13 +30,22 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
 
 ### TODOs
 
-* **High-pri**
-  * Clean up multiple matrices used for the board (maybe into a single one?)
-* **Mid-pri**
-  * Add support for two or more players
+* **Gameplay**
+  * Add game over
+  * Add score
   * Add support for keyboard
-  * Integrate with StyleCopAnalyzers
-* **Low-pri**
+  * Prevent cursor from going above all rows
+
+* **Advanced Gameplay**
+  * Add support for combos
+  * Add support for two or more players
+
+* **Aesthetics**
+  * Add sound effects
+  * Add music
   * Center game on the screen
   * Add animation to cursor movement
-  * Prevent cursor from going above all rows
+
+* **Dev Experience**
+  * Clean up multiple matrices used for the board (maybe into a single one?)
+  * Integrate with StyleCopAnalyzers
