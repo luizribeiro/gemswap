@@ -12,7 +12,7 @@ namespace gemswap
         SpriteBatch? spriteBatch;
         Texture2D? background;
         Board board;
-        Player player;
+        GamePadPlayer player;
         BoardRenderer boardRenderer;
 
         public GemSwap()
@@ -36,7 +36,7 @@ namespace gemswap
                     (SCREEN_HEIGHT - config.BoardHeightInPixels) / 2.0f
                 )
             );
-            this.player = new Player(this.board);
+            this.player = new GamePadPlayer(this.board, PlayerIndex.One);
         }
 
         protected override void Initialize()

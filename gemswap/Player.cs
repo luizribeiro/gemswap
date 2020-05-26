@@ -2,63 +2,86 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace gemswap {
-    public class Player {
-        Board board;
-        GamePadState? previousState;
+    public abstract class Player<T> where T : struct {
+        private Board board;
+        protected T? previousState;
 
-        public Player(Board board) {
+        protected Player(Board board) {
             this.board = board;
         }
 
-        protected GamePadState GetCurrentState() {
-            return GamePad.GetState(PlayerIndex.One);
+        protected abstract T GetCurrentState();
+
+        public abstract bool IsLeftPressed(T state);
+
+        public abstract bool IsRightPressed(T state);
+
+        public abstract bool IsDownPressed(T state);
+
+        public abstract bool IsUpPressed(T state);
+
+        public abstract bool IsSwapPressed(T state);
+
+        public void ProcessInput() {
+            T currentState = GetCurrentState();
+
+            if (IsLeftPressed(currentState)) {
+                this.board.MoveCursor(dx: -1, dy: 0);
+            }
+            if (IsRightPressed(currentState)) {
+                this.board.MoveCursor(dx: +1, dy: 0);
+            }
+            if (IsDownPressed(currentState)) {
+                this.board.MoveCursor(dx: 0, dy: +1);
+            }
+            if (IsUpPressed(currentState)) {
+                this.board.MoveCursor(dx: 0, dy: -1);
+            }
+            if (IsSwapPressed(currentState)) {
+                this.board.Swap();
+            }
+
+            this.previousState = currentState;
+        }
+    }
+
+    public class GamePadPlayer : Player<GamePadState> {
+        PlayerIndex playerIndex;
+
+        public GamePadPlayer(
+            Board board,
+            PlayerIndex playerIndex
+        ) : base(board) {
+            this.playerIndex = playerIndex;
         }
 
-        public bool IsLeftPressed(GamePadState state) {
+        protected override GamePadState GetCurrentState() {
+            return GamePad.GetState(this.playerIndex);
+        }
+
+        public override bool IsLeftPressed(GamePadState state) {
             return state.DPad.Left == ButtonState.Pressed
                 && state.DPad.Left != previousState?.DPad.Left;
         }
 
-        public bool IsRightPressed(GamePadState state) {
+        public override bool IsRightPressed(GamePadState state) {
             return state.DPad.Right == ButtonState.Pressed
                 && state.DPad.Right != previousState?.DPad.Right;
         }
 
-        public bool IsDownPressed(GamePadState state) {
+        public override bool IsDownPressed(GamePadState state) {
             return state.DPad.Down == ButtonState.Pressed
                 && state.DPad.Down != previousState?.DPad.Down;
         }
 
-        public bool IsUpPressed(GamePadState state) {
+        public override bool IsUpPressed(GamePadState state) {
             return state.DPad.Up == ButtonState.Pressed
                 && state.DPad.Up != previousState?.DPad.Up;
         }
 
-        public bool IsSwapPressed(GamePadState state) {
+        public override bool IsSwapPressed(GamePadState state) {
             return state.Buttons.A == ButtonState.Pressed
                 && state.Buttons.A != previousState?.Buttons.A;
-        }
-
-        public void ProcessInput() {
-            GamePadState gamePadState = GetCurrentState();
-
-            if (IsLeftPressed(gamePadState)) {
-                this.board.MoveCursor(dx: -1, dy: 0);
-            }
-            if (IsRightPressed(gamePadState)) {
-                this.board.MoveCursor(dx: +1, dy: 0);
-            }
-            if (IsDownPressed(gamePadState)) {
-                this.board.MoveCursor(dx: 0, dy: +1);
-            }
-            if (IsUpPressed(gamePadState)) {
-                this.board.MoveCursor(dx: 0, dy: -1);
-            }
-            if (IsSwapPressed(gamePadState)) {
-                this.board.Swap();
-            }
-
-            this.previousState = gamePadState;
         }
     }
 }
