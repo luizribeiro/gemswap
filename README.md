@@ -33,12 +33,9 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
 * **Gameplay**
   * Add game over
   * Add score
-  * Add support for keyboard
-  * Prevent cursor from going above all rows
 
 * **Advanced Gameplay**
   * Add support for combos
-  * Add support for two or more players
 
 * **Aesthetics**
   * Add sound effects
