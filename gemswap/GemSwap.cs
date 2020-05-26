@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace gemswap
 {
@@ -13,8 +12,8 @@ namespace gemswap
         SpriteBatch? spriteBatch;
         Texture2D? background;
         Board board;
+        Player player;
         BoardRenderer boardRenderer;
-        GamePadState previousGamePadState;
 
         public GemSwap()
         {
@@ -37,11 +36,11 @@ namespace gemswap
                     (SCREEN_HEIGHT - config.BoardHeightInPixels) / 2.0f
                 )
             );
+            this.player = new Player(this.board);
         }
 
         protected override void Initialize()
         {
-            this.previousGamePadState = GamePad.GetState(PlayerIndex.One);
             base.Initialize();
         }
 
@@ -67,51 +66,9 @@ namespace gemswap
 
             this.board.Update(ellapsedMilliseconds);
 
-            this.HandleUserInput();
+            this.player.ProcessInput();
 
             base.Update(gameTime);
-        }
-
-        private void HandleUserInput() {
-            GamePadState gamePadState1 = GamePad.GetState(PlayerIndex.One);
-            if (
-                gamePadState1.Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape)
-            ) {
-                Exit();
-            }
-
-            if (
-                gamePadState1.DPad.Left == ButtonState.Pressed
-                && gamePadState1.DPad.Left != previousGamePadState.DPad.Left
-            ) {
-                this.board.MoveCursor(dx: -1, dy: 0);
-            }
-            if (
-                gamePadState1.DPad.Right == ButtonState.Pressed
-                && gamePadState1.DPad.Right != previousGamePadState.DPad.Right
-            ) {
-                this.board.MoveCursor(dx: +1, dy: 0);
-            }
-            if (
-                gamePadState1.DPad.Down == ButtonState.Pressed
-                && gamePadState1.DPad.Down != previousGamePadState.DPad.Down
-            ) {
-                this.board.MoveCursor(dx: 0, dy: +1);
-            }
-            if (
-                gamePadState1.DPad.Up == ButtonState.Pressed
-                && gamePadState1.DPad.Up != previousGamePadState.DPad.Up
-            ) {
-                this.board.MoveCursor(dx: 0, dy: -1);
-            }
-            if (
-                gamePadState1.Buttons.A == ButtonState.Pressed
-                && gamePadState1.Buttons.A != previousGamePadState.Buttons.A
-            ) {
-                this.board.Swap();
-            }
-            this.previousGamePadState = gamePadState1;
         }
 
         protected override void Draw(GameTime gameTime)
