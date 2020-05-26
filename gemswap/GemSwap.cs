@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace gemswap
 {
@@ -11,9 +12,9 @@ namespace gemswap
         GraphicsDeviceManager graphics;
         SpriteBatch? spriteBatch;
         Texture2D? background;
-        Board board;
-        GamePadPlayer player;
-        BoardRenderer boardRenderer;
+        List<Board> boards;
+        List<GamePadPlayer> players;
+        List<BoardRenderer> boardRenderers;
 
         public GemSwap()
         {
@@ -27,16 +28,24 @@ namespace gemswap
             this.IsMouseVisible = true;
 
             Config config = new Config();
-            this.board = new Board(config);
-            this.boardRenderer = new BoardRenderer(
+
+            this.boardRenderers = new List<BoardRenderer>();
+            this.boards = new List<Board>();
+            this.players = new List<GamePadPlayer>();
+
+            int numPlayers = 1;
+
+            this.boardRenderers.Add(new BoardRenderer(
                 config,
                 GraphicsDevice,
                 position: new Vector2(
-                    (SCREEN_WIDTH - config.BoardWidthInPixels) / 2.0f,
-                    (SCREEN_HEIGHT - config.BoardHeightInPixels) / 2.0f
+                    (SCREEN_WIDTH - config.BoardWidthInPixels * numPlayers) / 2.0f,
+                    (SCREEN_HEIGHT - config.BoardHeightInPixels * numPlayers) / 2.0f
                 )
-            );
-            this.player = new GamePadPlayer(this.board, PlayerIndex.One);
+            ));
+            Board board = new Board(config);
+            this.boards.Add(board);
+            this.players.Add(new GamePadPlayer(board, PlayerIndex.One));
         }
 
         protected override void Initialize()
@@ -48,7 +57,10 @@ namespace gemswap
         {
             this.spriteBatch = new SpriteBatch(GraphicsDevice);
             this.background = this.Content.Load<Texture2D>("background");
-            this.boardRenderer.LoadContent(this.Content);
+
+            for (int i = 0; i < this.boardRenderers.Count; i++) {
+                this.boardRenderers[i].LoadContent(this.Content);
+            }
         }
 
         protected override void UnloadContent()
@@ -64,9 +76,13 @@ namespace gemswap
 
             TimerManager.Update(ellapsedMilliseconds);
 
-            this.board.Update(ellapsedMilliseconds);
+            for (int i = 0; i < this.boards.Count; i++) {
+                this.boards[i].Update(ellapsedMilliseconds);
+            }
 
-            this.player.ProcessInput();
+            for (int i = 0; i < this.players.Count; i++) {
+                this.players[i].ProcessInput();
+            }
 
             base.Update(gameTime);
         }
@@ -83,7 +99,9 @@ namespace gemswap
             );
             this.spriteBatch.End();
 
-            this.boardRenderer.Draw(board);
+            for (int i = 0; i < this.boardRenderers.Count; i++) {
+                this.boardRenderers[i].Draw(this.boards[i]);
+            }
 
             base.Draw(gameTime);
         }
