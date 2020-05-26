@@ -20,5 +20,8 @@ namespace gemswap
         public virtual int NumGems { get => 7; }
 
         public virtual int CursorOffsetPx { get => 8; }
+
+        public int BoardWidthInPixels { get => BoardWidth * GemWidth; }
+        public int BoardHeightInPixels { get => BoardHeight * GemHeight; }
     }
 }

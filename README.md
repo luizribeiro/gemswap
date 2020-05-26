@@ -43,7 +43,6 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
 * **Aesthetics**
   * Add sound effects
   * Add music
-  * Center game on the screen
   * Add animation to cursor movement
 
 * **Dev Experience**

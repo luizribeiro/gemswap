@@ -11,11 +11,21 @@ namespace gemswap {
         Texture2D? backgroundTexture;
         Texture2D? gemTexture;
         Texture2D? cursorTexture;
+        Matrix translationMatrix;
         private Config config;
 
-        public BoardRenderer(Config config, GraphicsDevice graphicsDevice) {
+        public BoardRenderer(
+            Config config,
+            GraphicsDevice graphicsDevice,
+            Vector2 position
+        ) {
             this.config = config;
             this.graphicsDevice = graphicsDevice;
+            this.translationMatrix = Matrix.CreateTranslation(
+                position.X,
+                position.Y,
+                0.0f
+            );
         }
 
         public void LoadContent(ContentManager contentManager) {
@@ -57,11 +67,11 @@ namespace gemswap {
                 DepthBufferEnable = false,
             };
 
-            spriteBatch!.Begin(SpriteSortMode.Immediate, null, null, s1, null, null);
+            spriteBatch!.Begin(SpriteSortMode.Immediate, null, null, s1, null, null, this.translationMatrix);
             this.DrawBackground();
             spriteBatch.End();
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, null, null, s2, null, null);
+            spriteBatch.Begin(SpriteSortMode.Immediate, null, null, s2, null, null, this.translationMatrix);
             this.DrawBackground();
             this.DrawBoard(board);
             this.DrawCursor(board);

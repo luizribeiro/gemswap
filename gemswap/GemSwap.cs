@@ -29,7 +29,14 @@ namespace gemswap
 
             Config config = new Config();
             this.board = new Board(config);
-            this.boardRenderer = new BoardRenderer(config, GraphicsDevice);
+            this.boardRenderer = new BoardRenderer(
+                config,
+                GraphicsDevice,
+                position: new Vector2(
+                    (SCREEN_WIDTH - config.BoardWidthInPixels) / 2.0f,
+                    (SCREEN_HEIGHT - config.BoardHeightInPixels) / 2.0f
+                )
+            );
         }
 
         protected override void Initialize()
