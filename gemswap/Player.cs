@@ -2,7 +2,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace gemswap {
-    public abstract class Player<T> where T : struct {
+    public interface IPlayer {
+        public void ProcessInput();
+    }
+
+    public abstract class Player<T> : IPlayer
+        where T : struct {
+
         private Board board;
         protected T? previousState;
 
@@ -82,6 +88,40 @@ namespace gemswap {
         public override bool IsSwapPressed(GamePadState state) {
             return state.Buttons.A == ButtonState.Pressed
                 && state.Buttons.A != previousState?.Buttons.A;
+        }
+    }
+
+    public class KeyboardPlayer : Player<KeyboardState> {
+        public KeyboardPlayer(Board board) : base(board) {
+        }
+
+        protected override KeyboardState GetCurrentState() {
+            return Keyboard.GetState();
+        }
+
+        public override bool IsLeftPressed(KeyboardState state) {
+            return state.IsKeyDown(Keys.A)
+                && !(previousState?.IsKeyDown(Keys.A) ?? false);
+        }
+
+        public override bool IsRightPressed(KeyboardState state) {
+            return state.IsKeyDown(Keys.D)
+                && !(previousState?.IsKeyDown(Keys.D) ?? false);
+        }
+
+        public override bool IsDownPressed(KeyboardState state) {
+            return state.IsKeyDown(Keys.S)
+                && !(previousState?.IsKeyDown(Keys.S) ?? false);
+        }
+
+        public override bool IsUpPressed(KeyboardState state) {
+            return state.IsKeyDown(Keys.W)
+                && !(previousState?.IsKeyDown(Keys.W) ?? false);
+        }
+
+        public override bool IsSwapPressed(KeyboardState state) {
+            return state.IsKeyDown(Keys.Space)
+                && !(previousState?.IsKeyDown(Keys.Space) ?? false);
         }
     }
 }

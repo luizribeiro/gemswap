@@ -13,7 +13,7 @@ namespace gemswap
         SpriteBatch? spriteBatch;
         Texture2D? background;
         List<Board> boards;
-        List<GamePadPlayer> players;
+        List<IPlayer> players;
         List<BoardRenderer> boardRenderers;
 
         public GemSwap()
@@ -31,7 +31,7 @@ namespace gemswap
 
             this.boardRenderers = new List<BoardRenderer>();
             this.boards = new List<Board>();
-            this.players = new List<GamePadPlayer>();
+            this.players = new List<IPlayer>();
 
             int numPlayers = 2;
             int playerIndex = 0;
@@ -48,7 +48,7 @@ namespace gemswap
             ));
             Board board = new Board(config);
             this.boards.Add(board);
-            this.players.Add(new GamePadPlayer(board, PlayerIndex.One));
+            this.players.Add(new KeyboardPlayer(board));
 
             playerIndex = 1;
             this.boardRenderers.Add(new BoardRenderer(
