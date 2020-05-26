@@ -33,17 +33,35 @@ namespace gemswap
             this.boards = new List<Board>();
             this.players = new List<GamePadPlayer>();
 
-            int numPlayers = 1;
+            int numPlayers = 2;
+            int playerIndex = 0;
 
             this.boardRenderers.Add(new BoardRenderer(
                 config,
                 GraphicsDevice,
                 position: new Vector2(
-                    (SCREEN_WIDTH - config.BoardWidthInPixels * numPlayers) / 2.0f,
-                    (SCREEN_HEIGHT - config.BoardHeightInPixels * numPlayers) / 2.0f
+                    (SCREEN_WIDTH - config.BoardWidthInPixels * numPlayers)
+                        / (numPlayers + 1.0f) * (playerIndex + 1)
+                        + playerIndex * config.BoardWidthInPixels,
+                    (SCREEN_HEIGHT - config.BoardHeightInPixels) / 2.0f
                 )
             ));
             Board board = new Board(config);
+            this.boards.Add(board);
+            this.players.Add(new GamePadPlayer(board, PlayerIndex.One));
+
+            playerIndex = 1;
+            this.boardRenderers.Add(new BoardRenderer(
+                config,
+                GraphicsDevice,
+                position: new Vector2(
+                    (SCREEN_WIDTH - config.BoardWidthInPixels * numPlayers)
+                        / (numPlayers + 1.0f) * (playerIndex + 1)
+                        + playerIndex * config.BoardWidthInPixels,
+                    (SCREEN_HEIGHT - config.BoardHeightInPixels) / 2.0f
+                )
+            ));
+            board = new Board(config);
             this.boards.Add(board);
             this.players.Add(new GamePadPlayer(board, PlayerIndex.One));
         }
