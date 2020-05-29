@@ -1,16 +1,18 @@
-using NUnit.Framework;
-
 namespace GemSwap.Tests
 {
+    using NUnit.Framework;
+
     public class TimerManagerTests
     {
         [TearDown]
-        public void TearDownTest() {
+        public void TearDownTest()
+        {
             TimerManager.ClearAll();
         }
 
         [Test]
-        public void TestTimerSetup() {
+        public void TestTimerSetup()
+        {
             Assert.AreEqual(0, TimerManager.GetNumTimers());
             Timer t = TimerManager.AddTimer(durationMilliseconds: 1000.0f);
             Assert.IsTrue(t.IsActive());
@@ -18,7 +20,8 @@ namespace GemSwap.Tests
         }
 
         [Test]
-        public void TestTimerCallback() {
+        public void TestTimerCallback()
+        {
             bool hasCallbackBeenCalled = false;
             Timer t = TimerManager.AddTimer(
                 durationMilliseconds: 1000.0f,
@@ -33,7 +36,8 @@ namespace GemSwap.Tests
         }
 
         [Test]
-        public void TestTimerCallbackWithDelay() {
+        public void TestTimerCallbackWithDelay()
+        {
             bool hasCallbackBeenCalled = false;
             Timer t = TimerManager.AddTimer(
                 durationMilliseconds: 1000.0f,
@@ -51,7 +55,8 @@ namespace GemSwap.Tests
         }
 
         [Test]
-        public void TestProgress() {
+        public void TestProgress()
+        {
             Timer t = TimerManager.AddTimer(
                 durationMilliseconds: 1000.0f,
                 delayMilliseconds: 1000.0f
@@ -69,7 +74,8 @@ namespace GemSwap.Tests
         }
 
         [Test]
-        public void TestCleanupOfInactiveTimers() {
+        public void TestCleanupOfInactiveTimers()
+        {
             TimerManager.AddTimer(durationMilliseconds: 1000.0f);
             TimerManager.AddTimer(durationMilliseconds: 50.0f);
             Assert.AreEqual(2, TimerManager.GetNumTimers());

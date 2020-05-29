@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RuleSet Name="style" ToolsVersion="15.0">
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <!-- Closing parenthesis should not be preceded by a space -->
+    <Rule Id="SA1009" Action="None" />
     <!-- Require headers on all files -->
     <Rule Id="SA1633" Action="None" />
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
     <!-- Name can be simplified -->
     <Rule Id="IDE0003" Action="None" />
+    <!-- Expression value is never used -->
+    <Rule Id="IDE0058" Action="None" />
     <!-- using should be outside of namespace -->
     <Rule Id="IDE0065" Action="None" />
   </Rules>

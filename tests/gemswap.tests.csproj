@@ -5,7 +5,13 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)\..\style.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="../stylecop.json" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NUnit" Version="3.12.0" />
