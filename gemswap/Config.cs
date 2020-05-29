@@ -1,4 +1,4 @@
-namespace gemswap
+namespace GemSwap
 {
     public class Config
     {

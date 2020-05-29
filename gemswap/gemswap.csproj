@@ -6,11 +6,16 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
 
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)\..\style.ruleset</CodeAnalysisRuleSet>
     <DefaultItemExcludes>$(DefaultItemExcludes);tests\*</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>
     <MonoGameContentReference Include="**\*.mgcb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="../stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace gemswap
+﻿namespace GemSwap
 {
+    using System;
+
     public static class Program
     {
         [STAThread]

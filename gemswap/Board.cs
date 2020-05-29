@@ -1,17 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace gemswap
+namespace GemSwap
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class Board
     {
         public const int EMPTY = -1;
 
-        private int[,] board;
-        private int[,] boardDX;
-        private int[,] boardDY;
-        private bool[,] isLocked;
+        private readonly Config config;
+        private readonly int[,] board;
+        private readonly int[,] boardDX;
+        private readonly int[,] boardDY;
+        private readonly bool[,] isLocked;
         private Timer?[,] movimentTimer;
         private Timer?[,] fadeOutTimer;
         private int[] upcomingRow;
@@ -19,7 +20,6 @@ namespace gemswap
         private int cursorX;
         private int cursorY;
         private int boardVerticalOffset;
-        private Config config;
 
         public Board(Config config)
         {

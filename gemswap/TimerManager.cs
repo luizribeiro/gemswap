@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
+namespace GemSwap {
+    using System;
+    using System.Collections.Generic;
 
-namespace gemswap {
     public class TimerManager {
         private static List<Timer> timers = new List<Timer>();
 

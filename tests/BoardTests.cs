@@ -1,7 +1,7 @@
 using Moq;
 using NUnit.Framework;
 
-namespace gemswap.tests
+namespace GemSwap.Tests
 {
     public class BoardTests
     {

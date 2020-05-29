@@ -1,25 +1,27 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-
-namespace gemswap
+﻿namespace GemSwap
 {
+    using System.Collections.Generic;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+
     public class GemSwap : Game
     {
-        const int SCREEN_WIDTH = 1920;
-        const int SCREEN_HEIGHT = 1080;
+        private const int SCREEN_WIDTH = 1920;
+        private const int SCREEN_HEIGHT = 1080;
 
-        GraphicsDeviceManager graphics;
-        SpriteBatch? spriteBatch;
-        Texture2D? background;
-        List<Board> boards;
-        List<IPlayer> players;
-        List<BoardRenderer> boardRenderers;
+        private readonly GraphicsDeviceManager graphics;
+        private readonly List<Board> boards;
+        private readonly List<BoardRenderer> boardRenderers;
+
+        private SpriteBatch? spriteBatch;
+        private Texture2D? background;
+        private List<IPlayer> players;
 
         public GemSwap()
         {
-            this.graphics = new GraphicsDeviceManager(this) {
-                PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8
+            this.graphics = new GraphicsDeviceManager(this)
+            {
+                PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8,
             };
             this.graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
             this.graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;

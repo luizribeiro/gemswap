@@ -1,6 +1,6 @@
-using System;
+namespace GemSwap {
+    using System;
 
-namespace gemswap {
     public class Timer {
         bool isActive;
 

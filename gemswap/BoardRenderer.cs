@@ -1,18 +1,19 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+namespace GemSwap
+{
+    using System;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Content;
+    using Microsoft.Xna.Framework.Graphics;
 
-namespace gemswap {
     public class BoardRenderer
     {
-        GraphicsDevice graphicsDevice;
-        SpriteBatch? spriteBatch;
-        Texture2D? backgroundTexture;
-        Texture2D? gemTexture;
-        Texture2D? cursorTexture;
-        Matrix translationMatrix;
-        private Config config;
+        private readonly GraphicsDevice graphicsDevice;
+        private readonly Config config;
+        private SpriteBatch? spriteBatch;
+        private Texture2D? backgroundTexture;
+        private Texture2D? gemTexture;
+        private Texture2D? cursorTexture;
+        private Matrix translationMatrix;
 
         public BoardRenderer(
             Config config,

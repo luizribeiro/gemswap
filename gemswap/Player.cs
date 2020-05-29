@@ -1,7 +1,8 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+namespace GemSwap
+{
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Input;
 
-namespace gemswap {
     public interface IPlayer {
         public void ProcessInput();
     }
