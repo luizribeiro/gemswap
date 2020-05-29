@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="style" ToolsVersion="15.0">
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <!-- Require headers on all files -->
+    <Rule Id="SA1633" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
+    <!-- Name can be simplified -->
+    <Rule Id="IDE0003" Action="None" />
+    <!-- using should be outside of namespace -->
+    <Rule Id="IDE0065" Action="None" />
+  </Rules>
+</RuleSet>

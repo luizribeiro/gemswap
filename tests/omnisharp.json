@@ -2,5 +2,8 @@
   "dotnet": {
    "enabled": true,
    "enablePackageRestore": false
+  },
+  "RoslynExtensionsOptions": {
+    "enableAnalyzersSupport": true
   }
 }
