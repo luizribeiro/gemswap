@@ -44,4 +44,3 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
 
 * **Dev Experience**
   * Clean up multiple matrices used for the board (maybe into a single one?)
-  * Integrate with StyleCopAnalyzers
