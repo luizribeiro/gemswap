@@ -93,14 +93,7 @@ namespace GemSwap
                 return;
             }
 
-            this.offset += this.config.GemHeight * ellapsedMilliseconds
-                / this.config.BoardSpeedRowPerMs;
-
-            if (this.offset >= this.config.GemHeight)
-            {
-                this.offset = 0.0f;
-                this.AddNewRow();
-            }
+            this.ScrollBoardUp(ellapsedMilliseconds);
 
             for (int x = 0; x < this.config.BoardWidth; x++)
             {
@@ -241,6 +234,29 @@ namespace GemSwap
 
             this.movimentTimer[x, y] = swapTimer;
             this.movimentTimer[x + 1, y] = swapTimer;
+        }
+
+        private void ScrollBoardUp(float ellapsedMilliseconds)
+        {
+            for (int x = 0; x < this.config.BoardWidth; x++)
+            {
+                for (int y = 0; y < this.config.BoardHeight; y++)
+                {
+                    if (this.fadeOutTimer[x, y] != null)
+                    {
+                        return;
+                    }
+                }
+            }
+
+            this.offset += this.config.GemHeight * ellapsedMilliseconds
+                / this.config.BoardSpeedRowPerMs;
+
+            if (this.offset >= this.config.GemHeight)
+            {
+                this.offset = 0.0f;
+                this.AddNewRow();
+            }
         }
 
         private void EliminateContiguous()

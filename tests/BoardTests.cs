@@ -168,6 +168,38 @@ namespace GemSwap.Tests
         }
 
         [Test]
+        public void TestDoesNotScrollUpWhileEliminatingGems()
+        {
+            Config config = this.SetupConfig(boardWidth: 3, boardHeight: 2);
+            Board board = this.SetupBoard(
+                config,
+                board: new[,] {
+                    { 0, 0, 0 },
+                    { 1, 1, 1 },
+                }
+            );
+            Assert.AreEqual(0.0f, board.GetOffset());
+
+            // eliminate first row
+            this.Update(board, 0);
+
+            // run animation almost until the end
+            this.Update(board, config.EliminationDurationMs - 1);
+
+            // run last second of animation (which will end up moving offset)
+            this.Update(board, 1);
+
+            this.AssertBoard(
+                new[,] {
+                    { 0, 0, 0 },
+                    { 0, 0, 0 },
+                },
+                board
+            );
+            Assert.AreEqual(0.0f, board.GetOffset(), 0.1f);
+        }
+
+        [Test]
         public void TestSwapImmediatelyBeforeAppendingUpcomingRow()
         {
             Config config = this.SetupConfig(boardWidth: 2, boardHeight: 2);
