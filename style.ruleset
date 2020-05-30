@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RuleSet Name="style" ToolsVersion="15.0">
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <!-- XML comment analysis is disabled due to project configuration-->
+    <Rule Id="SA0001" Action="None" />
     <!-- Closing parenthesis should not be preceded by a space -->
     <Rule Id="SA1009" Action="None" />
+    <!-- Closing square bracket should be followed by a space -->
+    <Rule Id="SA1011" Action="None" />
+    <!-- Closing parenthesis should be on line of last parameter -->
+    <Rule Id="SA1111" Action="None" />
+    <!-- SA1500 Braces for multi-line statements should not share line -->
+    <Rule Id="SA1500" Action="None" />
     <!-- Require headers on all files -->
     <Rule Id="SA1633" Action="None" />
+    <!-- The parameter spans multiple lines -->
+    <Rule Id="SA1118" Action="None" />
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
     <!-- Name can be simplified -->
