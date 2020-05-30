@@ -1,6 +1,5 @@
 namespace GemSwap
 {
-    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
     public class KeyboardPlayer : Player<KeyboardState>
@@ -8,11 +7,6 @@ namespace GemSwap
         public KeyboardPlayer(Board board)
             : base(board)
         {
-        }
-
-        protected override KeyboardState GetCurrentState()
-        {
-            return Keyboard.GetState();
         }
 
         public override bool IsLeftPressed(KeyboardState state)
@@ -43,6 +37,11 @@ namespace GemSwap
         {
             return state.IsKeyDown(Keys.Space)
                 && !(this.PreviousState?.IsKeyDown(Keys.Space) ?? false);
+        }
+
+        protected override KeyboardState GetCurrentState()
+        {
+            return Keyboard.GetState();
         }
     }
 }
