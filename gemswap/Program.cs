@@ -5,11 +5,10 @@
     public static class Program
     {
         [STAThread]
-        static void Main()
+        public static void Main()
         {
-            using (var game = new GemSwap()) {
-                game.Run();
-            }
+            using GemSwap game = new GemSwap();
+            game.Run();
         }
     }
 }
