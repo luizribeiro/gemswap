@@ -31,7 +31,6 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
 ### TODOs
 
 * **Gameplay**
-  * Add game over
   * Add score
 
 * **Advanced Gameplay**
@@ -41,6 +40,9 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
   * Add sound effects
   * Add music
   * Add animation to cursor movement
+  * Add effects to:
+    * Eliminations
+    * Game over
 
 * **Dev Experience**
   * Clean up multiple matrices used for the board (maybe into a single one?)
