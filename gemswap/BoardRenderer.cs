@@ -19,7 +19,8 @@ namespace GemSwap
             Config config,
             GraphicsDevice graphicsDevice,
             Vector2 position
-        ) {
+        )
+        {
             this.config = config;
             this.graphicsDevice = graphicsDevice;
             this.translationMatrix = Matrix.CreateTranslation(
@@ -29,14 +30,15 @@ namespace GemSwap
             );
         }
 
-        public void LoadContent(ContentManager contentManager) {
+        public void LoadContent(ContentManager contentManager)
+        {
             this.spriteBatch = new SpriteBatch(this.graphicsDevice);
             this.gemTexture = contentManager.Load<Texture2D>("gems");
             this.cursorTexture = contentManager.Load<Texture2D>("cursor");
 
-            int backgroundWidth = config.BoardWidth * config.GemWidth;
+            int backgroundWidth = this.config.BoardWidth * this.config.GemWidth;
             int backgroundHeight =
-                config.BoardHeight * config.GemHeight;
+                this.config.BoardHeight * this.config.GemHeight;
             this.backgroundTexture = new Texture2D(
                 this.graphicsDevice,
                 backgroundWidth,
@@ -46,21 +48,26 @@ namespace GemSwap
                 backgroundWidth * backgroundHeight
             ];
             Color backgroundColor = new Color(0, 0, 0, 100);
-            for(int i = 0; i < backgroundData.Length; i++) {
+            for (int i = 0; i < backgroundData.Length; i++)
+            {
                 backgroundData[i] = backgroundColor;
             }
+
             this.backgroundTexture.SetData(backgroundData);
         }
 
-        public void Draw(Board board) {
-            var s1 = new DepthStencilState {
+        public void Draw(Board board)
+        {
+            DepthStencilState s1 = new DepthStencilState
+            {
                 StencilEnable = true,
                 StencilFunction = CompareFunction.Always,
                 StencilPass = StencilOperation.Replace,
                 ReferenceStencil = 1,
                 DepthBufferEnable = false,
             };
-            var s2 = new DepthStencilState {
+            DepthStencilState s2 = new DepthStencilState
+            {
                 StencilEnable = true,
                 StencilFunction = CompareFunction.LessEqual,
                 StencilPass = StencilOperation.Keep,
@@ -68,32 +75,53 @@ namespace GemSwap
                 DepthBufferEnable = false,
             };
 
-            spriteBatch!.Begin(SpriteSortMode.Immediate, null, null, s1, null, null, this.translationMatrix);
+            this.spriteBatch!.Begin(
+                SpriteSortMode.Immediate,
+                null,
+                null,
+                s1,
+                null,
+                null,
+                this.translationMatrix
+            );
             this.DrawBackground();
-            spriteBatch.End();
+            this.spriteBatch.End();
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, null, null, s2, null, null, this.translationMatrix);
+            this.spriteBatch.Begin(
+                SpriteSortMode.Immediate,
+                null,
+                null,
+                s2,
+                null,
+                null,
+                this.translationMatrix
+            );
             this.DrawBackground();
             this.DrawBoard(board);
             this.DrawCursor(board);
-            spriteBatch.End();
+            this.spriteBatch.End();
         }
 
-        private void DrawBackground() {
-            spriteBatch!.Draw(
+        private void DrawBackground()
+        {
+            this.spriteBatch!.Draw(
                 this.backgroundTexture,
                 new Vector2(0, 0),
                 Color.Black
             );
         }
 
-        private void DrawBoard(Board board) {
+        private void DrawBoard(Board board)
+        {
             float offset = board.GetOffset();
 
-            for (int x = 0; x < config.BoardWidth; x++) {
-                for (int y = 0; y < config.BoardHeight; y++) {
+            for (int x = 0; x < this.config.BoardWidth; x++)
+            {
+                for (int y = 0; y < this.config.BoardHeight; y++)
+                {
                     int gem = board.GetCell(x, y);
-                    if (gem == Board.EMPTY) {
+                    if (gem == Board.EMPTY)
+                    {
                         continue;
                     }
 
@@ -104,60 +132,62 @@ namespace GemSwap
                     this.spriteBatch!.Draw(
                         this.gemTexture,
                         position: new Vector2(
-                            x * config.GemWidth + cellOffsetX,
-                            y * config.GemHeight + cellOffsetY - offset
+                            x * this.config.GemWidth + cellOffsetX,
+                            y * this.config.GemHeight + cellOffsetY - offset
                         ),
                         sourceRectangle: new Rectangle(
-                            gem * config.GemWidth,
+                            gem * this.config.GemWidth,
                             0,
-                            config.GemWidth,
-                            config.GemHeight
+                            this.config.GemWidth,
+                            this.config.GemHeight
                         ),
                         color: new Color(a, a, a, a)
                     );
                 }
             }
 
-            float heightLeft = config.GemHeight - offset;
-            float pxSpeed = config.GemHeight / config.BoardSpeedRowPerMs;
+            float heightLeft = this.config.GemHeight - offset;
+            float pxSpeed = this.config.GemHeight / this.config.BoardSpeedRowPerMs;
             float msLeft = heightLeft / pxSpeed;
-            int alpha = msLeft > config.AnimationGemFadeInMs
+            int alpha = msLeft > this.config.AnimationGemFadeInMs
                 ? 100
-                : Convert.ToInt32(100.0 + 155.0 * (1.0 - msLeft / config.AnimationGemFadeInMs));
+                : Convert.ToInt32(100.0 + 155.0 * (1.0 - msLeft / this.config.AnimationGemFadeInMs));
             Color upcomingGemColor = new Color(
                 alpha,
                 alpha,
                 alpha,
                 alpha
             );
-            for (int x = 0; x < config.BoardWidth; x++) {
+            for (int x = 0; x < this.config.BoardWidth; x++)
+            {
                 int gem = board.GetUpcomingCell(x);
 
                 this.spriteBatch!.Draw(
                     this.gemTexture,
                     position: new Vector2(
-                        x * config.GemWidth,
-                        config.BoardHeight * config.GemHeight - offset
+                        x * this.config.GemWidth,
+                        this.config.BoardHeight * this.config.GemHeight - offset
                     ),
                     sourceRectangle: new Rectangle(
-                        gem * config.GemWidth,
+                        gem * this.config.GemWidth,
                         0,
-                        config.GemWidth,
-                        config.GemHeight
+                        this.config.GemWidth,
+                        this.config.GemHeight
                     ),
                     color: upcomingGemColor
                 );
             }
         }
 
-        private void DrawCursor(Board board) {
-            spriteBatch!.Draw(
+        private void DrawCursor(Board board)
+        {
+            this.spriteBatch!.Draw(
                 this.cursorTexture,
                 new Vector2(
-                    board.GetCursorX() * config.GemWidth
-                        - config.CursorOffsetPx,
-                    board.GetCursorY() * config.GemHeight
-                        - config.CursorOffsetPx - board.GetOffset()
+                    board.GetCursorX() * this.config.GemWidth
+                        - this.config.CursorOffsetPx,
+                    board.GetCursorY() * this.config.GemHeight
+                        - this.config.CursorOffsetPx - board.GetOffset()
                 ),
                 Color.White
             );
