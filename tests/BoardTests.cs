@@ -62,9 +62,9 @@ namespace GemSwap.Tests
             Board board = new Board(config);
             for (int x = 0; x < config.BoardWidth; x++)
             {
-                Assert.AreNotEqual(
+                Assert.That(
                     board.GetCell(x, config.BoardHeight - 1),
-                    Board.EMPTY
+                    Is.Not.EqualTo(Board.EMPTY)
                 );
             }
         }
@@ -76,7 +76,7 @@ namespace GemSwap.Tests
             Board board = new Board(config);
             for (int x = 0; x < config.BoardWidth; x++)
             {
-                Assert.AreEqual(board.GetCell(x, 0), Board.EMPTY);
+                Assert.That(board.GetCell(x, 0), Is.EqualTo(Board.EMPTY));
             }
         }
 
@@ -98,8 +98,14 @@ namespace GemSwap.Tests
         [TestCaseSource(nameof(TestCasesForEliminatingGems))]
         public void TestEliminatingGems(int[,] initialBoard, int[,] finalBoard)
         {
-            Assert.AreEqual(initialBoard.GetLength(1), finalBoard.GetLength(1));
-            Assert.AreEqual(initialBoard.GetLength(0), finalBoard.GetLength(0));
+            Assert.That(
+                initialBoard.GetLength(1),
+                Is.EqualTo(finalBoard.GetLength(1))
+            );
+            Assert.That(
+                initialBoard.GetLength(0),
+                Is.EqualTo(finalBoard.GetLength(0))
+            );
 
             Config config = this.SetupConfig(
                 boardWidth: initialBoard.GetLength(1),
@@ -130,9 +136,9 @@ namespace GemSwap.Tests
             // check on it midway through
             this.Update(board, config.FallDurationMs / 2.0f);
             this.AssertBoard(new[,] { { 1 }, { 0 } }, board);
-            Assert.AreEqual(
-                config.GemHeight / 2.0f,
-                board.GetCellOffsetY(0, 0)
+            Assert.That(
+                board.GetCellOffsetY(0, 0),
+                Is.EqualTo(config.GemHeight / 2.0f)
             );
 
             // wait for it to finish
@@ -152,8 +158,8 @@ namespace GemSwap.Tests
                 },
                 upcomingRow: new[] { 3, 4 }
             );
-            Assert.AreEqual(board.GetCursorX(), 0);
-            Assert.AreEqual(board.GetCursorY(), 1);
+            Assert.That(board.GetCursorX(), Is.EqualTo(0));
+            Assert.That(board.GetCursorY(), Is.EqualTo(1));
 
             this.Update(board, config.BoardSpeedRowPerMs);
             this.AssertBoard(
@@ -163,8 +169,8 @@ namespace GemSwap.Tests
                 },
                 board
             );
-            Assert.AreEqual(board.GetCursorX(), 0);
-            Assert.AreEqual(board.GetCursorY(), 0);
+            Assert.That(board.GetCursorX(), Is.EqualTo(0));
+            Assert.That(board.GetCursorY(), Is.EqualTo(0));
         }
 
         [Test]
@@ -178,7 +184,7 @@ namespace GemSwap.Tests
                     { 1, 1, 1 },
                 }
             );
-            Assert.AreEqual(0.0f, board.GetOffset());
+            Assert.That(board.GetOffset(), Is.EqualTo(0.0f));
 
             // eliminate first row
             this.Update(board, 0);
@@ -196,7 +202,7 @@ namespace GemSwap.Tests
                 },
                 board
             );
-            Assert.AreEqual(0.0f, board.GetOffset(), 0.1f);
+            Assert.That(board.GetOffset(), Is.EqualTo(0.0f).Within(0.1f));
         }
 
         [Test]
@@ -211,8 +217,8 @@ namespace GemSwap.Tests
                 },
                 upcomingRow: new[] { 3, 4 }
             );
-            Assert.AreEqual(board.GetCursorX(), 0);
-            Assert.AreEqual(board.GetCursorY(), 1);
+            Assert.That(board.GetCursorX(), Is.EqualTo(0));
+            Assert.That(board.GetCursorY(), Is.EqualTo(1));
 
             this.Update(board, config.BoardSpeedRowPerMs - 1);
             board.Swap();
@@ -224,8 +230,8 @@ namespace GemSwap.Tests
                 },
                 board
             );
-            Assert.AreEqual(board.GetCursorX(), 0);
-            Assert.AreEqual(board.GetCursorY(), 1);
+            Assert.That(board.GetCursorX(), Is.EqualTo(0));
+            Assert.That(board.GetCursorY(), Is.EqualTo(1));
 
             this.Update(board, 1);
             this.AssertBoard(
@@ -236,8 +242,8 @@ namespace GemSwap.Tests
                 },
                 board
             );
-            Assert.AreEqual(board.GetCursorX(), 0);
-            Assert.AreEqual(board.GetCursorY(), 0);
+            Assert.That(board.GetCursorX(), Is.EqualTo(0));
+            Assert.That(board.GetCursorY(), Is.EqualTo(0));
 
             this.Update(board, config.SwapDurationMs);
             this.AssertBoard(
@@ -248,8 +254,8 @@ namespace GemSwap.Tests
                 },
                 board
             );
-            Assert.AreEqual(board.GetCursorX(), 0);
-            Assert.AreEqual(board.GetCursorY(), 0);
+            Assert.That(board.GetCursorX(), Is.EqualTo(0));
+            Assert.That(board.GetCursorY(), Is.EqualTo(0));
         }
 
         [Test]
@@ -335,10 +341,10 @@ namespace GemSwap.Tests
                 },
                 board
             );
-            Assert.AreEqual(1, board.GetCell(0, 0));
-            Assert.AreEqual(
-                config.GemHeight * 0.5f,
-                board.GetCellOffsetY(0, 0)
+            Assert.That(board.GetCell(0, 0), Is.EqualTo(1));
+            Assert.That(
+                board.GetCellOffsetY(0, 0),
+                Is.EqualTo(config.GemHeight * 0.5f)
             );
 
             // once done falling
@@ -354,8 +360,8 @@ namespace GemSwap.Tests
                 },
                 board
             );
-            Assert.AreEqual(1, board.GetCell(0, 1));
-            Assert.AreEqual(0.0f, board.GetCellOffsetY(0, 1));
+            Assert.That(board.GetCell(0, 1), Is.EqualTo(1));
+            Assert.That(board.GetCellOffsetY(0, 1), Is.EqualTo(0.0f));
         }
 
         private Config SetupConfig(
@@ -385,8 +391,8 @@ namespace GemSwap.Tests
         {
             int width = board.GetLength(1);
             int height = board.GetLength(0);
-            Assert.AreEqual(config.BoardHeight, height);
-            Assert.AreEqual(config.BoardWidth, width);
+            Assert.That(width, Is.EqualTo(config.BoardWidth));
+            Assert.That(height, Is.EqualTo(config.BoardHeight));
 
             int[,] rotatedBoard = new int[width, height];
             for (int x = 0; x < width; x++)
@@ -425,7 +431,10 @@ namespace GemSwap.Tests
             {
                 for (int y = 0; y < height; y++)
                 {
-                    Assert.AreEqual(expectedBoard[y, x] - 1, board.GetCell(x, y));
+                    Assert.That(
+                        board.GetCell(x, y),
+                        Is.EqualTo(expectedBoard[y, x] - 1)
+                    );
                 }
             }
         }
