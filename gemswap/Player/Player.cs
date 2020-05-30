@@ -1,4 +1,4 @@
-namespace GemSwap
+namespace GemSwap.Player
 {
     public abstract class Player<T> : IPlayer
         where T : struct

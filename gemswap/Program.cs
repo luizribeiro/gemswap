@@ -7,7 +7,7 @@
         [STAThread]
         public static void Main()
         {
-            using GemSwap game = new GemSwap();
+            using GemSwapGame game = new GemSwapGame();
             game.Run();
         }
     }

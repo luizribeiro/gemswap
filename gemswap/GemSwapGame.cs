@@ -1,10 +1,11 @@
 ﻿namespace GemSwap
 {
     using System.Collections.Generic;
+    using GemSwap.Player;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class GemSwap : Game
+    public class GemSwapGame : Game
     {
         private const int ScreenWidth = 1920;
         private const int ScreenHeight = 1080;
@@ -17,14 +18,14 @@
         private SpriteBatch? spriteBatch;
         private Texture2D? background;
 
-        public GemSwap()
+        public GemSwapGame()
         {
             this.graphics = new GraphicsDeviceManager(this)
             {
                 PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8,
             };
-            this.graphics.PreferredBackBufferWidth = GemSwap.ScreenWidth;
-            this.graphics.PreferredBackBufferHeight = GemSwap.ScreenHeight;
+            this.graphics.PreferredBackBufferWidth = GemSwapGame.ScreenWidth;
+            this.graphics.PreferredBackBufferHeight = GemSwapGame.ScreenHeight;
             this.graphics.ApplyChanges();
             this.Content.RootDirectory = "Content";
             this.IsMouseVisible = true;
@@ -42,10 +43,10 @@
                 config,
                 this.GraphicsDevice,
                 position: new Vector2(
-                    (GemSwap.ScreenWidth - config.BoardWidthInPixels * numPlayers)
+                    (GemSwapGame.ScreenWidth - config.BoardWidthInPixels * numPlayers)
                         / (numPlayers + 1.0f) * (playerIndex + 1)
                         + playerIndex * config.BoardWidthInPixels,
-                    (GemSwap.ScreenHeight - config.BoardHeightInPixels) / 2.0f
+                    (GemSwapGame.ScreenHeight - config.BoardHeightInPixels) / 2.0f
                 )
             ));
             Board board = new Board(config);
@@ -57,10 +58,10 @@
                 config,
                 this.GraphicsDevice,
                 position: new Vector2(
-                    (GemSwap.ScreenWidth - config.BoardWidthInPixels * numPlayers)
+                    (GemSwapGame.ScreenWidth - config.BoardWidthInPixels * numPlayers)
                         / (numPlayers + 1.0f) * (playerIndex + 1)
                         + playerIndex * config.BoardWidthInPixels,
-                    (GemSwap.ScreenHeight - config.BoardHeightInPixels) / 2.0f
+                    (GemSwapGame.ScreenHeight - config.BoardHeightInPixels) / 2.0f
                 )
             ));
             board = new Board(config);
@@ -115,7 +116,7 @@
             this.spriteBatch!.Begin(samplerState: SamplerState.PointClamp);
             this.spriteBatch.Draw(
                 this.background,
-                new Rectangle(0, 0, GemSwap.ScreenWidth, GemSwap.ScreenHeight),
+                new Rectangle(0, 0, GemSwapGame.ScreenWidth, GemSwapGame.ScreenHeight),
                 Color.White
             );
             this.spriteBatch.End();

@@ -1,4 +1,4 @@
-namespace GemSwap
+namespace GemSwap.Player
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;

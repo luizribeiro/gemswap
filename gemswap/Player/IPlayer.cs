@@ -1,4 +1,4 @@
-namespace GemSwap
+namespace GemSwap.Player
 {
     public interface IPlayer
     {
