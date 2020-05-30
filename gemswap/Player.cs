@@ -3,21 +3,22 @@ namespace GemSwap
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    public interface IPlayer {
+    public interface IPlayer
+    {
         public void ProcessInput();
     }
 
     public abstract class Player<T> : IPlayer
-        where T : struct {
+        where T : struct
+    {
+        private readonly Board board;
 
-        private Board board;
-        protected T? previousState;
-
-        protected Player(Board board) {
+        protected Player(Board board)
+        {
             this.board = board;
         }
 
-        protected abstract T GetCurrentState();
+        protected T? PreviousState { get; set; }
 
         public abstract bool IsLeftPressed(T state);
 
@@ -29,100 +30,130 @@ namespace GemSwap
 
         public abstract bool IsSwapPressed(T state);
 
-        public void ProcessInput() {
-            T currentState = GetCurrentState();
+        public void ProcessInput()
+        {
+            T currentState = this.GetCurrentState();
 
-            if (IsLeftPressed(currentState)) {
+            if (this.IsLeftPressed(currentState))
+            {
                 this.board.MoveCursor(dx: -1, dy: 0);
             }
-            if (IsRightPressed(currentState)) {
+
+            if (this.IsRightPressed(currentState))
+            {
                 this.board.MoveCursor(dx: +1, dy: 0);
             }
-            if (IsDownPressed(currentState)) {
+
+            if (this.IsDownPressed(currentState))
+            {
                 this.board.MoveCursor(dx: 0, dy: +1);
             }
-            if (IsUpPressed(currentState)) {
+
+            if (this.IsUpPressed(currentState))
+            {
                 this.board.MoveCursor(dx: 0, dy: -1);
             }
-            if (IsSwapPressed(currentState)) {
+
+            if (this.IsSwapPressed(currentState))
+            {
                 this.board.Swap();
             }
 
-            this.previousState = currentState;
+            this.PreviousState = currentState;
         }
+
+        protected abstract T GetCurrentState();
     }
 
-    public class GamePadPlayer : Player<GamePadState> {
-        PlayerIndex playerIndex;
+    public class GamePadPlayer : Player<GamePadState>
+    {
+        private readonly PlayerIndex playerIndex;
 
         public GamePadPlayer(
             Board board,
             PlayerIndex playerIndex
-        ) : base(board) {
+        )
+            : base(board)
+        {
             this.playerIndex = playerIndex;
         }
 
-        protected override GamePadState GetCurrentState() {
-            return GamePad.GetState(this.playerIndex);
-        }
-
-        public override bool IsLeftPressed(GamePadState state) {
+        public override bool IsLeftPressed(GamePadState state)
+        {
             return state.DPad.Left == ButtonState.Pressed
-                && state.DPad.Left != previousState?.DPad.Left;
+                && state.DPad.Left != this.PreviousState?.DPad.Left;
         }
 
-        public override bool IsRightPressed(GamePadState state) {
+        public override bool IsRightPressed(GamePadState state)
+        {
             return state.DPad.Right == ButtonState.Pressed
-                && state.DPad.Right != previousState?.DPad.Right;
+                && state.DPad.Right != this.PreviousState?.DPad.Right;
         }
 
-        public override bool IsDownPressed(GamePadState state) {
+        public override bool IsDownPressed(GamePadState state)
+        {
             return state.DPad.Down == ButtonState.Pressed
-                && state.DPad.Down != previousState?.DPad.Down;
+                && state.DPad.Down != this.PreviousState?.DPad.Down;
         }
 
-        public override bool IsUpPressed(GamePadState state) {
+        public override bool IsUpPressed(GamePadState state)
+        {
             return state.DPad.Up == ButtonState.Pressed
-                && state.DPad.Up != previousState?.DPad.Up;
+                && state.DPad.Up != this.PreviousState?.DPad.Up;
         }
 
-        public override bool IsSwapPressed(GamePadState state) {
+        public override bool IsSwapPressed(GamePadState state)
+        {
             return state.Buttons.A == ButtonState.Pressed
-                && state.Buttons.A != previousState?.Buttons.A;
+                && state.Buttons.A != this.PreviousState?.Buttons.A;
+        }
+
+        protected override GamePadState GetCurrentState()
+        {
+            return GamePad.GetState(this.playerIndex);
         }
     }
 
-    public class KeyboardPlayer : Player<KeyboardState> {
-        public KeyboardPlayer(Board board) : base(board) {
+    public class KeyboardPlayer : Player<KeyboardState>
+    {
+        public KeyboardPlayer(Board board)
+            : base(board)
+        {
         }
 
-        protected override KeyboardState GetCurrentState() {
+        protected override KeyboardState GetCurrentState()
+        {
             return Keyboard.GetState();
         }
 
-        public override bool IsLeftPressed(KeyboardState state) {
+        public override bool IsLeftPressed(KeyboardState state)
+        {
             return state.IsKeyDown(Keys.A)
-                && !(previousState?.IsKeyDown(Keys.A) ?? false);
+                && !(this.PreviousState?.IsKeyDown(Keys.A) ?? false);
         }
 
-        public override bool IsRightPressed(KeyboardState state) {
+        public override bool IsRightPressed(KeyboardState state)
+        {
             return state.IsKeyDown(Keys.D)
-                && !(previousState?.IsKeyDown(Keys.D) ?? false);
+                && !(this.PreviousState?.IsKeyDown(Keys.D) ?? false);
         }
 
-        public override bool IsDownPressed(KeyboardState state) {
+        public override bool IsDownPressed(KeyboardState state)
+        {
             return state.IsKeyDown(Keys.S)
-                && !(previousState?.IsKeyDown(Keys.S) ?? false);
+                && !(this.PreviousState?.IsKeyDown(Keys.S) ?? false);
         }
 
-        public override bool IsUpPressed(KeyboardState state) {
+        public override bool IsUpPressed(KeyboardState state)
+        {
             return state.IsKeyDown(Keys.W)
-                && !(previousState?.IsKeyDown(Keys.W) ?? false);
+                && !(this.PreviousState?.IsKeyDown(Keys.W) ?? false);
         }
 
-        public override bool IsSwapPressed(KeyboardState state) {
+        public override bool IsSwapPressed(KeyboardState state)
+        {
             return state.IsKeyDown(Keys.Space)
-                && !(previousState?.IsKeyDown(Keys.Space) ?? false);
+                && !(this.PreviousState?.IsKeyDown(Keys.Space) ?? false);
         }
     }
 }
