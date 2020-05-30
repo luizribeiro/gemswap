@@ -9,6 +9,8 @@
     <Rule Id="SA1011" Action="None" />
     <!-- Closing parenthesis should be on line of last parameter -->
     <Rule Id="SA1111" Action="None" />
+    <!-- SA1407 Arithmetic expressions should declare precedence -->
+    <Rule Id="SA1407" Action="None" />
     <!-- SA1500 Braces for multi-line statements should not share line -->
     <Rule Id="SA1500" Action="None" />
     <!-- Require headers on all files -->
@@ -18,7 +20,11 @@
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
     <!-- Name can be simplified -->
+    <Rule Id="IDE0002" Action="None" />
+    <!-- Name can be simplified -->
     <Rule Id="IDE0003" Action="None" />
+    <!-- IDE0048 Parentheses should be added for clarity -->
+    <Rule Id="IDE0048" Action="None" />
     <!-- Expression value is never used -->
     <Rule Id="IDE0058" Action="None" />
     <!-- using should be outside of namespace -->
