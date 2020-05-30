@@ -13,10 +13,10 @@ namespace GemSwap.Tests
         [Test]
         public void TestTimerSetup()
         {
-            Assert.AreEqual(0, TimerManager.GetNumTimers());
+            Assert.That(TimerManager.GetNumTimers(), Is.EqualTo(0));
             Timer t = TimerManager.AddTimer(durationMilliseconds: 1000.0f);
-            Assert.IsTrue(t.IsActive());
-            Assert.AreEqual(1, TimerManager.GetNumTimers());
+            Assert.That(t.IsActive(), Is.True);
+            Assert.That(TimerManager.GetNumTimers(), Is.EqualTo(1));
         }
 
         [Test]
@@ -28,11 +28,11 @@ namespace GemSwap.Tests
                 onDoneCallback: () => { hasCallbackBeenCalled = true; }
             );
 
-            Assert.IsFalse(hasCallbackBeenCalled);
+            Assert.That(hasCallbackBeenCalled, Is.False);
             TimerManager.Update(500.0f);
-            Assert.IsFalse(hasCallbackBeenCalled);
+            Assert.That(hasCallbackBeenCalled, Is.False);
             TimerManager.Update(500.0f);
-            Assert.IsTrue(hasCallbackBeenCalled);
+            Assert.That(hasCallbackBeenCalled, Is.True);
         }
 
         [Test]
@@ -45,13 +45,13 @@ namespace GemSwap.Tests
                 onDoneCallback: () => { hasCallbackBeenCalled = true; }
             );
 
-            Assert.IsFalse(hasCallbackBeenCalled);
+            Assert.That(hasCallbackBeenCalled, Is.False);
             TimerManager.Update(500.0f);
-            Assert.IsFalse(hasCallbackBeenCalled);
+            Assert.That(hasCallbackBeenCalled, Is.False);
             TimerManager.Update(500.0f);
-            Assert.IsFalse(hasCallbackBeenCalled);
+            Assert.That(hasCallbackBeenCalled, Is.False);
             TimerManager.Update(500.0f);
-            Assert.IsTrue(hasCallbackBeenCalled);
+            Assert.That(hasCallbackBeenCalled, Is.True);
         }
 
         [Test]
@@ -62,35 +62,37 @@ namespace GemSwap.Tests
                 delayMilliseconds: 1000.0f
             );
 
-            Assert.AreEqual(0.0f, t.Progress());
+            Assert.That(t.Progress(), Is.EqualTo(0.0f));
             TimerManager.Update(500.0f);
-            Assert.AreEqual(0.0f, t.Progress());
+            Assert.That(t.Progress(), Is.EqualTo(0.0f));
             TimerManager.Update(500.0f);
-            Assert.AreEqual(0.0f, t.Progress());
+            Assert.That(t.Progress(), Is.EqualTo(0.0f));
             TimerManager.Update(500.0f);
-            Assert.AreEqual(0.5f, t.Progress());
+            Assert.That(t.Progress(), Is.EqualTo(0.5f));
             TimerManager.Update(500.0f);
-            Assert.AreEqual(1.00f, t.Progress());
+            Assert.That(t.Progress(), Is.EqualTo(1.0f));
         }
 
         [Test]
         public void TestCleanupOfInactiveTimers()
         {
+            Assert.That(TimerManager.GetNumTimers(), Is.EqualTo(0));
             TimerManager.AddTimer(durationMilliseconds: 1000.0f);
+            Assert.That(TimerManager.GetNumTimers(), Is.EqualTo(1));
             TimerManager.AddTimer(durationMilliseconds: 50.0f);
-            Assert.AreEqual(2, TimerManager.GetNumTimers());
+            Assert.That(TimerManager.GetNumTimers(), Is.EqualTo(2));
 
             TimerManager.Update(50.0f);
-            Assert.AreEqual(1, TimerManager.GetNumTimers());
+            Assert.That(TimerManager.GetNumTimers(), Is.EqualTo(1));
 
             TimerManager.Update(50.0f);
-            Assert.AreEqual(1, TimerManager.GetNumTimers());
+            Assert.That(TimerManager.GetNumTimers(), Is.EqualTo(1));
 
             TimerManager.Update(899.0f);
-            Assert.AreEqual(1, TimerManager.GetNumTimers());
+            Assert.That(TimerManager.GetNumTimers(), Is.EqualTo(1));
 
             TimerManager.Update(1.0f);
-            Assert.AreEqual(0, TimerManager.GetNumTimers());
+            Assert.That(TimerManager.GetNumTimers(), Is.EqualTo(0));
         }
     }
 }
