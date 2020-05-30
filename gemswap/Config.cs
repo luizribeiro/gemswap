@@ -2,26 +2,34 @@ namespace GemSwap
 {
     public class Config
     {
-        public virtual int BoardWidth { get => 6; }
-        public virtual int BoardHeight { get => 14; }
+        public virtual int BoardWidth => 6;
 
-        public virtual int BoardInitialMinHeight { get => 2; }
-        public virtual int BoardInitialMaxHeight { get => 8; }
+        public virtual int BoardHeight => 14;
 
-        public virtual float BoardSpeedRowPerMs { get => 4000.0f; }
+        public virtual int BoardInitialMinHeight => 2;
 
-        public virtual float AnimationGemFadeInMs { get => 1000.0f; }
-        public virtual float SwapDurationMs { get => 100.0f; }
-        public virtual float EliminationDurationMs { get => 200.0f; }
-        public virtual float FallDurationMs { get => 50.0f; }
+        public virtual int BoardInitialMaxHeight => 8;
 
-        public virtual int GemWidth { get => 64; }
-        public virtual int GemHeight { get => 64; }
-        public virtual int NumGems { get => 7; }
+        public virtual float BoardSpeedRowPerMs => 4000.0f;
 
-        public virtual int CursorOffsetPx { get => 8; }
+        public virtual float AnimationGemFadeInMs => 1000.0f;
 
-        public int BoardWidthInPixels { get => BoardWidth * GemWidth; }
-        public int BoardHeightInPixels { get => BoardHeight * GemHeight; }
+        public virtual float SwapDurationMs => 100.0f;
+
+        public virtual float EliminationDurationMs => 200.0f;
+
+        public virtual float FallDurationMs => 50.0f;
+
+        public virtual int GemWidth => 64;
+
+        public virtual int GemHeight => 64;
+
+        public virtual int NumGems => 7;
+
+        public virtual int CursorOffsetPx => 8;
+
+        public int BoardWidthInPixels => this.BoardWidth * this.GemWidth;
+
+        public int BoardHeightInPixels => this.BoardHeight * this.GemHeight;
     }
 }
