@@ -128,6 +128,21 @@ namespace GemSwap
                     float cellOffsetX = board.GetCellOffsetX(x, y);
                     float cellOffsetY = board.GetCellOffsetY(x, y);
 
+                    this.spriteBatch!.Draw(
+                        this.gemTexture,
+                        position: new Vector2(
+                            x * this.config.GemWidth + cellOffsetX + 4,
+                            y * this.config.GemHeight + cellOffsetY - offset + 4
+                        ),
+                        sourceRectangle: new Rectangle(
+                            gem * this.config.GemWidth,
+                            0,
+                            this.config.GemWidth,
+                            this.config.GemHeight
+                        ),
+                        color: new Color(0, 0, 0, 75)
+                    );
+
                     int a = board.GetCellAlpha(x, y);
                     this.spriteBatch!.Draw(
                         this.gemTexture,
