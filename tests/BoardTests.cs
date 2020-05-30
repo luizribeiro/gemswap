@@ -5,7 +5,7 @@ namespace GemSwap.Tests
 
     public class BoardTests
     {
-        private static object[] testCasesForEliminatingGems =
+        private static readonly object[] TestCasesForEliminatingGems =
         {
             new object[]
             {
@@ -95,7 +95,7 @@ namespace GemSwap.Tests
         }
 
         [Test]
-        [TestCaseSource("testCasesForEliminatingGems")]
+        [TestCaseSource(nameof(TestCasesForEliminatingGems))]
         public void TestEliminatingGems(int[,] initialBoard, int[,] finalBoard)
         {
             Assert.AreEqual(initialBoard.GetLength(1), finalBoard.GetLength(1));
