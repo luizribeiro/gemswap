@@ -23,6 +23,8 @@
     <Rule Id="IDE0002" Action="None" />
     <!-- Name can be simplified -->
     <Rule Id="IDE0003" Action="None" />
+    <!-- IDE0046 'if' statement can be simplified -->
+    <Rule Id="IDE0046" Action="None" />
     <!-- IDE0048 Parentheses should be added for clarity -->
     <Rule Id="IDE0048" Action="None" />
     <!-- Expression value is never used -->
