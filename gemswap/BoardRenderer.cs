@@ -88,11 +88,11 @@ namespace GemSwap
         }
 
         private void DrawBoard(Board board) {
-            float offset = board.getOffset();
+            float offset = board.GetOffset();
 
             for (int x = 0; x < config.BoardWidth; x++) {
                 for (int y = 0; y < config.BoardHeight; y++) {
-                    int gem = board.getCell(x, y);
+                    int gem = board.GetCell(x, y);
                     if (gem == Board.EMPTY) {
                         continue;
                     }
@@ -131,7 +131,7 @@ namespace GemSwap
                 alpha
             );
             for (int x = 0; x < config.BoardWidth; x++) {
-                int gem = board.getUpcomingCell(x);
+                int gem = board.GetUpcomingCell(x);
 
                 this.spriteBatch!.Draw(
                     this.gemTexture,
@@ -154,10 +154,10 @@ namespace GemSwap
             spriteBatch!.Draw(
                 this.cursorTexture,
                 new Vector2(
-                    board.getCursorX() * config.GemWidth
+                    board.GetCursorX() * config.GemWidth
                         - config.CursorOffsetPx,
-                    board.getCursorY() * config.GemHeight
-                        - config.CursorOffsetPx - board.getOffset()
+                    board.GetCursorY() * config.GemHeight
+                        - config.CursorOffsetPx - board.GetOffset()
                 ),
                 Color.White
             );

@@ -63,7 +63,7 @@ namespace GemSwap.Tests
             for (int x = 0; x < config.BoardWidth; x++)
             {
                 Assert.AreNotEqual(
-                    board.getCell(x, config.BoardHeight - 1),
+                    board.GetCell(x, config.BoardHeight - 1),
                     Board.EMPTY
                 );
             }
@@ -76,7 +76,7 @@ namespace GemSwap.Tests
             Board board = new Board(config);
             for (int x = 0; x < config.BoardWidth; x++)
             {
-                Assert.AreEqual(board.getCell(x, 0), Board.EMPTY);
+                Assert.AreEqual(board.GetCell(x, 0), Board.EMPTY);
             }
         }
 
@@ -152,8 +152,8 @@ namespace GemSwap.Tests
                 },
                 upcomingRow: new[] { 3, 4 }
             );
-            Assert.AreEqual(board.getCursorX(), 0);
-            Assert.AreEqual(board.getCursorY(), 1);
+            Assert.AreEqual(board.GetCursorX(), 0);
+            Assert.AreEqual(board.GetCursorY(), 1);
 
             this.Update(board, config.BoardSpeedRowPerMs);
             this.AssertBoard(
@@ -163,8 +163,8 @@ namespace GemSwap.Tests
                 },
                 board
             );
-            Assert.AreEqual(board.getCursorX(), 0);
-            Assert.AreEqual(board.getCursorY(), 0);
+            Assert.AreEqual(board.GetCursorX(), 0);
+            Assert.AreEqual(board.GetCursorY(), 0);
         }
 
         [Test]
@@ -179,8 +179,8 @@ namespace GemSwap.Tests
                 },
                 upcomingRow: new[] { 3, 4 }
             );
-            Assert.AreEqual(board.getCursorX(), 0);
-            Assert.AreEqual(board.getCursorY(), 1);
+            Assert.AreEqual(board.GetCursorX(), 0);
+            Assert.AreEqual(board.GetCursorY(), 1);
 
             this.Update(board, config.BoardSpeedRowPerMs - 1);
             board.Swap();
@@ -192,8 +192,8 @@ namespace GemSwap.Tests
                 },
                 board
             );
-            Assert.AreEqual(board.getCursorX(), 0);
-            Assert.AreEqual(board.getCursorY(), 1);
+            Assert.AreEqual(board.GetCursorX(), 0);
+            Assert.AreEqual(board.GetCursorY(), 1);
 
             this.Update(board, 1);
             this.AssertBoard(
@@ -204,8 +204,8 @@ namespace GemSwap.Tests
                 },
                 board
             );
-            Assert.AreEqual(board.getCursorX(), 0);
-            Assert.AreEqual(board.getCursorY(), 0);
+            Assert.AreEqual(board.GetCursorX(), 0);
+            Assert.AreEqual(board.GetCursorY(), 0);
 
             this.Update(board, config.SwapDurationMs);
             this.AssertBoard(
@@ -216,8 +216,8 @@ namespace GemSwap.Tests
                 },
                 board
             );
-            Assert.AreEqual(board.getCursorX(), 0);
-            Assert.AreEqual(board.getCursorY(), 0);
+            Assert.AreEqual(board.GetCursorX(), 0);
+            Assert.AreEqual(board.GetCursorY(), 0);
         }
 
         [Test]
@@ -303,7 +303,7 @@ namespace GemSwap.Tests
                 },
                 board
             );
-            Assert.AreEqual(1, board.getCell(0, 0));
+            Assert.AreEqual(1, board.GetCell(0, 0));
             Assert.AreEqual(
                 config.GemHeight * 0.5f,
                 board.GetCellOffsetY(0, 0)
@@ -322,7 +322,7 @@ namespace GemSwap.Tests
                 },
                 board
             );
-            Assert.AreEqual(1, board.getCell(0, 1));
+            Assert.AreEqual(1, board.GetCell(0, 1));
             Assert.AreEqual(0.0f, board.GetCellOffsetY(0, 1));
         }
 
@@ -393,7 +393,7 @@ namespace GemSwap.Tests
             {
                 for (int y = 0; y < height; y++)
                 {
-                    Assert.AreEqual(expectedBoard[y, x] - 1, board.getCell(x, y));
+                    Assert.AreEqual(expectedBoard[y, x] - 1, board.GetCell(x, y));
                 }
             }
         }
