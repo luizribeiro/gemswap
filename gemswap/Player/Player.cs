@@ -3,11 +3,12 @@ namespace GemSwap.Player
     public abstract class Player<T> : IPlayer
         where T : struct
     {
-        private readonly Board board;
+        private Board? board;
 
-        protected Player(Board board)
+        public Board Board
         {
-            this.board = board;
+            get => this.board!;
+            set => this.board = value;
         }
 
         protected T? PreviousState { get; set; }
@@ -28,27 +29,27 @@ namespace GemSwap.Player
 
             if (this.IsLeftPressed(currentState))
             {
-                this.board.MoveCursor(dx: -1, dy: 0);
+                this.Board.MoveCursor(dx: -1, dy: 0);
             }
 
             if (this.IsRightPressed(currentState))
             {
-                this.board.MoveCursor(dx: +1, dy: 0);
+                this.Board.MoveCursor(dx: +1, dy: 0);
             }
 
             if (this.IsDownPressed(currentState))
             {
-                this.board.MoveCursor(dx: 0, dy: +1);
+                this.Board.MoveCursor(dx: 0, dy: +1);
             }
 
             if (this.IsUpPressed(currentState))
             {
-                this.board.MoveCursor(dx: 0, dy: -1);
+                this.Board.MoveCursor(dx: 0, dy: -1);
             }
 
             if (this.IsSwapPressed(currentState))
             {
-                this.board.Swap();
+                this.Board.Swap();
             }
 
             this.PreviousState = currentState;

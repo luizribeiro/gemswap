@@ -1,6 +1,8 @@
 ﻿namespace GemSwap
 {
+    using System.Collections.Generic;
     using GemSwap.Match;
+    using GemSwap.Player;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -23,7 +25,13 @@
             this.graphics.ApplyChanges();
             this.Content.RootDirectory = "Content";
             this.IsMouseVisible = true;
-            this.match = new VersusMatch(this.GraphicsDevice);
+            this.match = new VersusMatch(
+                this.GraphicsDevice,
+                new List<IPlayer> {
+                    new GamePadPlayer(PlayerIndex.One),
+                    new KeyboardPlayer(),
+                }
+            );
         }
 
         protected override void Initialize()

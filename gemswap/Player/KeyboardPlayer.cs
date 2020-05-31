@@ -4,11 +4,6 @@ namespace GemSwap.Player
 
     public class KeyboardPlayer : Player<KeyboardState>
     {
-        public KeyboardPlayer(Board board)
-            : base(board)
-        {
-        }
-
         public override bool IsLeftPressed(KeyboardState state)
         {
             return state.IsKeyDown(Keys.A)

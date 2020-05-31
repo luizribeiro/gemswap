@@ -14,44 +14,37 @@ namespace GemSwap.Match
 
         private Texture2D? background;
 
-        public VersusMatch(GraphicsDevice graphicsDevice)
+        public VersusMatch(
+            GraphicsDevice graphicsDevice,
+            List<IPlayer> players
+        )
             : base(graphicsDevice)
         {
             this.boardRenderers = new List<BoardRenderer>();
             this.boards = new List<Board>();
-            this.players = new List<IPlayer>();
+            this.players = players;
 
-            int numPlayers = 2;
             int playerIndex = 0;
+            int numPlayers = players.Count;
+            foreach (IPlayer player in players)
+            {
+                Board board = new Board(this.Config);
+                player.Board = board;
 
-            this.boardRenderers.Add(new BoardRenderer(
-                this.Config,
-                this.GraphicsDevice,
-                position: new Vector2(
-                    (this.ScreenWidth - this.Config.BoardWidthInPixels * numPlayers)
-                        / (numPlayers + 1.0f) * (playerIndex + 1)
-                        + playerIndex * this.Config.BoardWidthInPixels,
-                    (this.ScreenHeight - this.Config.BoardHeightInPixels) / 2.0f
-                )
-            ));
-            Board board = new Board(this.Config);
-            this.boards.Add(board);
-            this.players.Add(new KeyboardPlayer(board));
+                this.boards.Add(board);
+                this.boardRenderers.Add(new BoardRenderer(
+                    this.Config,
+                    this.GraphicsDevice,
+                    position: new Vector2(
+                        (this.ScreenWidth - this.Config.BoardWidthInPixels * numPlayers)
+                            / (numPlayers + 1.0f) * (playerIndex + 1)
+                            + playerIndex * this.Config.BoardWidthInPixels,
+                        (this.ScreenHeight - this.Config.BoardHeightInPixels) / 2.0f
+                    )
+                ));
 
-            playerIndex = 1;
-            this.boardRenderers.Add(new BoardRenderer(
-                this.Config,
-                this.GraphicsDevice,
-                position: new Vector2(
-                    (this.ScreenWidth - this.Config.BoardWidthInPixels * numPlayers)
-                        / (numPlayers + 1.0f) * (playerIndex + 1)
-                        + playerIndex * this.Config.BoardWidthInPixels,
-                    (this.ScreenHeight - this.Config.BoardHeightInPixels) / 2.0f
-                )
-            ));
-            board = new Board(this.Config);
-            this.boards.Add(board);
-            this.players.Add(new GamePadPlayer(board, PlayerIndex.One));
+                playerIndex++;
+            }
         }
 
         public new void LoadContent(ContentManager contentManager)

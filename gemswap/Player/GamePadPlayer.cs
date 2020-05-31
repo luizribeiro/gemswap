@@ -8,10 +8,8 @@ namespace GemSwap.Player
         private readonly PlayerIndex playerIndex;
 
         public GamePadPlayer(
-            Board board,
             PlayerIndex playerIndex
         )
-            : base(board)
         {
             this.playerIndex = playerIndex;
         }
