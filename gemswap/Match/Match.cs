@@ -1,11 +1,12 @@
 namespace GemSwap.Match
 {
-    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
 
-    public abstract class Match {
-        protected Match(GraphicsDevice graphicsDevice) {
+    public abstract class Match
+    {
+        protected Match(GraphicsDevice graphicsDevice)
+        {
             this.GraphicsDevice = graphicsDevice;
             this.Config = new Config();
         }
@@ -16,11 +17,14 @@ namespace GemSwap.Match
 
         protected SpriteBatch? SpriteBatch { get; private set; }
 
-        protected int ScreenWidth { get => this.GraphicsDevice.Viewport.Width; }
+        protected int ScreenWidth => this.GraphicsDevice.Viewport.Width;
 
-        protected int ScreenHeight { get => this.GraphicsDevice.Viewport.Height; }
+        protected int ScreenHeight => this.GraphicsDevice.Viewport.Height;
 
-        public void LoadContent(ContentManager contentManager) {
+        public void LoadContent(ContentManager contentManager)
+        {
+            // contentManager may be used by methods that override LoadContent
+            _ = contentManager;
             this.SpriteBatch = new SpriteBatch(this.GraphicsDevice);
         }
 
