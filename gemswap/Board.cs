@@ -15,7 +15,7 @@ namespace GemSwap
         private readonly bool[,] isLocked;
         private readonly Timer?[,] movimentTimer;
         private readonly Timer?[,] fadeOutTimer;
-        private bool hasGameEnded;
+
         private int[] upcomingRow;
         private float offset;
         private int cursorX;
@@ -26,7 +26,7 @@ namespace GemSwap
         {
             this.config = config;
 
-            this.hasGameEnded = false;
+            this.HasGameEnded = false;
             this.board = new int[config.BoardWidth, config.BoardHeight];
             this.boardDX = new int[config.BoardWidth, config.BoardHeight];
             this.boardDY = new int[config.BoardWidth, config.BoardHeight];
@@ -86,9 +86,11 @@ namespace GemSwap
             this.upcomingRow = upcomingRow;
         }
 
+        public bool HasGameEnded { get; private set; }
+
         public void Update(float ellapsedMilliseconds)
         {
-            if (this.hasGameEnded)
+            if (this.HasGameEnded)
             {
                 return;
             }
@@ -141,7 +143,7 @@ namespace GemSwap
 
         public void MoveCursor(int dx, int dy)
         {
-            if (this.hasGameEnded)
+            if (this.HasGameEnded)
             {
                 return;
             }
@@ -199,7 +201,7 @@ namespace GemSwap
                 return;
             }
 
-            if (this.hasGameEnded)
+            if (this.HasGameEnded)
             {
                 return;
             }
@@ -405,7 +407,7 @@ namespace GemSwap
             this.cursorY--;
             this.boardVerticalOffset++;
 
-            this.hasGameEnded = Enumerable.Range(0, this.board.GetLength(0))
+            this.HasGameEnded = Enumerable.Range(0, this.board.GetLength(0))
                 .Any(x => this.board[x, 1] != Board.EMPTY);
 
             for (int x = 0; x < this.config.BoardWidth; x++)

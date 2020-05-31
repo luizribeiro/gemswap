@@ -364,6 +364,35 @@ namespace GemSwap.Tests
             Assert.That(board.GetCellOffsetY(0, 1), Is.EqualTo(0.0f));
         }
 
+        [Test]
+        public void TestGameOver()
+        {
+            Config config = this.SetupConfig(boardWidth: 1, boardHeight: 3);
+            Board board = this.SetupBoard(
+                config,
+                board: new[,] {
+                    { 0 },
+                    { 1 },
+                    { 2 },
+                },
+                upcomingRow: new[] { 3 }
+            );
+
+            Assert.That(board.HasGameEnded, Is.False);
+
+            this.Update(board, config.BoardSpeedRowPerMs);
+            this.AssertBoard(
+                new[,]
+                {
+                    { 1 },
+                    { 2 },
+                    { 3 },
+                },
+                board
+            );
+            Assert.That(board.HasGameEnded, Is.True);
+        }
+
         private Config SetupConfig(
             int boardWidth = 0,
             int boardHeight = 0
