@@ -101,6 +101,9 @@ namespace GemSwap
             );
             this.DrawBackground();
             this.DrawBoard(board);
+            this.spriteBatch.End();
+
+            this.spriteBatch!.Begin(transformMatrix: this.translationMatrix);
             this.DrawCursor(board);
             this.spriteBatch.End();
 
