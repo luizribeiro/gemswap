@@ -13,6 +13,7 @@ namespace GemSwap
         private Texture2D? backgroundTexture;
         private Texture2D? gemTexture;
         private Texture2D? cursorTexture;
+        private SpriteFont? waveAttackFont;
         private Matrix translationMatrix;
 
         public BoardRenderer(
@@ -36,6 +37,8 @@ namespace GemSwap
             this.gemTexture = contentManager.Load<Texture2D>("gems");
             this.cursorTexture = contentManager.Load<Texture2D>("cursor");
 
+            this.waveAttackFont = contentManager.Load<SpriteFont>("WaveAttack");
+
             int backgroundWidth = this.config.BoardWidth * this.config.GemWidth;
             int backgroundHeight =
                 this.config.BoardHeight * this.config.GemHeight;
@@ -47,7 +50,7 @@ namespace GemSwap
             Color[] backgroundData = new Color[
                 backgroundWidth * backgroundHeight
             ];
-            Color backgroundColor = new Color(0, 0, 0, 100);
+            Color backgroundColor = new Color(0, 0, 0, 255);
             for (int i = 0; i < backgroundData.Length; i++)
             {
                 backgroundData[i] = backgroundColor;
@@ -100,6 +103,11 @@ namespace GemSwap
             this.DrawBoard(board);
             this.DrawCursor(board);
             this.spriteBatch.End();
+
+            if (board.HasGameEnded)
+            {
+                this.DrawGameOverOverlay();
+            }
         }
 
         private void DrawBackground()
@@ -107,8 +115,50 @@ namespace GemSwap
             this.spriteBatch!.Draw(
                 this.backgroundTexture,
                 new Vector2(0, 0),
-                Color.Black
+                new Color(0, 0, 0, 100)
             );
+        }
+
+        private void DrawGameOverOverlay()
+        {
+            string text = "Game Over";
+            Rectangle bounds = new Rectangle(
+                0,
+                0,
+                this.config.BoardWidthInPixels,
+                this.config.BoardHeightInPixels
+            );
+            Vector2 size = this.waveAttackFont!.MeasureString(text);
+            Point center = bounds.Center;
+            Vector2 position = new Vector2(center.X, center.Y) - size * 0.5f;
+
+            this.spriteBatch!.Begin(transformMatrix: this.translationMatrix);
+            this.spriteBatch.Draw(
+                this.backgroundTexture,
+                new Vector2(0, 0),
+                new Color(0, 0, 0, 175)
+            );
+
+            for (int x = -2; x <= 2; x++)
+            {
+                for (int y = -2; y <= 2; y++)
+                {
+                    this.spriteBatch.DrawString(
+                        this.waveAttackFont,
+                        text,
+                        position + new Vector2(x, y),
+                        Color.Red
+                    );
+                }
+            }
+
+            this.spriteBatch.DrawString(
+                this.waveAttackFont,
+                text,
+                new Vector2(position.X, position.Y),
+                Color.White
+            );
+            this.spriteBatch.End();
         }
 
         private void DrawBoard(Board board)

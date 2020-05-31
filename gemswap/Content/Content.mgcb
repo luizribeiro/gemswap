@@ -37,6 +37,13 @@
 /processorParam:TextureFormat=Color
 /build:cursor.png
 
+#begin WaveAttack.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:WaveAttack.spritefont;WaveAttack.spritefont
+
 #begin gems.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -48,4 +55,7 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:gems.png
+
+#begin WaveAttack.ttf
+/copy:WaveAttack.ttf
 

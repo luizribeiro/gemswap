@@ -37,7 +37,6 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
   * Add support for combos
 
 * **Aesthetics**
-  * Add game over screen
   * Add sound effects
   * Add music
   * Add animation to cursor movement
