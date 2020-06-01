@@ -215,8 +215,7 @@ namespace GemSwap
             }
 
             float heightLeft = this.config.GemHeight - offset;
-            float pxSpeed = this.config.GemHeight / this.config.BoardSpeedRowPerMs;
-            float msLeft = heightLeft / pxSpeed;
+            float msLeft = heightLeft / this.config.BoardSpeedPixelsPerMs;
             int alpha = msLeft > this.config.AnimationGemFadeInMs
                 ? 100
                 : Convert.ToInt32(100.0 + 155.0 * (1.0 - msLeft / this.config.AnimationGemFadeInMs));
