@@ -3,6 +3,7 @@ namespace GemSwap.Match
     using System.Collections.Generic;
     using GemSwap.Player;
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Audio;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -13,6 +14,9 @@ namespace GemSwap.Match
         private readonly List<IPlayer> players;
 
         private Texture2D? background;
+
+        private SoundEffect? swapSoundEffect;
+        private SoundEffect? eliminationSoundEffect;
 
         public VersusMatch(
             GraphicsDevice graphicsDevice,
@@ -50,6 +54,21 @@ namespace GemSwap.Match
         public new void LoadContent(ContentManager contentManager)
         {
             this.background = contentManager.Load<Texture2D>("background");
+            this.swapSoundEffect = contentManager.Load<SoundEffect>("swap");
+            this.eliminationSoundEffect =
+                contentManager.Load<SoundEffect>("eliminate");
+
+            foreach (Board board in this.boards)
+            {
+                board.When(
+                    BoardEvent.Elimination,
+                    () => this.eliminationSoundEffect.Play()
+                );
+                board.When(
+                    BoardEvent.Swap,
+                    () => this.swapSoundEffect.Play()
+                );
+            }
 
             for (int i = 0; i < this.boardRenderers.Count; i++)
             {

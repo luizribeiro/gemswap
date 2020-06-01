@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin alarm.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:alarm.mp3
+
 #begin background.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -37,12 +43,11 @@
 /processorParam:TextureFormat=Color
 /build:cursor.png
 
-#begin WaveAttack.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:WaveAttack.spritefont;WaveAttack.spritefont
+#begin eliminate.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:eliminate.mp3
 
 #begin gems.png
 /importer:TextureImporter
@@ -55,6 +60,25 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:gems.png
+
+#begin HeWalk.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:HeWalk.mp3
+
+#begin swap.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:swap.mp3
+
+#begin WaveAttack.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:WaveAttack.spritefont
 
 #begin WaveAttack.ttf
 /copy:WaveAttack.ttf
