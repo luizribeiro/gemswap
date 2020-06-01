@@ -15,6 +15,7 @@ namespace GemSwap
         private readonly bool[,] isLocked;
         private readonly Timer?[,] movimentTimer;
         private readonly Timer?[,] fadeOutTimer;
+        private readonly Dictionary<BoardEvent, List<Action>> listeners;
 
         private int[] upcomingRow;
         private float offset;
@@ -43,6 +44,14 @@ namespace GemSwap
                 config.BoardWidth,
                 config.BoardHeight
             ];
+
+            this.listeners = new Dictionary<BoardEvent, List<Action>>();
+            BoardEvent[] allEvents =
+                (BoardEvent[])Enum.GetValues(typeof(BoardEvent));
+            foreach (BoardEvent boardEvent in allEvents)
+            {
+                this.listeners[boardEvent] = new List<Action>();
+            }
 
             this.cursorX = 0;
             this.cursorY = config.BoardHeight - 1;
@@ -240,6 +249,13 @@ namespace GemSwap
 
             this.movimentTimer[x, y] = swapTimer;
             this.movimentTimer[x + 1, y] = swapTimer;
+
+            this.Notify(BoardEvent.Swap);
+        }
+
+        public void When(BoardEvent boardEvent, Action callback)
+        {
+            this.listeners[boardEvent].Add(callback);
         }
 
         private void ScrollBoardUp(float ellapsedMilliseconds)
@@ -384,6 +400,16 @@ namespace GemSwap
                 }
             );
             this.fadeOutTimer[x, y] = timer;
+
+            this.Notify(BoardEvent.Elimination);
+        }
+
+        private void Notify(BoardEvent boardEvent)
+        {
+            foreach (Action callback in this.listeners[boardEvent])
+            {
+                callback.Invoke();
+            }
         }
 
         private void FallAllAbove(int x, int origY)

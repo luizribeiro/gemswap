@@ -408,6 +408,41 @@ namespace GemSwap.Tests
             Assert.That(board.HasGameEnded, Is.True);
         }
 
+        [Test]
+        public void TestSwapCallback()
+        {
+            Config config = this.SetupConfig(boardWidth: 2, boardHeight: 1);
+            Board board = this.SetupBoard(config, new[,] { { 1, 2 } });
+            bool wasCallbackCalled = false;
+
+            board.When(BoardEvent.Swap, () => wasCallbackCalled = true);
+            Assert.That(wasCallbackCalled, Is.False);
+
+            board.Swap();
+            Assert.That(wasCallbackCalled, Is.True);
+        }
+
+        [Test]
+        public void TestEliminationCallback()
+        {
+            Config config = this.SetupConfig(boardWidth: 3, boardHeight: 2);
+            Board board = this.SetupBoard(
+                config,
+                board: new[,] {
+                    { 0, 0, 0 },
+                    { 1, 1, 1 },
+                }
+            );
+            bool wasCallbackCalled = false;
+
+            board.When(BoardEvent.Elimination, () => wasCallbackCalled = true);
+            Assert.That(wasCallbackCalled, Is.False);
+
+            // trigger elimination
+            this.Update(board, 0);
+            Assert.That(wasCallbackCalled, Is.True);
+        }
+
         private Config SetupConfig(
             int boardWidth = 0,
             int boardHeight = 0
