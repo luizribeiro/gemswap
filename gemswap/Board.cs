@@ -21,6 +21,7 @@ namespace GemSwap
         private int cursorX;
         private int cursorY;
         private int boardVerticalOffset;
+        private Timer? eliminationTimer;
 
         public Board(Config config)
         {
@@ -95,7 +96,10 @@ namespace GemSwap
                 return;
             }
 
-            this.ScrollBoardUp(ellapsedMilliseconds);
+            if (this.ShouldScroll())
+            {
+                this.ScrollBoardUp(ellapsedMilliseconds);
+            }
 
             for (int x = 0; x < this.config.BoardWidth; x++)
             {
@@ -251,8 +255,8 @@ namespace GemSwap
                 }
             }
 
-            this.offset += this.config.GemHeight * ellapsedMilliseconds
-                / this.config.BoardSpeedRowPerMs;
+            this.offset +=
+                this.config.BoardSpeedPixelsPerMs * ellapsedMilliseconds;
 
             if (this.offset >= this.config.GemHeight)
             {
@@ -343,10 +347,26 @@ namespace GemSwap
                 }
             }
 
+            if (toEliminate.Count > 0)
+            {
+                this.eliminationTimer = TimerManager.AddTimer(
+                    durationMilliseconds: this.config.EliminationScrollCooldownMs,
+                    onDoneCallback: () =>
+                    {
+                        this.eliminationTimer = null;
+                    }
+                );
+            }
+
             foreach (Tuple<int, int> cell in toEliminate.Distinct().ToList())
             {
                 this.EliminateCell(cell.Item1, cell.Item2);
             }
+        }
+
+        private bool ShouldScroll()
+        {
+            return this.eliminationTimer == null;
         }
 
         private void EliminateCell(int x, int y)

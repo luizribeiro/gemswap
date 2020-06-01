@@ -192,7 +192,7 @@ namespace GemSwap.Tests
             // run animation almost until the end
             this.Update(board, config.EliminationDurationMs - 1);
 
-            // run last second of animation (which will end up moving offset)
+            // run last ms of animation (which will end up eliminating row)
             this.Update(board, 1);
 
             this.AssertBoard(
@@ -202,7 +202,22 @@ namespace GemSwap.Tests
                 },
                 board
             );
-            Assert.That(board.GetOffset(), Is.EqualTo(0.0f).Within(0.1f));
+            Assert.That(board.GetOffset(), Is.EqualTo(0.0f));
+
+            // run until the cooldown finishes
+            this.Update(
+                board,
+                config.EliminationScrollCooldownMs
+                    - config.EliminationDurationMs - 1
+            );
+            Assert.That(board.GetOffset(), Is.EqualTo(0.0f));
+
+            // once cooldown is done, board start moving again
+            this.Update(board, 1);
+            Assert.That(
+                board.GetOffset(),
+                Is.EqualTo(config.BoardSpeedPixelsPerMs)
+            );
         }
 
         [Test]

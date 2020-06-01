@@ -18,6 +18,8 @@ namespace GemSwap
 
         public virtual float EliminationDurationMs => 200.0f;
 
+        public virtual float EliminationScrollCooldownMs => 1000.0f;
+
         public virtual float FallDurationMs => 50.0f;
 
         public virtual int GemWidth => 64;
@@ -31,5 +33,8 @@ namespace GemSwap
         public int BoardWidthInPixels => this.BoardWidth * this.GemWidth;
 
         public int BoardHeightInPixels => this.BoardHeight * this.GemHeight;
+
+        public float BoardSpeedPixelsPerMs
+            => this.GemHeight / this.BoardSpeedRowPerMs;
     }
 }
