@@ -6,6 +6,7 @@ namespace GemSwap.Match
     using Microsoft.Xna.Framework.Audio;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
+    using Microsoft.Xna.Framework.Media;
 
     public class VersusMatch : Match
     {
@@ -57,6 +58,11 @@ namespace GemSwap.Match
             this.swapSoundEffect = contentManager.Load<SoundEffect>("swap");
             this.eliminationSoundEffect =
                 contentManager.Load<SoundEffect>("eliminate");
+
+            Song music = contentManager.Load<Song>("HeWalk");
+            MediaPlayer.Volume = 0.5f;
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(music);
 
             foreach (Board board in this.boards)
             {
