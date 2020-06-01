@@ -104,6 +104,12 @@ namespace GemSwap
             this.spriteBatch.End();
 
             this.spriteBatch!.Begin(transformMatrix: this.translationMatrix);
+            this.spriteBatch.DrawString(
+                this.waveAttackFont,
+                $"{board.Score}",
+                new Vector2(0, -48),
+                Color.White
+            );
             this.DrawCursor(board);
             this.spriteBatch.End();
 
