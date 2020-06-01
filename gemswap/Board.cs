@@ -28,6 +28,7 @@ namespace GemSwap
         {
             this.config = config;
 
+            this.Score = 0;
             this.HasGameEnded = false;
             this.board = new int[config.BoardWidth, config.BoardHeight];
             this.boardDX = new int[config.BoardWidth, config.BoardHeight];
@@ -80,21 +81,25 @@ namespace GemSwap
             this.upcomingRow = this.BuildUpcomingRow();
         }
 
-        public Board(Config config, int[,] board)
+        public Board(Config config, int[,] board, int initialScore)
             : this(config)
         {
             this.board = board;
+            this.Score = initialScore;
         }
 
         public Board(
             Config config,
             int[,] board,
-            int[] upcomingRow
+            int[] upcomingRow,
+            int initialScore
         )
-            : this(config, board)
+            : this(config, board, initialScore)
         {
             this.upcomingRow = upcomingRow;
         }
+
+        public int Score { get; private set; }
 
         public bool HasGameEnded { get; private set; }
 
@@ -378,6 +383,9 @@ namespace GemSwap
             {
                 this.EliminateCell(cell.Item1, cell.Item2);
             }
+
+            int numGemsEliminated = toEliminate.Distinct().Count();
+            this.Score += numGemsEliminated * (numGemsEliminated - 2);
         }
 
         private bool ShouldScroll()

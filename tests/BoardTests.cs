@@ -49,6 +49,39 @@ namespace GemSwap.Tests
             },
         };
 
+        private static readonly object[] TestCasesForScoring =
+        {
+            new object[]
+            {
+                0,
+                new int[,] { { 1, 1, 1 } },
+                3,
+            },
+            new object[]
+            {
+                3,
+                new int[,] { { 1, 1, 1 } },
+                6,
+            },
+            new object[]
+            {
+                0,
+                new int[,] { { 1, 1, 1, 1, 1 } },
+                15,
+            },
+            new object[]
+            {
+                0,
+                new int[,] {
+                    { 1, 1, 1, 1, 1 },
+                    { 2, 3, 4, 5, 4 },
+                    { 2, 3, 3, 6, 4 },
+                    { 2, 3, 4, 5, 4 },
+                },
+                168,
+            },
+        };
+
         [TearDown]
         public void TearDownTest()
         {
@@ -122,6 +155,30 @@ namespace GemSwap.Tests
             this.Update(board, config.EliminationDurationMs);
 
             this.AssertBoard(finalBoard, board);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(TestCasesForScoring))]
+        public void TestScoring(
+            int currentScore,
+            int[,] boardState,
+            int expectedScore
+        )
+        {
+            Config config = this.SetupConfig(
+                boardWidth: boardState.GetLength(1),
+                boardHeight: boardState.GetLength(0)
+            );
+            Board board = this.SetupBoard(
+                config,
+                boardState,
+                initialScore: currentScore
+            );
+
+            // trigger the elimination
+            this.Update(board, 0);
+
+            Assert.That(board.Score, Is.EqualTo(expectedScore));
         }
 
         [Test]
@@ -465,7 +522,8 @@ namespace GemSwap.Tests
         private Board SetupBoard(
             Config config,
             int[,] board,
-            int[]? upcomingRow = null
+            int[]? upcomingRow = null,
+            int initialScore = 0
         )
         {
             int width = board.GetLength(1);
@@ -484,7 +542,7 @@ namespace GemSwap.Tests
 
             if (upcomingRow == null)
             {
-                return new Board(config, rotatedBoard);
+                return new Board(config, rotatedBoard, initialScore);
             }
 
             int[] newUpcomingRow = new int[width];
@@ -493,7 +551,12 @@ namespace GemSwap.Tests
                 newUpcomingRow[x] = upcomingRow[x] - 1;
             }
 
-            return new Board(config, rotatedBoard, newUpcomingRow);
+            return new Board(
+                config,
+                rotatedBoard,
+                newUpcomingRow,
+                initialScore
+            );
         }
 
         private void Update(Board board, float ellapsedMilliseconds)
