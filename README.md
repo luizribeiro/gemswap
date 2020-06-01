@@ -30,9 +30,6 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
 
 ### TODOs
 
-* **Gameplay**
-  * Add score
-
 * **Advanced Gameplay**
   * Add support for combos
 
