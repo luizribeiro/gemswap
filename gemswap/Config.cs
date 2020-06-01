@@ -4,7 +4,7 @@ namespace GemSwap
     {
         public virtual int BoardWidth => 6;
 
-        public virtual int BoardHeight => 14;
+        public virtual int BoardHeight => 12;
 
         public virtual int BoardInitialMinHeight => 2;
 

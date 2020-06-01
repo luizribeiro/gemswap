@@ -59,8 +59,8 @@ namespace GemSwap.Match
             this.eliminationSoundEffect =
                 contentManager.Load<SoundEffect>("eliminate");
 
-            Song music = contentManager.Load<Song>("HeWalk");
-            MediaPlayer.Volume = 0.5f;
+            Song music = contentManager.Load<Song>("music");
+            MediaPlayer.Volume = 1.0f;
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(music);
 
