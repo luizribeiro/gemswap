@@ -36,7 +36,6 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
 
 * **Aesthetics**
   * Add animation to cursor movement
-  * Add sound effect for when you are about to lose
   * Add timer
   * Add effects to:
     * Eliminations

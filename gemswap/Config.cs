@@ -6,6 +6,8 @@ namespace GemSwap
 
         public virtual int BoardHeight => 12;
 
+        public virtual int NumRowsLeftForAlarm => 3;
+
         public virtual int BoardInitialMinHeight => 2;
 
         public virtual int BoardInitialMaxHeight => 8;

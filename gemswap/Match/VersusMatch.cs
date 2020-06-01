@@ -1,6 +1,7 @@
 namespace GemSwap.Match
 {
     using System.Collections.Generic;
+    using System.Linq;
     using GemSwap.Player;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Audio;
@@ -18,6 +19,7 @@ namespace GemSwap.Match
 
         private SoundEffect? swapSoundEffect;
         private SoundEffect? eliminationSoundEffect;
+        private SoundEffectInstance? alarmSoundEffect;
 
         public VersusMatch(
             GraphicsDevice graphicsDevice,
@@ -59,6 +61,12 @@ namespace GemSwap.Match
             this.eliminationSoundEffect =
                 contentManager.Load<SoundEffect>("eliminate");
 
+            SoundEffect alarmSoundEffect =
+                contentManager.Load<SoundEffect>("alarm");
+            this.alarmSoundEffect = alarmSoundEffect.CreateInstance();
+            this.alarmSoundEffect.IsLooped = true;
+            this.alarmSoundEffect.Play();
+
             Song music = contentManager.Load<Song>("music");
             MediaPlayer.Volume = 1.0f;
             MediaPlayer.IsRepeating = true;
@@ -96,6 +104,15 @@ namespace GemSwap.Match
             for (int i = 0; i < this.players.Count; i++)
             {
                 this.players[i].ProcessInput();
+            }
+
+            if (this.boards.Any(b => !b.HasGameEnded && b.IsCloseToLosing))
+            {
+                this.alarmSoundEffect!.Play();
+            }
+            else
+            {
+                this.alarmSoundEffect!.Stop();
             }
         }
 

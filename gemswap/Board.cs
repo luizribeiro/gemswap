@@ -103,6 +103,25 @@ namespace GemSwap
 
         public bool HasGameEnded { get; private set; }
 
+        public bool IsCloseToLosing
+        {
+            get
+            {
+                for (int y = 0; y < this.config.NumRowsLeftForAlarm; y++)
+                {
+                    for (int x = 0; x < this.config.BoardWidth; x++)
+                    {
+                        if (this.board[x, y] != Board.EMPTY)
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+        }
+
         public void Update(float ellapsedMilliseconds)
         {
             if (this.HasGameEnded)
