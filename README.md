@@ -32,9 +32,12 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
 
 * **Advanced Gameplay**
   * Add support for combos
+  * Add support for sending bricks to each other
 
 * **Aesthetics**
   * Add animation to cursor movement
+  * Add sound effect for when you are about to lose
+  * Add timer
   * Add effects to:
     * Eliminations
     * Game over
