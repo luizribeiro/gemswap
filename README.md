@@ -1,6 +1,7 @@
 # luizribeiro/gemswap
 
 [![Build Status](https://travis-ci.com/luizribeiro/gemswap.svg?token=Y5WyECQyFrzmKkJLsCaK&branch=master)](https://travis-ci.com/luizribeiro/gemswap)
+[![codecov](https://codecov.io/gh/luizribeiro/gemswap/branch/master/graph/badge.svg?token=1Y0L8M3PWE)](https://codecov.io/gh/luizribeiro/gemswap)
 
 This is my gemswap game.
 
