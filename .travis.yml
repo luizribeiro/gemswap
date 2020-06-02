@@ -6,3 +6,8 @@ solution: gemswap/gemswap.sln
 script:
   - dotnet build gemswap
   - dotnet test tests
+  - >-
+    dotnet test tests/gemswap.tests.csproj
+    /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+after_script:
+  - bash <(curl -s https://codecov.io/bash)
