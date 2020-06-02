@@ -6,6 +6,9 @@ build:
 test:
 	dotnet test tests
 
+coverage:
+	dotnet test tests /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+
 run:
 	dotnet run --project gemswap/gemswap.csproj
 
