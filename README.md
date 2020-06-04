@@ -42,5 +42,13 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
     * Eliminations
     * Game over
 
+* **Competition**
+  * Finish game for both players
+  * Allow restart of the game
+  * Number of victories per player
+
+* **Simple Tweaks**
+  * On gamepad, allow any button to be used for swapping
+
 * **Dev Experience**
   * Clean up multiple matrices used for the board (maybe into a single one?)
