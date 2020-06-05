@@ -16,6 +16,7 @@ namespace GemSwap
         private readonly Timer?[,] movimentTimer;
         private readonly Timer?[,] fadeOutTimer;
         private readonly Dictionary<BoardEvent, List<Action>> listeners;
+        private readonly Random random;
 
         private int[] upcomingRow;
         private float offset;
@@ -58,17 +59,17 @@ namespace GemSwap
             this.cursorY = config.BoardHeight - 1;
             this.boardVerticalOffset = 0;
 
-            Random random = new Random();
+            this.random = new Random();
             for (int x = 0; x < config.BoardWidth; x++)
             {
-                int height = random.Next(
+                int height = this.random.Next(
                     config.BoardInitialMinHeight,
                     config.BoardInitialMaxHeight
                 );
                 for (int y = 0; y < config.BoardHeight; y++)
                 {
                     this.board[x, y] = y > config.BoardHeight - height
-                        ? random.Next(0, config.NumGems)
+                        ? this.random.Next(0, config.NumGems)
                         : Board.EMPTY;
                     this.isLocked[x, y] = false;
                     this.movimentTimer[x, y] = null;
@@ -513,10 +514,9 @@ namespace GemSwap
         private int[] BuildUpcomingRow()
         {
             int[] upcomingRow = new int[this.config.BoardWidth];
-            Random random = new Random();
             for (int x = 0; x < this.config.BoardWidth; x++)
             {
-                upcomingRow[x] = random.Next(0, this.config.NumGems);
+                upcomingRow[x] = this.random.Next(0, this.config.NumGems);
             }
 
             return upcomingRow;
