@@ -37,10 +37,16 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
 
 * **Aesthetics**
   * Add animation to cursor movement
-  * Add timer
+  * Improve cursor design
+  * Improve overall layout of the screen
   * Add effects to:
     * Eliminations
     * Game over
+  * Add timer
+
+* **Sound**
+  * Multiple songs. Pick one randomly
+  * Better sound effect for alarm
 
 * **Competition**
   * Finish game for both players
@@ -49,6 +55,9 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
 
 * **Simple Tweaks**
   * On gamepad, allow any button to be used for swapping
+  * Make board identical for all players in a proper way
+  * Add delay to falling pieces
 
-* **Dev Experience**
+* **Dev Experience / Refactor***
+  * Refactor board initialization so it's done by a board generator class instead of constructor
   * Clean up multiple matrices used for the board (maybe into a single one?)
