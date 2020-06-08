@@ -1,5 +1,6 @@
 namespace GemSwap.Player
 {
+    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
@@ -40,13 +41,25 @@ namespace GemSwap.Player
 
         public override bool IsSwapPressed(GamePadState state)
         {
-            return state.Buttons.A == ButtonState.Pressed
-                && state.Buttons.A != this.PreviousState?.Buttons.A;
+            return this.WasButtonPressed(state, b => b?.A)
+                || this.WasButtonPressed(state, b => b?.B)
+                || this.WasButtonPressed(state, b => b?.X)
+                || this.WasButtonPressed(state, b => b?.Y);
         }
 
         protected override GamePadState GetCurrentState()
         {
             return GamePad.GetState(this.playerIndex);
+        }
+
+        private bool WasButtonPressed(
+            GamePadState state,
+            Func<GamePadButtons?, ButtonState?> getButtonState
+        )
+        {
+            return getButtonState.Invoke(state.Buttons) == ButtonState.Pressed
+                && getButtonState.Invoke(state.Buttons)
+                    != getButtonState.Invoke(this.PreviousState?.Buttons);
         }
     }
 }

@@ -54,7 +54,6 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
   * Number of victories per player
 
 * **Simple Tweaks**
-  * On gamepad, allow any button to be used for swapping
   * Make board identical for all players in a proper way
   * Add delay to falling pieces
 
