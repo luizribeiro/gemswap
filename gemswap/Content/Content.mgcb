@@ -61,11 +61,29 @@
 /processorParam:TextureFormat=Color
 /build:gems.png
 
-#begin music.mp3
+#begin Music/DealWithIt.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:music.mp3
+/build:Music/DealWithIt.mp3
+
+#begin Music/EnjoyIt.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/EnjoyIt.mp3
+
+#begin Music/Jewels.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Jewels.mp3
+
+#begin Music/Puzzling.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Puzzling.mp3
 
 #begin swap.mp3
 /importer:Mp3Importer

@@ -1,5 +1,6 @@
 namespace GemSwap.Match
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using GemSwap.Player;
@@ -67,7 +68,7 @@ namespace GemSwap.Match
             this.alarmSoundEffect.IsLooped = true;
             this.alarmSoundEffect.Play();
 
-            Song music = contentManager.Load<Song>("music");
+            Song music = this.LoadRandomMusic(contentManager);
             MediaPlayer.Volume = 1.0f;
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(music);
@@ -132,6 +133,18 @@ namespace GemSwap.Match
             {
                 this.boardRenderers[i].Draw(this.boards[i]);
             }
+        }
+
+        private Song LoadRandomMusic(ContentManager contentManager)
+        {
+            string[] songs = new string[] {
+                "Music/DealWithIt",
+                "Music/EnjoyIt",
+                "Music/Jewels",
+                "Music/Puzzling",
+            };
+            string pickedSong = songs[new Random().Next(songs.Length)];
+            return contentManager.Load<Song>(pickedSong);
         }
     }
 }

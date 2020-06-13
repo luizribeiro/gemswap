@@ -45,7 +45,6 @@ $ dotnet publish -c Release -r win-x64 /p:PublishReadyToRun=false /p:TieredCompi
   * Add timer
 
 * **Sound**
-  * Multiple songs. Pick one randomly
   * Better sound effect for alarm
 
 * **Competition**
