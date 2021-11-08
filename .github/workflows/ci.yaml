@@ -20,4 +20,4 @@ jobs:
           dotnet test tests/gemswap.tests.csproj
           /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v2
